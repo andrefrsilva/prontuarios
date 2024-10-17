@@ -1,0 +1,856 @@
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/zvXJpKLP/image-8.png">
+  <meta property="og:title" content="Prontuários">
+<meta property="og:description" content="Prontuários para a disciplina de Decisão Terapêutica!">
+<meta property="og:image" content="https://i.postimg.cc/zvXJpKLP/image-8.png">
+<meta property="og:url" content="https://prontuarios.pt">
+<meta name="twitter:card" content="summary_large_image">
+  <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  
+    <title>Prontuários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+</head>
+
+<body>
+  
+<center>
+  <a href="https://prontuarios.pt/">
+    <img src="https://i.postimg.cc/Vv2sxds8/PRONTU-RIO-TERAP-UTICO-07-10-2024-2.gif" width="300">
+  </a>
+</center>
+
+<div class="container">
+  <img class="drug-box" src="https://i.postimg.cc/zvXJpKLP/image-8.png" alt="Drug box" data-id="1">
+  <img class="drug-box" src="https://i.postimg.cc/Y9XS5dww/image-8.png" alt="Drug box" data-id="2">
+  <img class="drug-box" src="https://i.postimg.cc/y6bdnpPm/image-8-C-pia.png" alt="Drug box" data-id="3">
+  <img class="drug-box" src="https://i.postimg.cc/15Vzd0CL/image-8-C-pia.png" alt="Drug box" data-id="5">
+  <img class="drug-box" src="https://i.postimg.cc/7LwYbFHk/image-8-C-pia.png" alt="Drug box" data-id="6">
+</div>
+
+<div id="mynetwork" style="display: none;"></div>
+  
+<div class="info-sections">
+  <div id="section-1" class="info-section">
+    <h1>Paracetamol</h1>
+    
+  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
+
+  <br /><br />
+  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
+
+  <label>
+    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
+    Ver Todos os Descendentes ao Clicar
+  </label>
+  <br><br>
+
+  <label>
+    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
+  </label>
+  
+  <div id="groupToggles"></div>
+
+  <!--<div id="mynetwork"></div>-->
+
+  <input type="text" id="dataURL" style="display:none;"/>
+  <button id="loadDataButton" style="display:none;">Load</button>
+  <button id="shareButton" style="display:none;">Share</button> 
+  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
+  <button onclick="degree()" style="display:none;">Info</button>
+  <canvas id="degreeChart"></canvas>
+  <div id="nodeDegreeResults" style="display:none;"></div>
+  <br /><br />
+  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
+  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
+  <canvas id="clusteringChart"></canvas>
+  <div id="clusteringResults" style="display:none;"></div>
+    
+   <h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
+<p><strong>Denominação Comum Internacional (DCI):</strong> Paracetamol (Acetaminofeno).</p>
+<p><strong>Grupo farmacoterapêutico:</strong> Analgésicos não opiáceos e antipiréticos. Código ATC: N02BE01. Pertence à classe das anilidas derivadas do para-aminofenol, com efeito analgésico e antipirético, mas pouca ação anti-inflamatória.</p>
+
+<h2>2. Indicações Principais</h2>
+<p>O paracetamol é utilizado para o tratamento sintomático de:</p>
+<ul>
+    <li>Dores ligeiras a moderadas, como cefaleias, enxaquecas, dores dentárias, otalgias, dores traumáticas, musculares e articulares.</li>
+    <li>Febre associada a estados gripais, pós-vacinação, ou outras condições febris.</li>
+    <li>Osteoartrose e outras condições reumáticas não inflamatórias.</li>
+    <li>Dismenorreia.</li>
+    <li>Alívio da dor pré e pós-operatória.</li>
+</ul>
+<p>É também um analgésico de primeira linha para a maioria das formas de dor aguda e crónica, podendo ser utilizado isoladamente para dores ligeiras ou em combinação com outros analgésicos (como opioides ou AINEs) para dores mais intensas.</p>
+
+<h2>3. Mecanismos de Ação</h2>
+<ul>
+    <li>Inibe a síntese de prostaglandinas no SNC, atuando como co-substrato redutor no que se pensa ser a COX-3 (uma variante diferente das COX-1 e COX-2), resultando em analgesia e antipirese.</li>
+    <li>Atua no centro de termorregulação do hipotálamo, reduzindo as concentrações de prostaglandina E2 (PGE2) e promovendo vasodilatação e sudorese para reduzir a febre.</li>
+    <li>Tem pouca inibição periférica das prostaglandinas, justificando a ausência de ação anti-inflamatória significativa, devido à inibição da sua ação por peróxidos nos tecidos inflamados.</li>
+    <li>Pode também ativar vias serotoninérgicas descendentes e inibir a recaptação de canabinoides endógenos, contribuindo para o seu efeito analgésico.</li>
+    <li>Não interfere na função plaquetária nem causa irritação gastrointestinal, diferenciando-se dos AINEs.</li>
+</ul>
+
+<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
+<p><strong>Adultos:</strong> A dose habitual de paracetamol para adultos é de 500 mg a 1 g, administrada 2 a 4 vezes por dia. Deve ser respeitado um intervalo mínimo de 4 horas entre as administrações, preferencialmente de 6 a 8 horas. A dose máxima diária não deve exceder 4 g para evitar o risco de hepatotoxicidade.</p>
+
+<p><strong>População pediátrica:</strong> A dosagem para crianças deve ser ajustada conforme o peso corporal, com base na recomendação de <strong>10 a 15 mg/kg/dose</strong>, administrada a cada 4 a 6 horas. A dose máxima diária para crianças é de <strong>60 mg/kg/dia</strong>, sem exceder 4 doses em 24 horas. Existem formulações pediátricas específicas.</p>
+
+<p><strong>Insuficiência hepática:</strong> Em doentes com insuficiência hepática, a dose de paracetamol deve ser reduzida para um máximo de <strong>2 g/dia</strong>, devido ao risco aumentado de toxicidade hepática. Monitorização frequente da função hepática é essencial.</p>
+
+<p><strong>Insuficiência renal:</strong> O ajustamento da dose depende do clearance de creatinina (ClCr):
+<ul>
+    <li><strong>ClCr 50-10 ml/min:</strong> 500 mg a cada 6 horas.</li>
+    <li><strong>ClCr &lt;10 ml/min:</strong> 500 mg a cada 8 horas.</li>
+</ul>
+Monitorização da função renal é recomendada em casos de insuficiência renal grave.</p>
+
+<p><strong>Via de administração:</strong> Paracetamol pode ser administrado por via oral (tem biodisponibilidade de 88% e atinge o pico de concentração plasmática 90 minutos depois da ingestão), retal ou intravenosa (IV). A via IV deve ser reservada para pacientes incapazes de tomar medicamentos por via oral e, devido ao custo elevado, deve ser substituída pela via oral o mais rapidamente possível.</p>
+
+<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
+<p><strong>Efeitos adversos comuns:</strong> O paracetamol é geralmente bem tolerado, mas pode causar náuseas, vómitos, sonolência ligeira e sudorese.</p>
+
+<p><strong>Efeitos adversos raros:</strong> Reações alérgicas graves (anafilaxia), trombocitopenia e agranulocitose, alterações hepáticas, incluindo hepatite medicamentosa.</p>
+
+<p><strong>Precauções:</strong> O uso prolongado de paracetamol pode levar à hepatotoxicidade, especialmente em doentes com:
+<ul>
+    <li><strong>Alcoolismo crónico:</strong> Aumento da produção de NAPQI, com risco aumentado de toxicidade hepática.</li>
+    <li><strong>Malnutrição e baixo peso corporal:</strong> Depleção das reservas de glutationo, aumentando o risco de dano hepático.</li>
+    <li><strong>Insuficiência hepática grave:</strong> Monitorização rigorosa da função hepática.</li>
+</ul>
+Em casos de sobredosagem, acetilcisteína deve ser administrada para prevenir hepatotoxicidade.</p>
+
+<h2>6. Interações Clinicamente Relevantes</h2>
+<ul>
+    <li><strong>Indutores enzimáticos</strong> (carbamazepina, fenitoína): Aumentam a produção de NAPQI, aumentando o risco de hepatotoxicidade.</li>
+    <li><strong>Álcool crónico:</strong> Potencia o risco de toxicidade hepática.</li>
+</ul>
+
+<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
+
+<ul>
+    <li><strong>Gravidez:</strong> O paracetamol é considerado seguro durante a gravidez quando utilizado em doses adequadas, sendo a escolha preferida para o alívio da dor e febre. Deve ser utilizado na menor dose eficaz e pelo menor período de tempo possível para evitar possíveis riscos ao feto.</li>
+
+    <li><strong>Aleitamento:</strong> Paracetamol é excretado no leite materno em quantidades insignificantes, o que o torna seguro para uso durante a amamentação. Não há efeitos adversos significativos conhecidos em lactentes expostos ao paracetamol através do leite materno.</li>
+
+    <li><strong>Idosos:</strong> Nos idosos, não há necessidade de ajuste de dose em geral, mas é importante considerar a função hepática e renal. A possibilidade de polimedicação e interações com outros fármacos deve ser cuidadosamente monitorizada, especialmente em casos de insuficiência renal ou hepática subjacentes.</li>
+
+    <li><strong>Insuficiência hepática:</strong> Em doentes com insuficiência hepática leve a moderada, a dose deve ser reduzida, com monitorização frequente da função hepática. Em casos graves, como cirrose descompensada, o uso de paracetamol deve ser restrito ou cuidadosamente monitorizado devido ao risco de hepatotoxicidade.</li>
+
+    <li><strong>Insuficiência renal:</strong> A insuficiência renal grave requer ajustes na dose e no intervalo de administração para evitar a acumulação de metabolitos tóxicos. Recomenda-se monitorização rigorosa da função renal em doentes com insuficiência renal crónica, especialmente quando a depuração de creatinina é inferior a 30 mL/min.</li>
+
+    <li><strong>Alcoolismo crónico:</strong> O uso de paracetamol em alcoólicos crónicos deve ser limitado a doses menores, como 2 g/dia, devido ao aumento da produção de NAPQI e à depleção das reservas de glutationo, aumentando o risco de hepatotoxicidade. A função hepática deve ser monitorizada com frequência.</li>
+
+    <li><strong>Baixo peso corporal (menos de 50 kg):</strong> Doentes com peso corporal abaixo de 50 kg devem receber doses reduzidas de paracetamol, uma vez que o risco de toxicidade hepática é aumentado devido ao menor volume de distribuição do fármaco e à potencial redução das reservas de glutationa.</li>
+
+    <li><strong>Doentes com malnutrição:</strong> Em doentes desnutridos, as reservas de glutationa no fígado podem estar reduzidas, aumentando o risco de hepatotoxicidade. Nestes casos, a dose máxima diária de paracetamol deve ser ajustada para 2 g/dia, e a função hepática monitorizada regularmente.</li>
+
+    <li><strong>Crianças:</strong> O uso de paracetamol em crianças é seguro quando as doses são ajustadas de acordo com o peso corporal. É importante monitorizar a frequência e quantidade de administração para evitar sobredosagens, especialmente ao utilizar formas líquidas ou supositórios.</li>
+
+    <li><strong>Pacientes em estado crítico:</strong> Em pacientes gravemente enfermos ou em estado crítico (ex. unidades de cuidados intensivos), especialmente os que estão a receber infusões IV de paracetamol, a dose deve ser cuidadosamente ajustada, considerando fatores como insuficiência hepática ou renal e desnutrição.</li>
+
+    <li><strong>Doentes com hepatite viral ativa ou história de hepatite:</strong> Embora o paracetamol possa ser utilizado com cautela em doentes com hepatite viral prévia ou atual, deve-se monitorizar atentamente a função hepática para evitar exacerbações da doença hepática.</li>
+</ul>
+
+<h2>8. Informação aos Doentes</h2>
+<ul>
+    <li>Explicar que o paracetamol é eficaz na redução da dor e febre, com efeito dentro de 30 minutos após a ingestão.</li>
+    <li>Alertar para não exceder a dose diária máxima (4 g) e verificar se outros medicamentos contêm paracetamol para evitar sobredosagem.</li>
+    <li>Reforçar a importância de evitar o consumo de álcool durante o tratamento.</li>
+</ul>
+
+<h2>9. Monitorização</h2>
+<p><strong>Eficácia:</strong> Monitorizar o alívio da dor com escalas de dor e rever o tratamento conforme necessário.</p>
+<p><strong>Segurança:</strong> Monitorização da função hepática em pacientes de risco ou em tratamentos prolongados. Em caso de sobredosagem, monitorizar níveis de paracetamol no sangue e função hepática.</p>
+
+<h2>10. Notas Adicionais</h2>
+ 
+     <ul>
+       
+          <li>O paracetamol está amplamente disponível em formas genéricas a baixo custo. É comparticipado em algumas formulações, dependendo da indicação clínica. Estudos recentes sugerem uma eficácia limitada em condições como osteoartrose.</li>
+    <li>Não há evidência de alta qualidade que suporte ou refute o uso de paracetamol isoladamente ou em combinação com opiáceos nos primeiros dois passos da escada analgésica da OMS para dor oncológica. (<a href="#wiffen2017">Wiffen et al., 2017</a>)</li>
+    <li>Paracetamol 1000 mg proporcionou um pequeno benefício em termos de alívio da dor a duas horas para pessoas com cefaleia tensional episódica aguda de intensidade moderada a severa. (<a href="#stephens2016">Stephens et al., 2016</a>)</li>
+    <li>Uma dose única de paracetamol pode melhorar o alívio da dor perineal após o parto vaginal, mas são necessários mais estudos para avaliar os efeitos adversos maternos e neonatais. (<a href="#abalos2021">Abalos et al., 2021</a>)</li>
+    <li>As evidências sobre a eficácia do paracetamol ou AINEs no alívio da dor de ouvido a curto prazo em crianças com otite média aguda são limitadas e incertas. (<a href="#sevaux2023">Sévaux et al., 2023</a>)</li>
+    <li>O paracetamol pode reduzir a necessidade de morfina após grandes cirurgias em recém-nascidos, mas as evidências atuais são insuficientes para determinar o seu papel na redução da dor em neonatos. (<a href="#ohlsson2020">Ohlsson & Shah, 2020</a>)</li>
+    <li>Paracetamol 1000 mg é estatisticamente superior ao placebo no tratamento de enxaqueca aguda, mas outros analgésicos têm NNTs inferiores. (<a href="#derry2013">Derry & Moore, 2013</a>)</li>
+    <li>Não existem ensaios clínicos randomizados que suportem ou refutem o uso de paracetamol para dor crónica não-oncológica em crianças e adolescentes. (<a href="#cooper2017">Cooper et al., 2017</a>)</li>
+    <li>Há poucas evidências comparando diferentes intervenções para a sobredosagem de paracetamol; o carvão ativado parece ser a melhor escolha para reduzir a absorção. (<a href="#chiew2018">Chiew et al., 2018</a>)</li>
+    <li>Uma dose única de paracetamol oferece alívio eficaz da dor pós-operatória em adultos por cerca de quatro horas, com poucos efeitos adversos leves. (<a href="#toms2008">Toms et al., 2008</a>)</li>
+    <li>O paracetamol pode ajudar a aliviar a obstrução nasal e a rinorreia, mas não melhora outros sintomas da constipação comum. (<a href="#li2013">Li et al., 2013</a>)</li>
+    <li>Paracetamol não apresentou melhores resultados do que o placebo no tratamento da dor lombar aguda, levantando incertezas sobre a sua recomendação como primeira linha de tratamento. (<a href="#saragiotto2016">Saragiotto et al., 2016</a>)</li>
+    <li>Paracetamol oferece apenas melhorias mínimas na dor e função para pessoas com osteoartrite do joelho ou anca, sem aumento do risco de eventos adversos. (<a href="#leopoldino2019">Leopoldino et al., 2019</a>)</li>
+    <li>Acetaminofeno 1000 mg é significativamente mais eficaz do que o placebo no tratamento de enxaquecas episódicas e moderadas, proporcionando também melhorias nos sintomas associados, como náusea e fotofobia. (<a href="#prior2010">Prior et al., 2010</a>)</li>
+</ul>
+
+<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
+<ul>
+    <li><strong>Sobredosagem:</strong> O paracetamol é uma causa importante de insuficiência hepática aguda; o tratamento com N-acetilcisteína deve ser iniciado o mais precocemente possível.</li>
+    <li><strong>Eficácia em enxaquecas:</strong> 1000 mg de paracetamol pode ser eficaz em crises moderadas; combinar com metoclopramida aumenta a eficácia.</li>
+    <li><strong>Monitorização rigorosa:</strong> Necessária em doentes com risco de hepatotoxicidade, como alcoólicos ou desnutridos.</li>
+</ul>
+    
+<h2 id="bibliografia">12. Bibliografia</h2>
+
+   <p><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></p>    
+        <p><a href="https://go.drugbank.com/drugs/DB00316" target="_blank">Drug Bank</i></a></p>
+  <p><a href="https://go.drugbank.com/drugs/DB00316" target="_blank">Hitchings, A., Lonsdale, D., Burrage, D., & Baker, E. (2023). The top 100 drugs: Clinical pharmacology and practical prescribing (3ª ed.). Elsevier.</i></a></p>
+
+<p id="wiffen2017"><a href="https://doi.org/10.1002/14651858.CD012637.pub2" target="_blank">Wiffen, P. J., Derry, S., Moore, R. A., McNicol, E. D., Bell, R. F., Carr, D. B., McIntyre, M., & Wee, B. (2017). Oral paracetamol (acetaminophen) for cancer pain. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="stephens2016"><a href="https://doi.org/10.1002/14651858.CD011889.pub2" target="_blank">Stephens, G., Derry, S., & Moore, R. A. (2016). Paracetamol (acetaminophen) for acute treatment of episodic tension-type headache in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="abalos2021"><a href="https://doi.org/10.1002/14651858.CD008407.pub3" target="_blank">Abalos, E., Sguassero, Y., & Gyte, G. M. (2021). Paracetamol/acetaminophen (single administration) for perineal pain in the early postpartum period. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="sevaux2023"><a href="https://doi.org/10.1002/14651858.CD011534.pub3" target="_blank">Sévaux, J. L. H., Damoiseaux, R. A. M. J., van de Pol, A. C., Lutje, V., Hay, A. D., Little, P., Schilder, A. G. M., & Venekamp, R. P. (2023). Paracetamol (acetaminophen) or non-steroidal anti-inflammatory drugs, alone or combined, for pain relief in acute otitis media in children. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="ohlsson2020"><a href="https://doi.org/10.1002/14651858.CD011219.pub4" target="_blank">Ohlsson, A., & Shah, P. S. (2020). Paracetamol (acetaminophen) for prevention or treatment of pain in newborns. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="derry2013"><a href="https://doi.org/10.1002/14651858.CD008040.pub3" target="_blank">Derry, S., & Moore, R. A. (2013). Paracetamol (acetaminophen) with or without an antiemetic for acute migraine headaches in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="cooper2017"><a href="https://doi.org/10.1002/14651858.CD012539.pub2" target="_blank">Cooper, T. E., Fisher, E., Anderson, B., Wilkinson, N. M. R., Williams, D. G., & Eccleston, C. (2017). Paracetamol (acetaminophen) for chronic non-cancer pain in children and adolescents. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="chiew2018"><a href="https://doi.org/10.1002/14651858.CD003328.pub3" target="_blank">Chiew, A. L., Gluud, C., Brok, J., & Buckley, N. A. (2018). Intervenções para sobredosagem de paracetamol (acetaminofeno). <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="toms2008"><a href="https://doi.org/10.1002/14651858.CD004602.pub2" target="_blank">Toms, L., McQuay, H. J., Derry, S., & Moore, R. A. (2008). Single dose oral paracetamol (acetaminophen) for postoperative pain in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="li2013"><a href="https://doi.org/10.1002/14651858.CD008800.pub2" target="_blank">Li, S., Yue, J., Dong, B. R., Yang, M., Lin, X., & Wu, T. (2013). Acetaminophen (paracetamol) for the common cold in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="saragiotto2016"><a href="https://doi.org/10.1002/14651858.CD012230" target="_blank">Saragiotto, B. T., Machado, G. C., Ferreira, M. L., Pinheiro, M. B., Shaheed, C. A., & Maher, C. G. (2016). Paracetamol for low back pain. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="leopoldino2019"><a href="https://doi.org/10.1002/14651858.CD013273" target="_blank">Leopoldino, A. O., Machado, G. C., Ferreira, P. H., Pinheiro, M. B., Day, R., McLachlan, A. J., Hunter, D. J., & Ferreira, M. L. (2019). Paracetamol versus placebo for knee and hip osteoarthritis. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
+
+<p id="prior2010"><a href="https://doi.org/10.1111/j.1526-4610.2010.01638.x" target="_blank">Prior, M. J., Codispoti, J. R., & Fu, M. (2010). A randomized, placebo-controlled trial of acetaminophen for treatment of migraine headache. <i>Headache: The Journal of Head and Face Pain</i>.</a></p>
+    
+<br>
+<!-- At the end of each section -->
+<button class="btn btn-primary print-page">Imprimir</button>
+     
+  </div>
+  <div id="section-2" class="info-section">
+    <h1>Bisoprolol</h1> 
+    
+    
+    
+    
+  </div>
+  <div id="section-3" class="info-section">
+    <h1>Semaglutido</h1>
+  </div>
+  <div id="section-4" class="info-section">
+    <h1>Quetiapina</h1>
+  </div>
+  <div id="section-5" class="info-section">
+    <h1>Pantoprazol</h1>
+  </div>
+</div>
+
+
+<button id="loadDataButton1" style="display:none;">Load Data 1</button>
+<button id="loadDataButton2" style="display:none;">Load Data 2</button>
+<button id="loadDataButton3" style="display:none;">Load Data 3</button>
+<button id="loadDataButton4" style="display:none;">Load Data 4</button>
+<button id="loadDataButton5" style="display:none;">Load Data 5</button>
+
+<center>
+  <p>André Filipe Rodrigues da Silva (36162)</p>
+  <p>Decisão Terapêutica</p>  
+  <p>FMUL</p>
+  <p>prontuarios.pt</p>
+  <p>2024</p>
+  </center>
+  
+<style>
+  
+ 
+
+    @media print {
+      body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  
+  
+    .group-toggle-container {
+      margin-bottom: 10px;
+    }
+    .group-toggle {
+      cursor: pointer;
+      padding: 5px 10px;
+      margin: 5px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+    }
+    .group-toggle.off {
+      background-color: #ccc;
+      color: #666;
+    }    
+    .deleteButton { cursor: pointer; padding: 5px 10px; margin: 5px; background-color: #f44336; color: white; border: none; border-radius: 3px; }
+    .deleteButton:hover { background-color: #cc0000; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+    th { background-color: #f2f2f2; }
+    .button { cursor: pointer; padding: 5px 10px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; }
+    .button:hover { background-color: #45a049; }
+    #resetButton { background-color: #f44336; }
+    #resetButton:hover { background-color: #cc0000; }
+    .copyButton { padding: 4px 8px; }
+    #degreeChart, #clusteringChart {
+      display: none;
+      height: 400px;
+    }
+    .vis-tooltip {
+      z-index: 10000 !important;
+    }
+#mynetwork {
+  width: 100%;
+  height: 500px;
+  border: 1px solid lightgray;
+  background-color: white;
+  position: relative;
+  page-break-inside: avoid; /* Ensure the network graph doesn't break */
+}
+
+    #watermark {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: gray;
+      opacity: 0.5; /* Adjust transparency */
+      font-size: 12px;
+      z-index: 1000; /* Ensure it stays on top */
+    }
+    #watermark a {
+      color: gray; /* Match the text color of the watermark */
+      text-decoration: none; /* No underline for the link */
+    }
+  
+  @property --_l {
+    syntax: "<length>";
+    initial-value: 0px;
+    inherits: true;
+  }
+  @property --_r {
+    syntax: "<length>";
+    initial-value: 0px;
+    inherits: true;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Horizontal spacing between boxes */
+    justify-content: center;
+    margin-bottom: 40px; /* Vertical spacing between rows on larger screens */
+  }
+
+  .drug-box {
+    --d: 18px;  /* the depth */
+    --a: 20deg; /* the angle */
+    --x: 10px;  /* lateral width */
+
+    width: 300px; /* Width for the frontal face */
+    aspect-ratio: 2.2;
+    object-fit: cover;
+    padding-block: var(--d);
+    transform: perspective(600px) rotateY(calc(var(--_i, 1) * var(--a)));
+    outline: var(--d) solid #0008;
+    outline-offset: calc(-1 * var(--d));
+    --_d: calc(100% - var(--d));
+    --_l: 0px;
+    --_r: 0px;
+    clip-path: polygon(
+      var(--_l) calc(var(--_d) - var(--x)),
+      var(--_l) calc(var(--d) + var(--x)), 
+      var(--d) var(--d), var(--_d) var(--d),
+      calc(var(--_d) + var(--_r)) calc(var(--d) + var(--x)),
+      calc(var(--_d) + var(--_r)) calc(var(--_d) - var(--x)),  
+      var(--_d) var(--_d), var(--d) var(--_d)
+    );
+    transition: transform .3s, --_r .15s, --_l .15s .15s;
+    transition-timing-function: linear;
+    cursor: pointer;
+    display: block;
+    max-width: 100%;
+  }
+
+  .drug-box:hover,
+  .drug-box.alt {
+    --_l: var(--d);
+    --_r: var(--d);
+    --_i: -1;
+    transition-delay: 0s, .15s, 0s;
+  }
+
+  /* Information section styles */
+  .info-sections {
+    display: block; /* Ensure this container is visible */
+    margin-top: 20px;
+  }
+
+  .info-section {
+    display: none;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+  }
+
+  /* Responsive vertical spacing for larger screens */
+  @media (min-width: 1024px) {
+    .container {
+      row-gap: 40px; /* Increased vertical gap for large screens */
+    }
+  }
+</style>
+
+<script>
+  // Initialize global variables
+  var nodes = new vis.DataSet([]);
+  var edges = new vis.DataSet([]);
+  var network = null;
+  var options = null;
+
+  const boxes = document.querySelectorAll('.drug-box');
+  const sections = document.querySelectorAll('.info-section');  
+  const networkContainer = document.getElementById('mynetwork');
+
+  // Smooth scroll function
+  function smoothScroll(target, duration) {
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const run = easeInOut(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    function easeInOut(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) return c / 2 * t * t + b;
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+
+    requestAnimationFrame(animation);
+  }
+
+  // Define the Excel URLs
+  const excelURLs = [
+    null, // Index 0 placeholder
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3Ve9RmvGHPomdLhlL8vcKw92ysBoLLW3Z7GCt-6_1-Eo9zRpxfM2J2O22uXZ7-2XP8yoMgW6-qvRa/pub?output=xlsx', 
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx', 
+ 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx', 
+     'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx', 
+     'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx'
+  ];
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Initialize the network
+    var container = document.getElementById("mynetwork");
+    var data = {
+      nodes: nodes,
+      edges: edges,
+    };
+    options = {
+      layout: { randomSeed: 2 },
+      physics: {
+        enabled: true,
+        solver: "barnesHut",
+        barnesHut: {
+          gravitationalConstant: -8000,
+          springLength: 10,
+          centralGravity: 0.01,
+        },
+        maxVelocity: 135,
+        timestep: 0.35,
+        stabilization: {
+          enabled: true,
+          iterations: 600,
+          updateInterval: 10,
+          onlyDynamicEdges: false,
+          fit: true
+        }
+      },
+      nodes: {
+        shape: "dot",
+        scaling: {
+          customScalingFunction: function (min, max, total, value) {
+            return value / total;
+          },
+          min: 5,
+          max: 50,
+        },
+      },
+      edges: {
+        color: {
+          inherit: false,
+        },
+        scaling: {
+          min: 0.5,
+          max: 3,
+        },
+        smooth: {
+          enabled: false,
+          type: 'dynamic',
+        },
+      },
+    };
+    network = new vis.Network(container, data, options);
+
+    boxes.forEach(box => {
+      box.addEventListener('click', () => {
+        // Close all sections
+        sections.forEach(section => {
+          section.style.display = 'none';
+        });
+
+        // Get the associated section
+        const id = box.getAttribute('data-id');
+        const section = document.getElementById(`section-${id}`);
+
+        // Open the associated section
+        section.style.display = 'block';
+
+        // Move the network container into the current section, after the main title
+        const h1 = section.querySelector('h1');
+        if (h1) {
+          h1.insertAdjacentElement('afterend', networkContainer);
+        } else {
+          section.insertAdjacentElement('afterbegin', networkContainer);
+        }
+
+        // Ensure the network container is visible
+        networkContainer.style.display = 'block';
+
+        // Smooth scroll to the section
+        smoothScroll(section, 1300);
+
+        // Load the data for this section
+        loadDataForSection(id);
+      });
+    });
+
+    // Event listener for physics checkbox
+    document.getElementById("physicsCheck").addEventListener("change", function() {
+      options.physics.enabled = this.checked; // Toggle physics
+      network.setOptions(options); // Update network options
+      network.redraw(); // Redraw network
+    });
+
+    // Event listener for curved edges
+    document.getElementById("curvedEdgesCheckbox").addEventListener("change", function () {
+      options.edges.smooth.enabled = this.checked;
+      network.setOptions(options);
+      network.redraw();
+    });
+
+    // Add the watermark
+    var watermark = document.createElement('div');
+    watermark.id = 'watermark';
+    watermark.innerHTML = `<a href="https://www.linkedin.com/in/andrefrsilva/" target="_blank">André © ${new Date().getFullYear()}</a>`;
+    networkContainer.appendChild(watermark);
+
+    // Add event handlers for node selection
+    network.on('selectNode', function (properties) {
+      let seeAllDescendants = document.getElementById('seeAllDescendantsCheckbox').checked;
+      let nodesToUpdate = [];
+      let allNodes = nodes.get(); // Get all nodes
+
+      allNodes.forEach(node => {
+        if (properties.nodes.includes(node.id)) {
+          nodesToUpdate.push({ id: node.id, hidden: false, color: node.originalColor });
+        } else {
+          nodesToUpdate.push({ id: node.id, hidden: true });
+        }
+      });
+
+      const addChildNodes = (nodeId, nodesMap, recursive = true) => {
+        let connectedEdges = edges.get({
+          filter: function (edge) {
+            return edge.from === nodeId;
+          }
+        });
+
+        connectedEdges.forEach((edge) => {
+          let childId = edge.to;
+          let childNode = nodesMap.find(node => node.id === childId);
+          if (childNode && childNode.hidden) {
+            childNode.hidden = false;
+            childNode.color = nodes.get(childId).originalColor;
+            if (recursive) {
+              addChildNodes(childId, nodesMap, seeAllDescendants); // Use the checkbox value
+            }
+          }
+        });
+      };
+
+      // Apply recursion based on user preference
+      properties.nodes.forEach(nodeId => {
+        addChildNodes(nodeId, nodesToUpdate, seeAllDescendants);
+      });
+
+      nodes.update(nodesToUpdate);
+    });
+
+    network.on('deselectNode', function (properties) {
+      let nodesToUpdate = [];
+      let allNodes = nodes.get(); // Get all nodes
+
+      allNodes.forEach(node => {
+        if (node.hidden) {
+          // Make the node visible and restore its original color
+          nodesToUpdate.push({ id: node.id, hidden: false, color: node.originalColor });
+        } else {
+          // Ensure visible nodes have their original color
+          nodesToUpdate.push({ id: node.id, color: node.originalColor });
+        }
+      });
+
+      nodes.update(nodesToUpdate);
+    });
+  });
+
+  function loadDataForSection(id) {
+    const url = excelURLs[id];
+    if (url) {
+      loadDataFromGivenURL(url);
+    } else {
+      console.error('No data URL defined for section', id);
+    }
+  }
+
+  async function loadDataFromGivenURL(url) {
+    try {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const blob = await response.blob();
+      processExcel(blob); // Process the Excel file
+    } catch (error) {
+      console.error("Error loading the Excel file:", error);
+    }
+  }
+
+  function processExcel(blob) {
+    nodes.clear(); // Clear existing nodes
+    edges.clear(); // Clear existing edges
+    groupFilters = {}; // Reset group filters
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      var data = e.target.result;
+      var workbook = XLSX.read(data, {type: "binary"});
+
+      // Read "nodes" sheet
+      var nodesSheet = workbook.Sheets["nodes"];
+      if (!nodesSheet) {
+        console.error("No 'nodes' sheet found in the Excel file.");
+        return;
+      }
+      var nodesData = XLSX.utils.sheet_to_json(nodesSheet, {header: 1});
+      nodesData.shift(); // Remove header row
+
+      nodesData.forEach(function(row) {
+        if (row.every(cell => cell === undefined || cell === null || cell === '')) {
+          return; // Skip this row
+        }
+        var nodeId = row[0] ? row[0].replace(/\s+/g, '') : '';
+        var value = row[2] ? row[2] : '';
+        var color = row[1] ? row[1] : 'black';
+        var title = row[3] ? row[3] : '';
+        var group = row[4] ? row[4] : null; // Assuming group info is in the 5th column
+
+        if(group) {
+          groupFilters[group] = true; // Mark group as visible by default
+        }
+
+        var nodeOptions = {
+          id: nodeId,
+          label: row[0],
+          value: value,
+          color: color, // This is the color from Sheets data
+          title: title,
+          group: group,
+          hidden: group ? !groupFilters[group] : false,
+          originalColor: color, // Store the original color
+          font: { background: 'white', color: 'black' } // Set label background and text color
+        };
+
+        nodes.add(nodeOptions);
+      });
+
+      // Read "edges" sheet
+      var edgesSheet = workbook.Sheets["edges"];
+      if (!edgesSheet) {
+        console.error("No 'edges' sheet found in the Excel file.");
+        return;
+      }
+      var edgesData = XLSX.utils.sheet_to_json(edgesSheet, {header: 1});
+      edgesData.shift(); // Remove header row
+
+      edgesData.forEach(function(row) {
+        if (row.every(cell => cell === undefined || cell === null || cell === '')) {
+          return; // Skip empty rows
+        }
+
+        var color = "grey";
+        var dashes = false;
+        if (row[2] === "promotes") color = "green";
+        else if (row[2] === "inhibits") color = "red";
+        else if (row[2] === "link") {
+          color = "black";
+          dashes = true;
+        }
+
+        var title = row[4] ? row[4] : ''; // Comment from column E
+        var value = row[3] ? parseFloat(row[3]) : undefined; // Value from column D
+
+        // Define min and max values for thickness and length
+        var minThickness = 0.5;
+        var maxThickness = 10;
+        var minLength = 40;
+        var maxLength = 120;
+
+        // Normalize value for thickness and length
+        var thickness = value !== undefined ? Math.max(minThickness, minThickness + (value / 100) * (maxThickness - minThickness)) : minThickness;
+        var length = value !== undefined ? Math.max(minLength, maxLength - (value / 100) * (maxLength - minLength)) : minLength;
+
+        // Assuming row[0] and row[1] are the IDs for the source and target nodes
+        var fromNode = row[0].replace(/\s+/g, '');
+        var toNode = row[1].replace(/\s+/g, '');
+
+        edges.add({
+          from: fromNode,
+          to: toNode,
+          arrows: row[2] === "link" ? "" : "to",
+          color: color,
+          dashes: dashes,
+          title: title, // Add the comment as title
+          width: thickness, // Set the thickness directly
+          length: length,   // Set the length directly
+        });
+      });
+
+      // Update the network with new data
+      network.setData({nodes: nodes, edges: edges});
+
+      // Render group toggles only after updating data
+      renderGroupToggles();
+
+      // Stabilize the network to adjust the layout
+      network.stabilize();
+    };
+
+    reader.onerror = function(error) {
+      console.error("Error reading the Excel file:", error);
+    };
+
+    reader.readAsBinaryString(blob);
+  }
+
+  // Group filters and functions
+  var groupFilters = {};
+
+  function renderGroupToggles() {
+    var toggleContainer = document.getElementById("groupToggles");
+    toggleContainer.innerHTML = ""; // Clear previous toggles
+
+    Object.keys(groupFilters).forEach(function(group) {
+      var button = document.createElement("button");
+      button.innerText = group;
+      button.classList.add("group-toggle", "button");
+      button.onclick = function() {
+        // Toggle group visibility
+        groupFilters[group] = !groupFilters[group];
+        button.classList.toggle("off", !groupFilters[group]);
+        updateNetworkVisibility();
+      };
+
+      toggleContainer.appendChild(button);
+    });
+  }
+
+  function updateNetworkVisibility() {
+    nodes.forEach(function(node) {
+      var shouldBeHidden = node.group && !groupFilters[node.group];
+      nodes.update({
+        id: node.id,
+        hidden: shouldBeHidden,
+        color: node.originalColor // Use the original color stored for the node
+      });
+    });
+
+    edges.forEach(function(edge) {
+      var fromNode = nodes.get(edge.from);
+      var toNode = nodes.get(edge.to);
+      edges.update({
+        id: edge.id,
+        hidden: fromNode.hidden || toNode.hidden
+      });
+    });
+  }
+
+  // Fullscreen functions
+  function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  }
+
+  function exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+
+  function isFullscreen() {
+    return !!(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+    );
+  }
+
+  // Add event listener for the fullscreen toggle button
+  document.getElementById("toggleFullscreen").addEventListener("click", function () {
+    var container = document.getElementById("mynetwork");
+    if (isFullscreen()) {
+      exitFullscreen();
+    } else {
+      enterFullscreen(container);
+    }
+  });
+
+document.querySelector('.print-page').addEventListener('click', () => {
+      window.print();
+    });
+</script>
+  
+  </body>
