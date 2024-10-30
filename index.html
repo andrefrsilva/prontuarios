@@ -230,14 +230,323 @@ Em casos de sobredosagem, acetilcisteína deve ser administrada para prevenir he
      
   </div>
   <div id="section-2" class="info-section">
-    <h1>Bisoprolol</h1> 
+    <h1>Bisoprolol</h1>
     
+  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
+
+  <br /><br />
+  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
+
+  <label>
+    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
+    Ver Todos os Descendentes ao Clicar
+  </label>
+  <br><br>
+
+  <label>
+    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
+  </label>
+  
+  <div id="groupToggles"></div>
+
+  <!--<div id="mynetwork"></div>-->
+
+  <input type="text" id="dataURL" style="display:none;"/>
+  <button id="loadDataButton" style="display:none;">Load</button>
+  <button id="shareButton" style="display:none;">Share</button> 
+  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
+  <button onclick="degree()" style="display:none;">Info</button>
+  <canvas id="degreeChart"></canvas>
+  <div id="nodeDegreeResults" style="display:none;"></div>
+  <br /><br />
+  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
+  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
+  <canvas id="clusteringChart"></canvas>
+  <div id="clusteringResults" style="display:none;"></div>
     
+<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
+<p><strong>Denominação Comum Internacional (DCI):</strong> Bisoprolol.</p>
+<p><strong>Grupo farmacoterapêutico:</strong> Bloqueadores seletivos dos recetores beta-adrenérgicos (beta-bloqueadores cardioselectivos). Código ATC: C07AB07. O bisoprolol é um agente bloqueador beta<sub>1</sub>-adrenérgico altamente seletivo, sem atividade simpatomimética intrínseca e com atividade estabilizadora de membrana negligenciável.</p>
+<h2>2. Indicações Principais</h2>
+<p>O bisoprolol está indicado para o tratamento de:</p>
+<ul>
+   <li><strong>Hipertensão arterial:</strong> Como monoterapia ou em associação com outros agentes anti-hipertensores.</li>
+   <li><strong>Angina de peito crónica estável:</strong> Reduzindo a frequência e a gravidade dos episódios anginosos.</li>
+   <li><strong>Insuficiência cardíaca crónica estável:</strong> Com função sistólica ventricular esquerda reduzida, em combinação com inibidores da ECA, diuréticos e, opcionalmente, glicosídeos cardíacos.</li>
+</ul>
+<h2>3. Mecanismos de Ação</h2>
+<ul>
+   <li>O bisoprolol é um bloqueador competitivo e seletivo dos recetores beta<sub>1</sub>-adrenérgicos, localizados predominantemente no coração.</li>
+   <li>A redução da estimulação beta<sub>1</sub>-adrenérgica diminui a frequência cardíaca, o débito cardíaco e a pressão arterial, reduzindo a carga de trabalho do coração e o consumo de oxigénio.</li>
+   <li>Inibe a libertação de renina pelos rins, contribuindo para o efeito anti-hipertensor.</li>
+   <li>Em doses terapêuticas, apresenta mínima afinidade pelos recetores beta<sub>2</sub>-adrenérgicos dos músculos lisos vasculares e brônquicos, reduzindo o risco de efeitos adversos pulmonares e vasculares periféricos.</li>
+   <li>A seletividade beta<sub>1</sub> mantém-se até doses elevadas; contudo, em doses muito altas, pode ocorrer bloqueio beta<sub>2</sub>, levando a broncoconstrição e vasoconstrição.</li>
+</ul>
+<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
+<p><strong>Hipertensão arterial e angina de peito crónica estável:</strong></p>
+<ul>
+   <li><strong>Adultos:</strong> A dose inicial habitual é de 5 mg uma vez ao dia. Em casos leves, pode iniciar-se com 2,5 mg. Se necessário, a dose pode ser aumentada para 10 mg uma vez ao dia. A dose máxima recomendada é de 20 mg por dia.</li>
+   <li><strong>Idosos:</strong> Não é necessário ajuste de dose, mas recomenda-se iniciar com a menor dose eficaz.</li>
+   <li><strong>Insuficiência renal ou hepática:</strong> Em casos de insuficiência renal ou hepática ligeira a moderada, não é necessário ajuste de dose. Em insuficiências graves, a dose diária não deve exceder 10 mg.</li>
+</ul>
+<p><strong>Insuficiência cardíaca crónica estável:</strong></p>
+<p>O tratamento requer uma fase de titulação cuidadosa sob supervisão médica:</p>
+<ul>
+   <li><strong>Semana 1:</strong> 1,25 mg uma vez ao dia.</li>
+   <li><strong>Semana 2:</strong> 2,5 mg uma vez ao dia.</li>
+   <li><strong>Semana 3:</strong> 3,75 mg uma vez ao dia.</li>
+   <li><strong>Semanas 4-7:</strong> 5 mg uma vez ao dia.</li>
+   <li><strong>Semanas 8-11:</strong> 7,5 mg uma vez ao dia.</li>
+   <li><strong>A partir da semana 12:</strong> 10 mg uma vez ao dia (dose de manutenção).</li>
+</ul>
+<p>Durante a titulação, monitorizar frequentemente os sinais vitais e sintomas de agravamento da insuficiência cardíaca. Se necessário, a dose pode ser ajustada ou reduzida temporariamente.</p>
+<p><strong>População pediátrica:</strong> Não se recomenda o uso de bisoprolol em crianças e adolescentes, devido à falta de dados de segurança e eficácia.</p>
+<p><strong>Modo de administração:</strong> Os comprimidos devem ser tomados de manhã, com ou sem alimentos, e ingeridos com água. Não devem ser mastigados ou esmagados.</p>
+<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
+<p><strong>Efeitos adversos comuns:</strong></p>
+<ul>
+   <li><strong>Sistema nervoso:</strong> Tonturas, cefaleias, especialmente no início do tratamento.</li>
+   <li><strong>Cardíacos:</strong> Bradicardia, agravamento da insuficiência cardíaca, hipotensão.</li>
+   <li><strong>Gastrointestinais:</strong> Náuseas, vómitos, diarreia, obstipação.</li>
+   <li><strong>Musculoesqueléticos:</strong> Fraqueza muscular, cãibras.</li>
+   <li><strong>Geral:</strong> Fadiga, astenia.</li>
+</ul>
+<p><strong>Precauções:</strong></p>
+<ul>
+   <li><strong>Asma brônquica e DPOC:</strong> Utilizar com precaução; pode ser necessário ajustar a dose de broncodilatadores.</li>
+   <li><strong>Diabetes mellitus:</strong> Pode mascarar sintomas de hipoglicemia; monitorização regular da glicemia é recomendada.</li>
+   <li><strong>Insuficiência cardíaca:</strong> Iniciar tratamento apenas em condições estáveis; titulação cuidadosa é essencial.</li>
+   <li><strong>Feocromocitoma:</strong> Não iniciar bisoprolol sem bloqueio alfa prévio.</li>
+   <li><strong>Doenças vasculares periféricas:</strong> Pode agravar sintomas de claudicação intermitente ou síndrome de Raynaud.</li>
+   <li><strong>Psoríase:</strong> Pode exacerbar sintomas; avaliar risco-benefício.</li>
+   <li><strong>Reações alérgicas severas:</strong> Pode aumentar a sensibilidade aos alérgenos e a gravidade das reações anafiláticas.</li>
+</ul>
+<p><strong>Contraindicações:</strong></p>
+<ul>
+   <li>Hipersensibilidade ao bisoprolol ou a qualquer excipiente.</li>
+   <li>Insuficiência cardíaca aguda ou descompensação que requeira terapêutica inotrópica intravenosa.</li>
+   <li>Choque cardiogénico.</li>
+   <li>Bloqueio auriculoventricular de segundo ou terceiro grau sem pacemaker.</li>
+   <li>Síndrome do nódulo sinusal.</li>
+   <li>Bradicardia sintomática.</li>
+   <li>Hipotensão sintomática.</li>
+   <li>Asma brônquica grave ou doença pulmonar obstrutiva crónica severa.</li>
+   <li>Acidose metabólica.</li>
+   <li>Feocromocitoma não tratado.</li>
+</ul>
+<h2>6. Interações Clinicamente Relevantes</h2>
+<ul>
+   <li><strong>Antagonistas do cálcio (verapamilo, diltiazem):</strong> Risco aumentado de bradicardia, hipotensão e bloqueio AV; evitar uso concomitante.</li>
+   <li><strong>Antiarrítmicos de classe I (quinidina, disopiramida):</strong> Potenciam efeitos negativos na condução AV e função miocárdica.</li>
+   <li><strong>Medicamentos anti-hipertensores de ação central (clonidina, metildopa):</strong> Podem diminuir o tónus simpático; risco de hipertensão de rebote na descontinuação abrupta.</li>
+   <li><strong>Insulina e antidiabéticos orais:</strong> Potenciam o efeito hipoglicemiante; podem mascarar sinais de hipoglicemia.</li>
+   <li><strong>Anestésicos gerais:</strong> Podem atenuar a taquicardia reflexa e aumentar o risco de hipotensão; informar o anestesista antes da cirurgia.</li>
+   <li><strong>Glicosídeos digitálicos:</strong> Podem aumentar o tempo de condução AV e induzir bradicardia.</li>
+   <li><strong>AINEs:</strong> Podem diminuir o efeito anti-hipertensor do bisoprolol.</li>
+   <li><strong>Simpaticomiméticos beta (isoprenalina, dobutamina):</strong> Efeito reduzido quando usados concomitantemente.</li>
+   <li><strong>Simpaticomiméticos alfa e beta (noradrenalina, adrenalina):</strong> Podem causar hipertensão e exacerbação da claudicação intermitente.</li>
+   <li><strong>Mefloquina:</strong> Aumenta o risco de bradicardia.</li>
+   <li><strong>Inibidores da MAO (exceto MAO-B):</strong> Podem potenciar o efeito hipotensor do bisoprolol.</li>
+</ul>
+<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
+<ul>
+   <li><strong>Gravidez:</strong> Bisoprolol pode causar efeitos nocivos no feto; utilizar apenas se estritamente necessário. Monitorizar fluxo uteroplacentário e crescimento fetal.</li>
+   <li><strong>Aleitamento:</strong> Não se sabe se o bisoprolol é excretado no leite materno; não se recomenda o aleitamento durante o tratamento.</li>
+   <li><strong>Idosos:</strong> Geralmente não requer ajuste de dose, mas iniciar com doses baixas e monitorizar a resposta.</li>
+   <li><strong>Insuficiência renal ou hepática:</strong> Em casos graves, não exceder 10 mg por dia; monitorização cuidadosa é necessária.</li>
+   <li><strong>Crianças:</strong> A segurança e eficácia não foram estabelecidas; não recomendado em pacientes pediátricos.</li>
+   <li><strong>Doença pulmonar obstrutiva crónica:</strong> Utilizar com precaução; risco de broncospasmo.</li>
+   <li><strong>Diabetes mellitus:</strong> Pode mascarar sinais de hipoglicemia; monitorizar glicemia regularmente.</li>
+   <li><strong>Psoríase:</strong> Pode agravar a doença; utilizar apenas após avaliação cuidadosa.</li>
+   <li><strong>Distúrbios da circulação periférica:</strong> Pode agravar sintomas; monitorizar cuidadosamente.</li>
+   <li><strong>Feocromocitoma:</strong> Não iniciar sem bloqueio alfa prévio; risco de crise hipertensiva.</li>
+</ul>
+<h2>8. Informação aos Doentes</h2>
+<ul>
+   <li>Tomar o medicamento exatamente como prescrito, preferencialmente de manhã.</li>
+   <li>Não interromper o tratamento abruptamente sem consultar o médico.</li>
+   <li>Informar o médico sobre qualquer dificuldade respiratória, fadiga extrema ou batimentos cardíacos lentos.</li>
+   <li>Se for diabético, monitorizar a glicemia regularmente, pois os sintomas de hipoglicemia podem ser mascarados.</li>
+   <li>Informar profissionais de saúde sobre o uso de bisoprolol antes de qualquer cirurgia ou tratamento médico.</li>
+   <li>Evitar o consumo excessivo de álcool, pois pode potenciar os efeitos hipotensores.</li>
+</ul>
+<h2>9. Monitorização</h2>
+<p><strong>Eficácia:</strong> Monitorizar a pressão arterial, frequência cardíaca e sintomas associados à condição tratada (angina, insuficiência cardíaca).</p>
+<p><strong>Segurança:</strong> Observar sinais de bradicardia, hipotensão, broncospasmo e reações alérgicas. Em pacientes com insuficiência renal ou hepática, monitorizar função renal e hepática periodicamente.</p>
+<h2>10. Notas Adicionais</h2>
+<ul>
+   <li><strong>Estudos clínicos:</strong> O estudo CIBIS II demonstrou que o bisoprolol reduz significativamente a mortalidade e hospitalizações em pacientes com insuficiência cardíaca crónica estável.</li>
+   <li><strong>Formas farmacêuticas disponíveis:</strong> Comprimidos revestidos por película de 1,25 mg, 2,5 mg, 5 mg e 10 mg, permitindo ajuste flexível da dose.</li>
+   <li><strong>Descontinuação:</strong> A interrupção do tratamento deve ser feita gradualmente ao longo de 1-2 semanas para evitar efeitos de rebote.</li>
+   <li><strong>Uso em cirurgia:</strong> Informar o anestesista sobre o uso de bisoprolol; pode ser necessário ajustar a terapêutica antes de procedimentos cirúrgicos.</li>
+</ul>
+<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
+<ul>
+   <li><strong>Titulação cuidadosa:</strong> Fundamental em pacientes com insuficiência cardíaca para minimizar o risco de descompensação.</li>
+   <li><strong>Cardioselectividade:</strong> A preferência por bisoprolol em pacientes com doenças pulmonares obstrutivas devido à sua seletividade beta<sub>1</sub>.</li>
+   <li><strong>Monitorização regular:</strong> Importante para ajustar a dose e garantir a segurança do paciente, especialmente durante alterações na terapêutica.</li>
+   <li><strong>Interrupção gradual:</strong> Evita potenciais efeitos adversos associados à retirada abrupta, como exacerbação da angina ou arritmias.</li>
+   <li><strong>Educação do paciente:</strong> Esclarecer sobre a importância da adesão ao tratamento e comunicação de quaisquer efeitos adversos.</li>
+</ul>
     
+<h2 id="bibliografia">12. Bibliografia</h2>
+
+   <p><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></p>    
+        <p><a href="https://go.drugbank.com/drugs/DB00612" target="_blank">Drug Bank</i></a></p>
+  <p><a href="https://www.amazon.co.uk/Top-100-Drugs-Pharmacology-Prescribing/dp/0323834450" target="_blank">Hitchings, A., Lonsdale, D., Burrage, D., & Baker, E. (2023). The top 100 drugs: Clinical pharmacology and practical prescribing (3ª ed.). Elsevier.</i></a></p>
     
+<br>
+<!-- At the end of each section -->
+<button class="btn btn-primary print-page">Imprimir</button>
+     
   </div>
   <div id="section-3" class="info-section">
     <h1>Semaglutido</h1>
+    
+  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
+
+  <br /><br />
+  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
+
+  <label>
+    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
+    Ver Todos os Descendentes ao Clicar
+  </label>
+  <br><br>
+
+  <label>
+    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
+  </label>
+  
+  <div id="groupToggles"></div>
+
+  <!--<div id="mynetwork"></div>-->
+
+  <input type="text" id="dataURL" style="display:none;"/>
+  <button id="loadDataButton" style="display:none;">Load</button>
+  <button id="shareButton" style="display:none;">Share</button> 
+  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
+  <button onclick="degree()" style="display:none;">Info</button>
+  <canvas id="degreeChart"></canvas>
+  <div id="nodeDegreeResults" style="display:none;"></div>
+  <br /><br />
+  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
+  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
+  <canvas id="clusteringChart"></canvas>
+  <div id="clusteringResults" style="display:none;"></div>
+    
+<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
+<p><strong>Denominação Comum Internacional (DCI):</strong> Semaglutido.</p>
+<p><strong>Grupo farmacoterapêutico:</strong> Medicamentos usados no tratamento da diabetes, análogos do péptido-1 semelhante ao glucagon (GLP-1). Código ATC: A10BJ06.</p>
+<h2>2. Indicações Principais</h2>
+<p>O semaglutido é indicado para o tratamento de adultos com diabetes mellitus tipo 2 insuficientemente controlada, como adjuvante à dieta e exercício físico, para melhorar o controlo glicémico. As principais indicações incluem:</p>
+<ul>
+   <li><strong>Monoterapia:</strong> Quando a metformina é considerada inapropriada devido a intolerância ou contraindicações.</li>
+   <li><strong>Terapia combinada:</strong> Em associação com outros medicamentos para o tratamento da diabetes, como metformina, sulfonilureias, tiazolidinedionas, inibidores do SGLT2 ou insulina basal.</li>
+</ul>
+<p>Além disso, o semaglutido é indicado para a gestão crónica do peso em adultos com:</p>
+<ul>
+   <li>Índice de Massa Corporal (IMC) ≥30 kg/m² (obesidade).</li>
+   <li>IMC ≥27 kg/m² a &lt;30 kg/m² (excesso de peso) com pelo menos uma comorbilidade relacionada com o peso, como hipertensão, dislipidemia, apneia obstrutiva do sono ou diabetes tipo 2.</li>
+</ul>
+<p>Também demonstrou eficácia na redução do risco de eventos cardiovasculares major em adultos com diabetes tipo 2 e doença cardiovascular estabelecida.</p>
+<h2>3. Mecanismos de Ação</h2>
+<ul>
+   <li><strong>Agonista do recetor de GLP-1:</strong> O semaglutido é um análogo do GLP-1 humano que se liga seletivamente aos recetores de GLP-1, estimulando a secreção de insulina pelas células beta do pâncreas de forma dependente da glicose.</li>
+   <li><strong>Redução da secreção de glucagon:</strong> Diminui a secreção de glucagon pelas células alfa do pâncreas, reduzindo a produção hepática de glicose.</li>
+   <li><strong>Atraso do esvaziamento gástrico:</strong> Retarda o esvaziamento gástrico, contribuindo para a diminuição das excursões glicémicas pós-prandiais.</li>
+   <li><strong>Supressão do apetite:</strong> Atua nos centros hipotalâmicos de regulação do apetite, levando a uma redução da ingestão calórica e promovendo a perda de peso.</li>
+   <li><strong>Efeitos cardiovasculares:</strong> Pode melhorar parâmetros cardiovasculares, incluindo a redução da pressão arterial sistólica e melhorias no perfil lipídico, diminuindo o risco cardiovascular.</li>
+</ul>
+<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
+<p><strong>Posologia inicial:</strong> A dose inicial recomendada é de 0,25 mg de semaglutido administrada uma vez por semana durante as primeiras 4 semanas. Esta dose inicial tem como objetivo reduzir a ocorrência de efeitos adversos gastrointestinais e não proporciona controlo glicémico pleno.</p>
+<p><strong>Aumento gradual da dose:</strong> Após 4 semanas, a dose deve ser aumentada para 0,5 mg uma vez por semana. Se for necessário um maior controlo glicémico, a dose pode ser aumentada para 1 mg uma vez por semana após, pelo menos, 4 semanas com a dose de 0,5 mg. Em alguns casos, pode ser considerada a titulação até 2 mg uma vez por semana, seguindo o mesmo intervalo de tempo.</p>
+<p><strong>Administração:</strong> O semaglutido é administrado por via subcutânea no abdómen, coxa ou braço. O local da injeção pode ser alterado sem necessidade de ajuste da dose.</p>
+<p><strong>Horário de administração:</strong> Deve ser administrado no mesmo dia todas as semanas, a qualquer hora do dia, com ou sem alimentos.</p>
+<p><strong>Omissão de uma dose:</strong> Se uma dose for esquecida, pode ser administrada dentro de 5 dias após a data prevista. Se tiverem passado mais de 5 dias, a dose omitida deve ser ignorada e retomar o esquema habitual no próximo dia programado.</p>
+<p><strong>Ajuste de dose com outros antidiabéticos:</strong> Ao iniciar o semaglutido em combinação com sulfonilureias ou insulina, pode ser necessário reduzir a dose destes medicamentos para minimizar o risco de hipoglicemia.</p>
+<p><strong>Populações especiais:</strong></p>
+<ul>
+   <li><strong>Idosos:</strong> Não é necessário ajuste de dose com base na idade. A experiência em doentes com mais de 75 anos é limitada.</li>
+   <li><strong>Compromisso renal:</strong> Não é necessário ajuste de dose em doentes com compromisso renal ligeiro, moderado ou grave. A utilização em doentes com doença renal terminal não é recomendada devido à experiência limitada.</li>
+   <li><strong>Compromisso hepático:</strong> Não é necessário ajuste de dose. Deve haver precaução em doentes com compromisso hepático grave devido à experiência limitada.</li>
+</ul>
+<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
+<p><strong>Efeitos adversos gastrointestinais:</strong> Os efeitos adversos mais comuns incluem náuseas, vómitos, diarreia e obstipação. Geralmente são ligeiros a moderados e tendem a diminuir com o tempo. A titulação gradual da dose pode ajudar a reduzir a incidência destes efeitos.</p>
+<p><strong>Hipoglicemia:</strong> Quando combinado com sulfonilureias ou insulina, existe um risco aumentado de hipoglicemia. Pode ser necessário ajustar a dose destes medicamentos para reduzir este risco.</p>
+<p><strong>Pancreatite aguda:</strong> Foram relatados casos de pancreatite aguda. Se houver suspeita ou confirmação de pancreatite, o tratamento com semaglutido deve ser descontinuado.</p>
+<p><strong>Retinopatia diabética:</strong> Pode ocorrer agravamento da retinopatia diabética, especialmente em doentes com historial da doença e tratados com insulina. Recomenda-se monitorização cuidadosa.</p>
+<p><strong>Reações de hipersensibilidade:</strong> Foram reportadas reações de hipersensibilidade, incluindo anafilaxia e angioedema. Na ocorrência de reações graves, o tratamento deve ser interrompido imediatamente.</p>
+<p><strong>Contraindicações:</strong> Hipersensibilidade conhecida ao semaglutido ou a qualquer um dos excipientes. Não deve ser utilizado em doentes com história pessoal ou familiar de carcinoma medular da tiroide ou com síndrome de neoplasia endócrina múltipla tipo 2.</p>
+<p><strong>Precauções:</strong> Não está indicado para o tratamento da diabetes tipo 1 ou cetoacidose diabética. O atraso do esvaziamento gástrico pode afetar a absorção de medicamentos orais; deve-se ter cautela em doentes a tomar medicamentos com margem terapêutica estreita ou que requerem absorção rápida.</p>
+<h2>6. Interações Clinicamente Relevantes</h2>
+<ul>
+   <li><strong>Medicamentos orais:</strong> O atraso no esvaziamento gástrico pode afetar a absorção de medicamentos orais. Deve-se monitorizar a eficácia de medicamentos críticos e ajustar a administração conforme necessário.</li>
+   <li><strong>Varfarina e anticoagulantes cumarínicos:</strong> Pode haver alterações na Razão Normalizada Internacional (RNI). Recomenda-se monitorização frequente da RNI ao iniciar ou ajustar a dose de semaglutido.</li>
+   <li><strong>Sulfonilureias e insulina:</strong> A combinação aumenta o risco de hipoglicemia. Pode ser necessário reduzir a dose destes medicamentos.</li>
+   <li><strong>Paracetamol:</strong> O semaglutido pode atrasar a absorção do paracetamol; no entanto, não é necessário ajuste de dose.</li>
+   <li><strong>Contracetivos orais:</strong> A eficácia dos contracetivos orais não é afetada, mas recomenda-se precaução devido ao potencial atraso na absorção.</li>
+</ul>
+<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
+<ul>
+   <li><strong>Gravidez:</strong> Contraindicado durante a gravidez devido à falta de dados em humanos e evidência de toxicidade reprodutiva em estudos animais. Deve ser interrompido pelo menos 2 meses antes de uma gravidez planeada.</li>
+   <li><strong>Aleitamento:</strong> Não é recomendado durante a amamentação, pois não se sabe se é excretado no leite materno e não se pode excluir risco para o lactente.</li>
+   <li><strong>Idosos:</strong> Não é necessário ajuste de dose baseado na idade. Deve-se considerar a função renal e hepática.</li>
+   <li><strong>Compromisso renal:</strong> Sem necessidade de ajuste de dose em compromisso renal ligeiro a grave. O uso não é recomendado em doença renal terminal devido à experiência limitada.</li>
+   <li><strong>Compromisso hepático:</strong> Não é necessário ajuste de dose. Deve-se ter precaução em compromisso hepático grave pela experiência limitada.</li>
+   <li><strong>Crianças e adolescentes:</strong> A segurança e eficácia não foram estabelecidas em menores de 18 anos. Não é recomendado nesta população.</li>
+   <li><strong>Retinopatia diabética:</strong> Monitorização cuidadosa é necessária, especialmente em doentes com historial da doença e em tratamento com insulina.</li>
+</ul>
+<h2>8. Informação aos Doentes</h2>
+<ul>
+   <li>Ensinar a técnica correta de injeção e a importância de rodar os locais de aplicação.</li>
+   <li>Informar sobre os possíveis efeitos gastrointestinais e que geralmente diminuem com o tempo.</li>
+   <li>Alertar para os sinais de hipoglicemia e como agir em caso de ocorrência, especialmente se estiver a tomar sulfonilureias ou insulina.</li>
+   <li>Orientar para notificar imediatamente qualquer sintoma de pancreatite (dor abdominal intensa persistente).</li>
+   <li>Explicar a importância de aderir a uma dieta equilibrada e atividade física regular.</li>
+   <li>Informar sobre a necessidade de comunicar ao médico qualquer intenção de engravidar ou se ocorrer gravidez.</li>
+</ul>
+<h2>9. Monitorização</h2>
+<p><strong>Eficácia:</strong> Monitorizar regularmente a HbA1c para avaliar o controlo glicémico. Avaliar o peso corporal e os parâmetros metabólicos associados.</p>
+<p><strong>Segurança:</strong> Observar para sintomas de pancreatite e retinopatia diabética. Monitorizar a RNI em doentes a tomar varfarina. Vigiar sinais de hipoglicemia em doentes em terapia combinada com sulfonilureias ou insulina.</p>
+<h2>10. Notas Adicionais</h2>
+<ul>
+   <li>Estudos clínicos demonstraram que o semaglutido é superior a outros antidiabéticos na redução da HbA1c e do peso corporal (<a href="#marso2016">Marso et al., 2016</a>).</li>
+   <li>O semaglutido reduziu significativamente o risco de eventos cardiovasculares major em doentes com diabetes tipo 2 e doença cardiovascular estabelecida (<a href="#marso2016cv">Marso et al., 2016</a>).</li>
+   <li>A formulação oral de semaglutido foi desenvolvida para melhorar a adesão ao tratamento, embora apresente menor biodisponibilidade em comparação com a via subcutânea (<a href="#baekdal2017">Baekdal et al., 2017</a>).</li>
+   <li>Estudos recentes indicam a eficácia do semaglutido na gestão do peso em indivíduos com obesidade sem diabetes, mostrando perdas de peso significativas (<a href="#wilding2021">Wilding et al., 2021</a>).</li>
+   <li>O semaglutido mostrou melhorias em parâmetros de risco cardiovascular, incluindo redução da pressão arterial e melhoria do perfil lipídico (<a href="#pratley2018">Pratley et al., 2018</a>).</li>
+   <li>A conveniência da administração semanal pode melhorar a adesão ao tratamento em comparação com medicamentos de administração diária.</li>
+   <li>A monitorização regular e educação do doente são essenciais para maximizar os benefícios terapêuticos e minimizar os riscos.</li>
+</ul>
+<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
+<ul>
+   <li><strong>Titulação gradual:</strong> Aumentar a dose de forma progressiva ajuda a minimizar efeitos gastrointestinais e melhorar a tolerabilidade.</li>
+   <li><strong>Perda de peso significativa:</strong> Além do controlo glicémico, o semaglutido promove perda de peso substancial, beneficiando doentes com excesso de peso ou obesidade.</li>
+   <li><strong>Benefícios cardiovasculares:</strong> Considerar em doentes com alto risco cardiovascular devido à redução comprovada de eventos cardiovasculares major.</li>
+   <li><strong>Educação do doente:</strong> A formação adequada sobre a utilização do dispositivo de administração e gestão de efeitos adversos é fundamental para a adesão ao tratamento.</li>
+   <li><strong>Atenção às interações:</strong> Estar atento a medicamentos cuja absorção possa ser afetada pelo atraso do esvaziamento gástrico.</li>
+   <li><strong>Acompanhamento multidisciplinar:</strong> A colaboração entre endocrinologistas, nutricionistas e outros profissionais de saúde otimiza os resultados terapêuticos.</li>
+</ul>
+    
+<h2 id="bibliografia">12. Bibliografia</h2>
+
+
+    
+<ul>
+     <li><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></li>    
+        <li><a href="https://go.drugbank.com/drugs/DB13928" target="_blank">Drug Bank</i></a></li>
+
+   <li id="marso2016cv">Marso SP et al. Semaglutide and Cardiovascular Outcomes in Patients with Type 2 Diabetes. N Engl J Med. 2016;375(19):1834-1844.</li>
+   <li id="baekdal2017">Baekdal TA et al. Pharmacokinetics, safety and tolerability of oral semaglutide in healthy male subjects: A randomized controlled trial. Clin Pharmacokinet. 2017;56(6):703-712.</li>
+   <li id="wilding2021">Wilding JPH et al. Once-Weekly Semaglutide in Adults with Overweight or Obesity. N Engl J Med. 2021;384(11):989-1002.</li>
+   <li id="pratley2018">Pratley RE et al. Cardiovascular Safety and Benefits of Semaglutide in Subjects with Type 2 Diabetes at High Cardiovascular Risk. Diabetes Obes Metab. 2018;20(9):2102-2110.</li>
+</ul>
+
+<br>
+<!-- At the end of each section -->
+<button class="btn btn-primary print-page">Imprimir</button>
+     
   </div>
   <div id="section-4" class="info-section">
     <h1>Quetiapina</h1>
@@ -848,9 +1157,12 @@ Em casos de sobredosagem, acetilcisteína deve ser administrada para prevenir he
     }
   });
 
-document.querySelector('.print-page').addEventListener('click', () => {
-      window.print();
-    });
+document.querySelectorAll('.print-page').forEach(button => {
+  button.addEventListener('click', () => {
+    window.print();
+  });
+});
+
 </script>
   
   </body>
