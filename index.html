@@ -27,8 +27,8 @@
   <img class="drug-box" src="https://i.postimg.cc/zvXJpKLP/image-8.png" alt="Drug box" data-id="1">
   <img class="drug-box" src="https://i.postimg.cc/Y9XS5dww/image-8.png" alt="Drug box" data-id="2">
   <img class="drug-box" src="https://i.postimg.cc/y6bdnpPm/image-8-C-pia.png" alt="Drug box" data-id="3">
-  <img class="drug-box" src="https://i.postimg.cc/15Vzd0CL/image-8-C-pia.png" alt="Drug box" data-id="5">
-  <img class="drug-box" src="https://i.postimg.cc/7LwYbFHk/image-8-C-pia.png" alt="Drug box" data-id="6">
+  <img class="drug-box" src="https://i.postimg.cc/15Vzd0CL/image-8-C-pia.png" alt="Drug box" data-id="4">
+  <img class="drug-box" src="https://i.postimg.cc/7LwYbFHk/image-8-C-pia.png" alt="Drug box" data-id="5">
 </div>
 
 <div id="mynetwork" style="display: none;"></div>
@@ -550,9 +550,369 @@ Em casos de sobredosagem, acetilcisteína deve ser administrada para prevenir he
   </div>
   <div id="section-4" class="info-section">
     <h1>Quetiapina</h1>
+    
+  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
+
+  <br /><br />
+  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
+
+  <label>
+    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
+    Ver Todos os Descendentes ao Clicar
+  </label>
+  <br><br>
+
+  <label>
+    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
+  </label>
+  
+  <div id="groupToggles"></div>
+
+  <!--<div id="mynetwork"></div>-->
+
+  <input type="text" id="dataURL" style="display:none;"/>
+  <button id="loadDataButton" style="display:none;">Load</button>
+  <button id="shareButton" style="display:none;">Share</button> 
+  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
+  <button onclick="degree()" style="display:none;">Info</button>
+  <canvas id="degreeChart"></canvas>
+  <div id="nodeDegreeResults" style="display:none;"></div>
+  <br /><br />
+  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
+  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
+  <canvas id="clusteringChart"></canvas>
+  <div id="clusteringResults" style="display:none;"></div>
+    
+<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
+<p><strong>Denominação Comum Internacional (DCI):</strong> Quetiapina.</p>
+<p><strong>Grupo farmacoterapêutico:</strong> Antipsicóticos atípicos; diazepinas, oxazepinas, tiazepinas e oxepinas. Código ATC: N05AH04.</p>
+<h2>2. Indicações Principais</h2>
+<p>A quetiapina é utilizada no tratamento de:</p>
+<ul>
+   <li><strong>Esquizofrenia</strong>: Gestão de sintomas positivos e negativos em doentes adultos.</li>
+   <li>
+      <strong>Perturbação bipolar</strong>: 
+      <ul>
+         <li>Episódios maníacos moderados a graves associados à perturbação bipolar.</li>
+         <li>Episódios depressivos major na perturbação bipolar.</li>
+         <li>Prevenção de recorrências em doentes com perturbação bipolar que responderam previamente ao tratamento com quetiapina.</li>
+      </ul>
+   </li>
+   <li><strong>Perturbação Depressiva Major (PDM)</strong>: Terapia adjuvante para episódios depressivos major em doentes que não responderam adequadamente à monoterapia antidepressiva.</li>
+</ul>
+<h2>3. Mecanismos de Ação</h2>
+<ul>
+   <li>A quetiapina é um antipsicótico atípico que atua como antagonista dos recetores de serotonina (5-HT<sub>2</sub>) e dopamina D<sub>1</sub> e D<sub>2</sub>, contribuindo para os seus efeitos antipsicóticos e estabilizadores do humor.</li>
+   <li>Possui afinidade para recetores histaminérgicos H<sub>1</sub> e adrenérgicos α<sub>1</sub> e α<sub>2</sub>, o que explica efeitos como sedação e hipotensão ortostática.</li>
+   <li>O metabolito ativo norquetiapina inibe o transportador de norepinefrina (NET) e atua como agonista parcial dos recetores 5-HT<sub>1A</sub>, contribuindo para a eficácia antidepressiva.</li>
+   <li>Os efeitos anticolinérgicos resultam da afinidade da norquetiapina para os recetores muscarínicos M<sub>1</sub>, podendo levar a efeitos como boca seca e obstipação.</li>
+   <li>O perfil farmacológico com menor afinidade para recetores dopaminérgicos D<sub>2</sub> em relação aos 5-HT<sub>2</sub> está associado a um menor risco de sintomas extrapiramidais comparativamente aos antipsicóticos típicos.</li>
+</ul>
+<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
+<p><strong>Esquizofrenia e episódios maníacos na perturbação bipolar:</strong></p>
+<ul>
+   <li><strong>Dia 1:</strong> 300 mg uma vez ao dia.</li>
+   <li><strong>Dia 2:</strong> 600 mg uma vez ao dia.</li>
+   <li><strong>Manutenção:</strong> Dose diária recomendada de 600 mg, podendo ser ajustada entre 400 mg e 800 mg/dia conforme a resposta clínica e tolerabilidade.</li>
+</ul>
+<p><strong>Episódios depressivos na perturbação bipolar:</strong></p>
+<ul>
+   <li><strong>Dia 1:</strong> 50 mg ao deitar.</li>
+   <li><strong>Dia 2:</strong> 100 mg ao deitar.</li>
+   <li><strong>Dia 3:</strong> 200 mg ao deitar.</li>
+   <li><strong>Dia 4:</strong> 300 mg ao deitar (dose diária recomendada).</li>
+   <li><strong>Ajustes:</strong> Em alguns doentes, a dose pode ser aumentada até 600 mg/dia ou reduzida até um mínimo de 200 mg/dia, dependendo da tolerabilidade.</li>
+</ul>
+<p><strong>Perturbação Depressiva Major (PDM) como terapia adjuvante:</strong></p>
+<ul>
+   <li><strong>Dias 1 e 2:</strong> 50 mg ao deitar.</li>
+   <li><strong>Dias 3 e 4:</strong> 150 mg ao deitar.</li>
+   <li><strong>Manutenção:</strong> Dose entre 50 mg e 300 mg/dia, utilizando a dose eficaz mais baixa possível.</li>
+</ul>
+<p><strong>Populações especiais:</strong></p>
+<ul>
+   <li><strong>Idosos:</strong> Iniciar com 50 mg/dia, aumentando gradualmente em incrementos de 50 mg/dia conforme tolerabilidade.</li>
+   <li><strong>Compromisso hepático:</strong> Iniciar com 50 mg/dia, ajustando a dose conforme a resposta clínica.</li>
+   <li><strong>Compromisso renal:</strong> Não é necessário ajuste posológico.</li>
+</ul>
+<p><strong>Modo de administração:</strong> A quetiapina deve ser administrada por via oral, uma vez ao dia, preferencialmente sem alimentos. Os comprimidos devem ser engolidos inteiros, sem partir, mastigar ou esmagar.</p>
+<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
+<p><strong>Efeitos adversos comuns:</strong></p>
+<ul>
+   <li>Sonolência e sedação.</li>
+   <li>Tonturas e hipotensão ortostática.</li>
+   <li>Boca seca.</li>
+   <li>Aumento de peso.</li>
+   <li>Obstipação.</li>
+   <li>Sintomas extrapiramidais (SEP), especialmente em doses elevadas.</li>
+   <li>Aumento dos níveis de prolactina.</li>
+   <li>Elevações transitórias das transaminases hepáticas (ALT, AST).</li>
+</ul>
+<p><strong>Efeitos adversos graves:</strong></p>
+<ul>
+   <li>Síndrome neuroléptica maligna.</li>
+   <li>Discinesia tardia.</li>
+   <li>Convulsões.</li>
+   <li>Neutropenia grave e agranulocitose.</li>
+   <li>Prolongamento do intervalo QT e arritmias cardíacas.</li>
+   <li>Reações cutâneas graves (p.ex., Síndrome de Stevens-Johnson).</li>
+   <li>Priapismo.</li>
+</ul>
+<p><strong>Precauções:</strong></p>
+<ul>
+   <li><strong>Doenças cardiovasculares:</strong> Utilizar com precaução devido ao risco de hipotensão ortostática e prolongamento do intervalo QT.</li>
+   <li><strong>Sintomas extrapiramidais:</strong> Monitorizar, especialmente em doentes jovens e em doses elevadas.</li>
+   <li><strong>Síndrome neuroléptica maligna:</strong> Suspender o tratamento se surgirem sinais como hipertermia, rigidez muscular e instabilidade autonómica.</li>
+   <li><strong>Convulsões:</strong> Utilizar com cautela em doentes com história de convulsões.</li>
+   <li><strong>Metabolismo:</strong> Monitorizar glicemia e perfil lipídico devido ao risco de hiperglicemia e dislipidemia.</li>
+   <li><strong>Hematologia:</strong> Observar sinais de neutropenia ou agranulocitose; realizar hemogramas periódicos.</li>
+   <li><strong>Descontinuação:</strong> Suspender gradualmente para evitar sintomas de abstinência.</li>
+   <li><strong>Interações:</strong> Evitar coadministração com inibidores potentes do CYP3A4.</li>
+</ul>
+<p><strong>Contraindicações:</strong></p>
+<ul>
+   <li>Hipersensibilidade à quetiapina ou a qualquer excipiente.</li>
+   <li>Administração concomitante com inibidores do CYP3A4 (p.ex., inibidores da protease, cetoconazol, eritromicina, claritromicina, nefazodona).</li>
+</ul>
+<h2>6. Interações Clinicamente Relevantes</h2>
+<ul>
+   <li><strong>Indutores do CYP3A4</strong> (p.ex., carbamazepina, fenitoína): Diminuem os níveis plasmáticos de quetiapina, podendo reduzir a eficácia. Considerar substituição por agentes não indutores.</li>
+   <li><strong>Inibidores do CYP3A4</strong> (p.ex., cetoconazol, itraconazol): Aumentam os níveis plasmáticos de quetiapina, aumentando o risco de efeitos adversos. A coadministração é contraindicada.</li>
+   <li><strong>Fármacos que prolongam o intervalo QT</strong> (p.ex., antiarrítmicos classe IA e III): Podem aumentar o risco de arritmias cardíacas.</li>
+   <li><strong>Álcool e depressores do SNC</strong>: Podem potenciar os efeitos sedativos da quetiapina.</li>
+   <li><strong>Fármacos anticolinérgicos</strong>: Aumentam o risco de efeitos anticolinérgicos, como retenção urinária e obstipação.</li>
+</ul>
+<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
+<ul>
+   <li><strong>Gravidez:</strong> Utilizar apenas se os benefícios justificarem os potenciais riscos. Recém-nascidos expostos no terceiro trimestre devem ser monitorizados para sintomas extrapiramidais e de abstinência.</li>
+   <li><strong>Aleitamento:</strong> A decisão de continuar a amamentação ou o tratamento deve ser tomada considerando os benefícios para a mãe e para a criança, pois a quetiapina é excretada no leite materno em quantidades limitadas.</li>
+   <li><strong>Idosos:</strong> Iniciar com doses mais baixas (50 mg/dia) e aumentar gradualmente. Maior susceptibilidade a hipotensão ortostática e sedação. Precaução em doentes com demência devido ao aumento do risco de eventos cerebrovasculares e mortalidade.</li>
+   <li><strong>Crianças e adolescentes:</strong> Não recomendado em menores de 18 anos devido à falta de dados de segurança e eficácia. Maior incidência de efeitos adversos como aumento de peso e sintomas extrapiramidais.</li>
+   <li><strong>Compromisso hepático:</strong> Iniciar com 50 mg/dia e ajustar a dose conforme tolerabilidade, devido à metabolização hepática extensiva da quetiapina.</li>
+   <li><strong>Compromisso renal:</strong> Não é necessário ajuste posológico, mas deve-se ter precaução.</li>
+   <li><strong>História de abuso de substâncias:</strong> Utilizar com precaução; foram reportados casos de uso indevido e abuso.</li>
+</ul>
+<h2>8. Informação aos Doentes</h2>
+<ul>
+   <li>Tomar a medicação conforme prescrito, mesmo que os sintomas melhorem.</li>
+   <li>Evitar conduzir ou operar máquinas até conhecer os efeitos da quetiapina, devido à possibilidade de sonolência e tonturas.</li>
+   <li>Adotar uma dieta equilibrada e prática regular de exercício físico para controlar o peso.</li>
+   <li>Informar imediatamente o médico se surgirem sintomas como febre alta, rigidez muscular ou confusão.</li>
+   <li>Não interromper o tratamento sem consultar o médico, para evitar sintomas de abstinência.</li>
+   <li>Evitar o consumo de álcool durante o tratamento.</li>
+</ul>
+<h2>9. Monitorização</h2>
+<p><strong>Eficácia:</strong> Avaliar regularmente a melhoria dos sintomas utilizando escalas clínicas apropriadas (p.ex., PANSS para esquizofrenia, YMRS para mania, MADRS para depressão).</p>
+<p><strong>Segurança:</strong></p>
+<ul>
+   <li>Monitorizar peso, IMC e perímetro abdominal.</li>
+   <li>Avaliar glicemia em jejum e perfil lipídico periodicamente.</li>
+   <li>Controlar a pressão arterial, especialmente no início do tratamento.</li>
+   <li>Realizar hemogramas para detetar possíveis alterações hematológicas.</li>
+   <li>Monitorizar sinais de sintomas extrapiramidais e discinesia tardia.</li>
+   <li>Realizar ECG em doentes com fatores de risco cardíaco.</li>
+</ul>
+<h2>10. Notas Adicionais</h2>
+<ul>
+   <li>A quetiapina está disponível em formulações de libertação imediata e prolongada, permitindo flexibilidade na administração e ajuste posológico.</li>
+   <li>O uso de quetiapina para tratamento de insónia não é recomendado devido ao perfil de efeitos adversos e falta de evidência robusta (<a id="anderson2014" href="https://doi.org/10.2146/ajhp130221">Anderson & Vande Griend, 2014</a>).</li>
+   <li>Há relatos de uso indevido e abuso de quetiapina, particularmente em indivíduos com história de abuso de substâncias (<a id="modestolowe2021" href="https://doi.org/10.3949/ccjm.88a.20164">Modesto-Lowe et al., 2021</a>).</li>
+   <li>A quetiapina pode estar associada a efeitos metabólicos adversos, incluindo síndrome metabólica; a monitorização regular é essencial (<a id="carrizo2008" href="https://academic.oup.com/qjmed/article/108/3/245/1606572">Jalota et al., 2012</a>).</li>
+   <li>A evidência suporta a eficácia da quetiapina como adjuvante no tratamento da depressão resistente, mas os riscos e benefícios devem ser avaliados individualmente (<a id="komossa2010" href="https://doi.org/10.1002/14651858.CD008121.pub2">Komossa et al., 2010</a>).</li>
+</ul>
+<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
+<ul>
+   <li><strong>Sedação:</strong> Útil em doentes com agitação ou insónia associadas a doenças psicóticas ou afetivas, mas deve-se evitar sedação excessiva.</li>
+   <li><strong>Risco Metabólico:</strong> Implementar medidas preventivas e monitorização regular devido ao potencial de aumento de peso e alterações metabólicas.</li>
+   <li><strong>Descontinuação Gradual:</strong> Reduzir a dose gradualmente para minimizar o risco de sintomas de abstinência.</li>
+   <li><strong>Ajuste Posológico Individualizado:</strong> Considerar características individuais do doente, como idade, função hepática e presença de comorbilidades, ao ajustar a dose.</li>
+   <li><strong>Educação do Doente:</strong> Informar sobre a importância da adesão ao tratamento e comunicar quaisquer efeitos adversos ou preocupações.</li>
+</ul>
+    
+<h2 id="bibliografia">12. Bibliografia</h2>
+
+
+    
+<ul>
+     <li><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></li>    
+        <li><a href="https://go.drugbank.com/drugs/DB01224" target="_blank">Drug Bank</i></a></li>
+
+   <li id="anderson2014">Anderson, Sarah L., and Joseph P. Vande Griend. (2014) Quetiapine for insomnia: a review of the literature. American journal of health-system pharmacy 71(5), 394-402.</li>
+   <li id="carrizo2008">Carrizo, E., Fernández, V., Quintero, J., Connell, L., Rodríguez, Z., Mosquera, M., ... & Baptista, T. (2008). Coagulation and inflammation markers during atypical or typical antipsychotic treatment in schizophrenia patients and drug-free first-degree relatives. Schizophrenia research, 103(1-3), 83-93.</li>
+   <li id="wilding2021">Jalota, R., Bond, C., & Jose, R. J. (2015). Quetiapine and the development of the metabolic syndrome. QJM: An International Journal of Medicine, 108(3), 245-247.</li>
+   <li id="pratley2018">Komossa, K., Depping, A. M., Gaudchau, A., Kissling, W., & Leucht, S. (2010). Second‐generation antipsychotics for major depressive disorder and dysthymia. Cochrane Database of Systematic Reviews, (12).</li>
+</ul>
+
+<br>
+<!-- At the end of each section -->
+<button class="btn btn-primary print-page">Imprimir</button>
+     
   </div>
-  <div id="section-5" class="info-section">
+   <div id="section-5" class="info-section">
     <h1>Pantoprazol</h1>
+    
+  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
+
+  <br /><br />
+  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
+
+  <label>
+    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
+    Ver Todos os Descendentes ao Clicar
+  </label>
+  <br><br>
+
+  <label>
+    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
+  </label>
+  
+  <div id="groupToggles"></div>
+
+  <!--<div id="mynetwork"></div>-->
+
+  <input type="text" id="dataURL" style="display:none;"/>
+  <button id="loadDataButton" style="display:none;">Load</button>
+  <button id="shareButton" style="display:none;">Share</button> 
+  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
+  <button onclick="degree()" style="display:none;">Info</button>
+  <canvas id="degreeChart"></canvas>
+  <div id="nodeDegreeResults" style="display:none;"></div>
+  <br /><br />
+  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
+  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
+  <canvas id="clusteringChart"></canvas>
+  <div id="clusteringResults" style="display:none;"></div>
+    
+<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
+<p><strong>Denominação Comum Internacional (DCI):</strong> Pantoprazol.</p>
+<p><strong>Grupo farmacoterapêutico:</strong> Antiácidos e antiulcerosos. Modificadores da secreção gástrica. Inibidores da bomba de protões. Código ATC: A02BC02.</p>
+<h2>2. Indicações Principais</h2>
+<p>Pantoprazol é utilizado para o tratamento e prevenção de condições associadas ao excesso de ácido gástrico:</p>
+<ul>
+   <li><strong>Doença de refluxo gastroesofágico (DRGE):</strong> Alívio dos sintomas como azia, regurgitação ácida e disfagia.</li>
+   <li><strong>Esofagite de refluxo:</strong> Tratamento e prevenção de recidivas.</li>
+   <li><strong>Úlceras gástricas e duodenais:</strong> Tratamento de úlceras pépticas.</li>
+   <li><strong>Erradicação de Helicobacter pylori:</strong> Em combinação com terapêutica antibiótica adequada.</li>
+   <li><strong>Síndrome de Zollinger-Ellison e outras condições de hipersecreção patológica:</strong> Tratamento a longo prazo para controlar a secreção ácida excessiva.</li>
+   <li><strong>Prevenção de úlceras gastroduodenais induzidas por anti-inflamatórios não esteroides (AINEs):</strong> Em doentes de risco que necessitam de terapia contínua com AINEs.</li>
+</ul>
+<h2>3. Mecanismos de Ação</h2>
+<ul>
+   <li>Pantoprazol é um inibidor da bomba de protões que atua bloqueando irreversivelmente a enzima H<sup>+</sup>/K<sup>+</sup>-ATPase nas células parietais gástricas.</li>
+   <li>Inibe a etapa final da produção de ácido clorídrico, reduzindo tanto a secreção basal como a estimulada de ácido gástrico.</li>
+   <li>A redução da acidez gástrica promove a cicatrização de lesões na mucosa gastrointestinal e alivia os sintomas associados ao refluxo ácido.</li>
+   <li>É um pró-fármaco que, após administração oral, é ativado no ambiente ácido dos canalículos das células parietais.</li>
+   <li>O efeito inibitório sobre a secreção ácida é dose-dependente e pode durar mais de 24 horas, permitindo uma administração diária única.</li>
+</ul>
+<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
+<p><strong>Adultos e adolescentes a partir dos 12 anos:</strong></p>
+<ul>
+   <li><strong>Doença de refluxo gastroesofágico e sintomas associados:</strong> 20 mg uma vez por dia. O alívio dos sintomas é geralmente alcançado em 2 a 4 semanas; se necessário, o tratamento pode ser prolongado por mais 4 semanas.</li>
+   <li><strong>Esofagite de refluxo:</strong> 40 mg uma vez por dia durante 4 semanas, podendo ser prolongado por mais 4 semanas se não houver cicatrização completa.</li>
+   <li><strong>Prevenção de úlceras induzidas por AINEs:</strong> 20 mg uma vez por dia em doentes de risco que necessitam de tratamento contínuo com AINEs.</li>
+</ul>
+<p><strong>Adultos:</strong></p>
+<ul>
+   <li><strong>Erradicação de Helicobacter pylori:</strong> 40 mg duas vezes por dia em combinação com antibióticos (por exemplo, claritromicina e amoxicilina ou metronidazol) durante 7 a 14 dias.</li>
+   <li><strong>Síndrome de Zollinger-Ellison e outras condições hipersecretoras:</strong> Dose inicial de 80 mg por dia, ajustada conforme necessário; doses superiores a 80 mg devem ser divididas em duas administrações diárias.</li>
+</ul>
+<p><strong>Insuficiência hepática:</strong> Em doentes com insuficiência hepática grave, a dose diária não deve exceder 20 mg; monitorização regular das enzimas hepáticas é recomendada.</p>
+<p><strong>Insuficiência renal:</strong> Não é necessário ajuste de dose.</p>
+<p><strong>Idosos:</strong> Não é necessário ajuste de dose; no entanto, deve-se considerar a função renal e hepática.</p>
+<p><strong>Modo de administração:</strong> Os comprimidos gastrorresistentes devem ser engolidos inteiros com água uma hora antes da refeição; não devem ser mastigados ou partidos.</p>
+<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
+<p><strong>Efeitos adversos comuns:</strong></p>
+<ul>
+   <li>Cefaleias.</li>
+   <li>Diarreia, náuseas, vómitos, distensão abdominal, flatulência, obstipação.</li>
+   <li>Erupções cutâneas, prurido.</li>
+   <li>Tonturas, visão turva.</li>
+</ul>
+<p><strong>Efeitos adversos raros:</strong></p>
+<ul>
+   <li>Reações alérgicas graves (anafilaxia, angioedema).</li>
+   <li>Hipomagnesemia com possíveis consequências como tetania, arritmias ventriculares; pode levar a hipocalcemia e hipocaliemia.</li>
+   <li>Fraturas ósseas, especialmente da anca, punho e coluna, associadas ao uso prolongado e em doses elevadas.</li>
+   <li>Lúpus eritematoso cutâneo subagudo.</li>
+   <li>Reações cutâneas graves como síndrome de Stevens-Johnson e necrólise epidérmica tóxica.</li>
+</ul>
+<p><strong>Precauções:</strong></p>
+<ul>
+   <li>Em doentes com sintomas de alarme (por exemplo, perda de peso não intencional, hemorragia gastrointestinal), excluir malignidade gástrica antes do tratamento.</li>
+   <li>Monitorizar magnésio sérico em tratamentos prolongados ou quando usados concomitantemente com medicamentos que podem causar hipomagnesemia (por exemplo, diuréticos).</li>
+   <li>Usar com precaução em doentes com risco de osteoporose; considerar suplementação de vitamina D e cálcio.</li>
+   <li>A coadministração com atazanavir e outros inibidores da protease do VIH dependentes do pH ácido não é recomendada.</li>
+</ul>
+<p><strong>Contraindicações:</strong></p>
+<ul>
+   <li>Hipersensibilidade ao pantoprazol, a outros benzimidazóis substituídos ou a qualquer excipiente da formulação.</li>
+</ul>
+<h2>6. Interações Clinicamente Relevantes</h2>
+<ul>
+   <li><strong>Medicamentos dependentes do pH gástrico para absorção:</strong> Pode diminuir a absorção de cetoconazol, itraconazol, posaconazol, erlotinib, entre outros.</li>
+   <li><strong>Varfarina e outros anticoagulantes cumarínicos:</strong> Possível aumento do INR e tempo de protrombina; monitorizar parâmetros de coagulação.</li>
+   <li><strong>Metotrexato:</strong> Pode aumentar os níveis séricos de metotrexato; pode ser necessário suspender temporariamente o pantoprazol em altas doses de metotrexato.</li>
+   <li><strong>Inibidores da protease do VIH:</strong> A coadministração com atazanavir é desaconselhada devido à redução da eficácia deste.</li>
+</ul>
+<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
+<ul>
+   <li><strong>Gravidez:</strong> Deve ser utilizado apenas se o benefício justificar o potencial risco para o feto; estudos em animais não indicam efeitos prejudiciais diretos ou indiretos.</li>
+   <li><strong>Aleitamento:</strong> Excretado no leite materno; a decisão de continuar ou interromper o aleitamento deve considerar o benefício para a mãe e o potencial risco para o lactente.</li>
+   <li><strong>Idosos:</strong> Geralmente bem tolerado; considerar a função renal e hepática e o risco de fraturas ósseas em uso prolongado.</li>
+   <li><strong>Insuficiência hepática:</strong> Não exceder 20 mg por dia em insuficiência hepática grave; monitorizar enzimas hepáticas.</li>
+   <li><strong>Insuficiência renal:</strong> Não é necessário ajuste de dose.</li>
+   <li><strong>Crianças e adolescentes:</strong> A segurança e eficácia não foram estabelecidas em crianças com menos de 12 anos.</li>
+   <li><strong>Osteoporose:</strong> Doentes com risco devem receber cuidados adequados e suplementação de cálcio e vitamina D.</li>
+</ul>
+<h2>8. Informação aos Doentes</h2>
+<ul>
+   <li>Tomar o medicamento uma hora antes da refeição, engolindo o comprimido inteiro com água.</li>
+   <li>Não partir ou mastigar os comprimidos.</li>
+   <li>Não interromper o tratamento sem consultar o médico, mesmo que os sintomas melhorem.</li>
+   <li>Informar o médico sobre todos os medicamentos que está a tomar, incluindo medicamentos sem receita médica.</li>
+   <li>Contactar o médico se surgirem sintomas como perda de peso involuntária, vómitos persistentes, dificuldade em engolir, sangue nas fezes ou anemia.</li>
+</ul>
+<h2>9. Monitorização</h2>
+<p><strong>Eficácia:</strong> Avaliação clínica dos sintomas gastrointestinais; endoscopia se indicado.</p>
+<p><strong>Segurança:</strong> Monitorizar enzimas hepáticas em doentes com insuficiência hepática; níveis de magnésio em tratamentos prolongados; parâmetros de coagulação se usado com varfarina.</p>
+<h2>10. Notas Adicionais</h2>
+<ul>
+   <li><strong>Disponibilidade de formulações:</strong> Pantoprazol está disponível em comprimidos gastrorresistentes de 20 mg e 40 mg, permitindo ajustes posológicos conforme a necessidade clínica.</li>
+   <li><strong>Uso intravenoso:</strong> Existe formulação intravenosa para situações em que a administração oral não é possível; deve ser substituída pela via oral assim que possível.</li>
+   <li><strong>Uso prolongado:</strong> Tratamentos de longa duração podem aumentar o risco de efeitos adversos como hipomagnesemia, fraturas ósseas e deficiência de vitamina B12; recomenda-se uso na menor dose eficaz pelo menor tempo necessário.</li>
+   <li><strong>Estudos recentes:</strong></li>
+</ul>
+<p>Vários estudos têm investigado os efeitos do pantoprazol e outros inibidores da bomba de protões (IBPs):</p>
+<ul>
+   <li>Estudos observacionais sugerem uma possível associação entre o uso prolongado de IBPs e o aumento do risco de doença renal crónica; no entanto, a relação causal não está estabelecida e são necessários mais estudos (<a href="#lazarus2016">Lazarus et al., 2016</a>).</li>
+   <li>O uso prolongado de IBPs tem sido associado a um risco aumentado de fraturas osteoporóticas, possivelmente devido à redução da absorção de cálcio e magnésio (<a href="#corley2010">Corley et al., 2010</a>).</li>
+   <li>A hipomagnesemia induzida por IBPs é um efeito adverso raro mas potencialmente grave; a monitorização dos níveis de magnésio é recomendada em tratamentos prolongados ou quando usados com outros medicamentos que possam causar hipomagnesemia (<a href="#cheung2015">Cheungpasitporn et al., 2015</a>).</li>
+   <li>Alguns estudos indicam que os IBPs podem interferir na eficácia de certos medicamentos antineoplásicos devido à alteração do pH gástrico e consequente absorção dos fármacos (<a href="#liu2013">Liu et al., 2013</a>).</li>
+</ul>
+
+<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
+<ul>
+   <li><strong>Uso racional:</strong> Avaliar periodicamente a necessidade contínua de terapia com pantoprazol, especialmente em tratamentos prolongados.</li>
+   <li><strong>Interações medicamentosas:</strong> Estar atento a medicamentos cuja absorção depende do pH gástrico; ajustar terapêuticas conforme necessário.</li>
+   <li><strong>Monitorização:</strong> Considerar a monitorização de eletrólitos (magnésio, cálcio) em doentes em terapêutica prolongada.</li>
+   <li><strong>Sintomas mascarados:</strong> O alívio sintomático pode atrasar o diagnóstico de condições graves; investigar adequadamente se persistirem sintomas alarmantes.</li>
+   <li><strong>Educação do doente:</strong> Informar sobre a importância de seguir as instruções de administração e de não exceder a dose recomendada.</li>
+</ul>
+     
+    <h2 id="bibliografia">12. Bibliografia</h2>
+<ul>
+   <li><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</a></li>
+   <li><a href="https://go.drugbank.com/drugs/DB00213" target="_blank">DrugBank</a></li>
+   <li id="lazarus2016">Lazarus, B., Chen, Y., Wilson, F. P., Sang, Y., Chang, A. R., Coresh, J., & Grams, M. E. (2016). Proton pump inhibitor use and the risk of chronic kidney disease. <em>JAMA Internal Medicine</em>, 176(2), 238-246.</li>
+   <li id="corley2010">Corley, D. A., Kubo, A., Zhao, W., & Quesenberry, C. (2010). Proton pump inhibitors and histamine-2 receptor antagonists are associated with hip fractures among at-risk patients. <em>Gastroenterology</em>, 139(1), 93-101.</li>
+   <li id="cheung2015">Cheungpasitporn, W., Thongprayoon, C., Kittanamongkolchai, W., Brabec, B. A., O'Corragain, O. A., Edmonds, P. J., & Erickson, S. B. (2015). Proton pump inhibitors linked to hypomagnesemia: a systematic review and meta-analysis of observational studies. <em>Renal Failure</em>, 37(7), 1237-1241.</li>
+   <li id="liu2013">Liu, J., Shen, J., & Yu, H. G. (2013). Effect of pantoprazole on the pharmacokinetics of erlotinib in patients with advanced solid tumors. <em>Anti-Cancer Drugs</em>, 24(9), 1000-1006.</li>
+</ul>
+     
+<br>
+<!-- At the end of each section -->
+<button class="btn btn-primary print-page">Imprimir</button>
+     
   </div>
 </div>
 
