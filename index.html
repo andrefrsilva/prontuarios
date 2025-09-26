@@ -5,7 +5,27 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>prontuarios.pt · Catálogo com QR dinâmicos</title>
   <meta name="color-scheme" content="dark light" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Marcellus&display=swap" rel="stylesheet">
+
+  <!-- Fontes auto-hospedadas (robusto no GitHub Pages) -->
+  <style>
+    @font-face{
+      font-family:"InterLocal"; font-style:normal; font-weight:400; font-display:swap;
+      src:url("/assets/fonts/inter-400.woff2") format("woff2");
+    }
+    @font-face{
+      font-family:"InterLocal"; font-style:normal; font-weight:600; font-display:swap;
+      src:url("/assets/fonts/inter-600.woff2") format("woff2");
+    }
+    @font-face{
+      font-family:"MarcellusLocal"; font-style:normal; font-weight:400; font-display:swap;
+      src:url("/assets/fonts/marcellus-400.woff2") format("woff2");
+    }
+  </style>
+  <!-- Fallback Google Fonts (sem preload como font, sem OTS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Marcellus&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#0b0f14; --text:#eaf0f6; --muted:#9fb1c9;
@@ -13,25 +33,26 @@
       --accent:#3ba0ff; --accent-2:#59d0a0; --shadow:0 10px 28px rgba(0,0,0,.35);
       --radius:18px;
 
-      --card-font-head:"Marcellus", serif;
-      --card-font-body:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      --font-body:"InterLocal","Inter", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-head:"MarcellusLocal","Marcellus", serif;
 
-      --site-card-min: 560px;      /* cartões maiores em desktop */
+      --site-card-min: 580px;         /* cartões maiores em desktop */
       --site-card-ratio: 3/2;
 
       --right-col: 20%;
       --left-col: 80%;
 
-      --tl-size: clamp(22px, 2.6vw, 42px);
-      --bl-size: clamp(18px, 2.2vw, 34px);
+      --tl-size: clamp(22px, 2.6vw, 44px);
+      --bl-size: clamp(18px, 2.2vw, 36px);
 
       --card-text-color: #0a0e14;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 var(--card-font-body)}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 var(--font-body)}
     a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;display:block}
 
     header{
       max-width:1200px;margin:28px auto 10px;padding:0 16px;
@@ -43,7 +64,7 @@
       border:1px solid var(--border); box-shadow:var(--shadow);
       border-radius:var(--radius); padding:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center
     }
-    .field{display:flex;gap:10px;align-items:center;flex:1 1 360px}
+    .field{display:flex;gap:10px;align-items:center;flex:1 1 420px}
     .field label{font-size:13px;color:var(--muted);white-space:nowrap}
     .field input{flex:1;background:#0e1621;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none;transition:box-shadow .2s,border-color .2s}
     .field input:focus{border-color:#2a3e57;box-shadow:0 0 0 4px var(--ring)}
@@ -59,9 +80,7 @@
     }
 
     /* Título acima de cada cartão (nome do produto) */
-    .card-title{
-      margin:0 0 6px; font:600 14px/1 var(--card-font-body); color:#cdd8ea; letter-spacing:.2px
-    }
+    .card-title{margin:0 0 6px; font:600 14px/1 var(--font-body); color:#cdd8ea; letter-spacing:.2px}
 
     .card{
       background:#fff;color:var(--card-text-color);
@@ -70,13 +89,13 @@
       width:100%;aspect-ratio:var(--site-card-ratio);
       display:grid;grid-template-columns:var(--left-col) var(--right-col);grid-template-rows:1fr 1fr;gap:0;
       position:relative;overflow:hidden;
-      font-family:var(--card-font-body);
+      font-family:var(--font-body);
     }
     .cell{display:flex;align-items:center;justify-content:center;padding:14px}
-    .cell.top-left{font-family:var(--card-font-head); font-size:var(--tl-size); text-align:center}
-    .cell.bottom-left{font-family:var(--card-font-head); font-size:var(--bl-size); text-align:center}
+    .cell.top-left{font-family:var(--font-head); text-align:center}
+    .cell.bottom-left{font-family:var(--font-head); text-align:center}
     .cell.top-right,.cell.bottom-right{padding:10px}
-    .logo{max-width:100%;max-height:80%;object-fit:contain;display:block;margin:auto}
+    .logo{max-height:80%;object-fit:contain;margin:auto}
     .qrbox{width:100%;height:100%;display:grid;place-items:center}
     .qrbox>div{width:min(92%,190px)!important;height:min(92%,190px)!important}
 
@@ -85,14 +104,14 @@
     .copy{font-size:12px;border:1px solid #e3e7ef;padding:6px 10px;border-radius:10px;background:#f6f8fc;color:#1d2736;cursor:pointer}
     .select-print{display:flex;align-items:center;gap:6px;font-size:12px}
 
-    footer{max-width:1200px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:var(--muted)}
+    footer{max-width:1200px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:#9fb1c9}
     footer .ok{color:var(--accent-2);font-weight:700}
 
     /* Modal */
     .backdrop{position:fixed;inset:0;background:rgba(3,8,15,.74);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999}
     .modal{width:min(720px,92vw);background:linear-gradient(180deg,#0f1520,#0a1018);border:1px solid #26364d;border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
     .modal h3{margin:0 0 6px;color:#fff}
-    .modal p{margin:0 0 12px;color:var(--muted)}
+    .modal p{margin:0 0 12px;color:#9fb1c9}
     .form{display:grid;gap:12px;grid-template-columns:1fr 1fr}
     .form .full{grid-column:1/-1}
     .form label{color:#fff}
@@ -101,9 +120,7 @@
     .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
     .btn-pri{background:linear-gradient(135deg,var(--accent-2),#78e3b3);color:#062017;font-weight:900;padding:10px 16px;border-radius:12px;cursor:pointer;border:0}
     /* Mobile: 1 campo/linha */
-    @media (max-width:640px){
-      .form{grid-template-columns:1fr}
-    }
+    @media (max-width:640px){ .form{grid-template-columns:1fr} }
 
     /* Offscreen render helpers */
     #offscreen{position:fixed;left:-9999px;top:-9999px}
@@ -111,7 +128,7 @@
 </head>
 <body>
   <header>
-    <div class="brand">v5 prontuarios.pt</div>
+    <div class="brand">prontuarios.pt</div>
     <div class="panel" role="group" aria-label="Controlo">
       <div class="field">
         <label for="affiliate">Affiliate</label>
@@ -129,15 +146,20 @@
       <h2 style="margin:18px 0 6px;font-size:20px;">Catálogo</h2>
 
       <div class="grid" id="catalog">
-        <!-- ==== DUPLICA ESTES BLOCOS ==== -->
+        <!-- === DUPLICA ESTES BLOCOS (um por cartão) === -->
+
         <div class="card-holder">
-          <h3 class="card-title" data-title>Manual de Onboarding</h3>
-          <article class="card" data-product="Manual de Onboarding"
-                   data-top-left="Manual de Onboarding"
-                   data-bottom-left="Acelera a integração">
-            <div class="cell top-left"><div class="tl">Manual de Onboarding</div></div>
+          <h3 class="card-title" data-title>Consultas McMinsky</h3>
+          <article
+            class="card"
+            data-product="Consultas McMinsky"
+
+            data-tl-html="Problemas com <b>Notas</b>, <b>Rotinas</b>, <b>Motivação</b>?<br><u>Criança especial?</u>"
+            data-bl-html="<span style='font-size:28px;font-weight:800'>30€/h</span><br>ou <b>198€/mês</b><br><span style='color:#b00'>Lugares limitados</span><br><u>McMinsky.pt</u>"
+          >
+            <div class="cell top-left"><div class="tl"></div></div>
             <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
-            <div class="cell bottom-left"><div class="bl">Acelera a integração</div></div>
+            <div class="cell bottom-left"><div class="bl"></div></div>
             <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
           </article>
           <div class="meta-wrap">
@@ -149,12 +171,15 @@
 
         <div class="card-holder">
           <h3 class="card-title" data-title>Template de Proposta</h3>
-          <article class="card" data-product="Template de Proposta"
-                   data-top-left="Template de Proposta"
-                   data-bottom-left="Feche negócios com clareza">
-            <div class="cell top-left"><div class="tl">Template de Proposta</div></div>
+          <article
+            class="card"
+            data-product="Template de Proposta"
+            data-tl-html="Template de <b>Proposta</b>"
+            data-bl-html="Feche negócios com <u>clareza</u>"
+          >
+            <div class="cell top-left"><div class="tl"></div></div>
             <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
-            <div class="cell bottom-left"><div class="bl">Feche negócios com clareza</div></div>
+            <div class="cell bottom-left"><div class="bl"></div></div>
             <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
           </article>
           <div class="meta-wrap">
@@ -166,12 +191,15 @@
 
         <div class="card-holder">
           <h3 class="card-title" data-title>Checklist de Auditoria</h3>
-          <article class="card" data-product="Checklist de Auditoria"
-                   data-top-left="Checklist de Auditoria"
-                   data-bottom-left="Rigor e conformidade">
-            <div class="cell top-left"><div class="tl">Checklist de Auditoria</div></div>
+          <article
+            class="card"
+            data-product="Checklist de Auditoria"
+            data-tl-html="Checklist de Auditoria"
+            data-bl-html="Rigor e <b>conformidade</b>"
+          >
+            <div class="cell top-left"><div class="tl"></div></div>
             <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
-            <div class="cell bottom-left"><div class="bl">Rigor e conformidade</div></div>
+            <div class="cell bottom-left"><div class="bl"></div></div>
             <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
           </article>
           <div class="meta-wrap">
@@ -180,6 +208,7 @@
             <button class="copy" data-copy>Copiar URL</button>
           </div>
         </div>
+
       </div>
     </section>
   </main>
@@ -226,12 +255,12 @@
   <div id="offscreen"></div>
 
   <!-- libs -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
   (function(){
-    // ====== GOOGLE FORMS ======
+    // ====== GOOGLE FORMS (mesma aba, robusto) ======
     const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeKazNy8WHQL5xqdJMk5PJZJKJAr6bMy2Nk14VZCiUGTY8-AA/formResponse";
     const ENTRY_PROD = "entry.698615008";   // NOME DO CARTÃO
     const ENTRY_AFF  = "entry.645159200";   // AFFILIATE
@@ -260,11 +289,30 @@
     // Helpers
     const qs=(s,c=document)=>c.querySelector(s);
     const qsa=(s,c=document)=>Array.from(c.querySelectorAll(s));
-    function setStatus(msg, ok=false){ $status.textContent = msg; $status.style.color = ok ? "var(--accent-2)" : "var(--muted)"; }
+    function setStatus(msg, ok=false){ $status.textContent = msg; $status.style.color = ok ? "var(--accent-2)" : "#9fb1c9"; }
     function saveAff(v){ try{localStorage.setItem("prontuarios_aff", v||"")}catch{} }
     function loadAff(){ try{return localStorage.getItem("prontuarios_aff")||""}catch{ return "" } }
     function linkFor(product, affiliate){ const u = new URL(SITE_BASE); u.searchParams.set("p", product); u.searchParams.set("a", affiliate); return u.toString(); }
     function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
+
+    // ==== Conteúdo rico por cartão (data-*-html ou template) ====
+    function getBlockHTML(card, key) {
+      const htmlAttr = card.getAttribute(`data-${key}-html`);
+      if (htmlAttr) return htmlAttr;
+      const tplSel = card.getAttribute(`data-${key}-tpl`);
+      if (tplSel) {
+        const tpl = document.querySelector(tplSel);
+        if (tpl && 'content' in tpl) return tpl.innerHTML.trim();
+      }
+      const el = card.querySelector(key === 'tl' ? '.tl' : '.bl');
+      return el ? el.innerHTML.trim() : '';
+    }
+    function applyPerCardContent(card) {
+      const elTL = card.querySelector('.tl');
+      const elBL = card.querySelector('.bl');
+      if (elTL) { elTL.innerHTML = getBlockHTML(card, 'tl'); elTL.style.textAlign='center'; }
+      if (elBL) { elBL.innerHTML = getBlockHTML(card, 'bl'); elBL.style.textAlign='center'; }
+    }
 
     // ====== QR CODES NO SITE ======
     function regen(){
@@ -276,15 +324,13 @@
         const titleEl = holder.querySelector("[data-title]");
         const product = card.getAttribute("data-product") || titleEl?.textContent || "Produto";
 
-        // Mostra título coerente
+        // título coerente
         if (titleEl) titleEl.textContent = product;
 
         const url = linkFor(product, affiliate);
 
-        // textos internos (se quiseres forçar pelos data-*)
-        const tl = card.getAttribute("data-top-left"); const bl = card.getAttribute("data-bottom-left");
-        if (tl) { const el = qs(".tl", card); if (el) el.textContent = tl; }
-        if (bl) { const el = qs(".bl", card); if (el) el.textContent = bl; }
+        // textos internos por cartão
+        applyPerCardContent(card);
 
         // url por baixo
         const linkEl = holder.querySelector("[data-link]"); if(linkEl) linkEl.textContent = url;
@@ -316,19 +362,17 @@
       const p = getParam("p");
       const a = getParam("a");
       if(!p || !a) return;
-      // Mostra o produto (readonly) para o utilizador
-      $produtoView.value = p;
-      // Guardar para submissão
-      window.__landing = { produto:p, affiliate:a };
+      $produtoView.value = p;                         // mostra produto no modal
+      window.__landing = { produto:p, affiliate:a };  // guarda p/ envio
       openModal();
     }
 
-    // ====== ENVIO ROBUSTO (mesma aba, POST nativo para Google Forms) ======
+    // ====== ENVIO ROBUSTO (mesma aba, sem pop-ups) ======
     function postToGoogleFormsSameTab(produto, affiliate, texto){
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = FORM_ACTION;     // abre a página do Forms (robusto, sem pop-ups)
-      form.target = "_self";         // mesma aba
+      form.action = FORM_ACTION;
+      form.target = "_self";         // mesma aba (robusto em mobile/desktop)
       form.style.position="absolute"; form.style.left="-9999px";
 
       const mk=(name,val)=>{const i=document.createElement("input"); i.type="hidden"; i.name=name; i.value=val; return i;};
@@ -356,86 +400,140 @@
         $formStatus.textContent = "⚠️ Falta produto/affiliate no URL.";
         return;
       }
-
-      // Navega para a página do Forms (funciona em qualquer mobile/desktop, sem popups)
       postToGoogleFormsSameTab(produto, affiliate, texto);
     });
 
-    document.getElementById("btnClose").addEventListener("click", closeModal);
-    document.getElementById("modalBackdrop").addEventListener("click", (e)=>{ if(e.target.id==="modalBackdrop") closeModal(); });
+    $btnClose.addEventListener("click", closeModal);
+    $backdrop.addEventListener("click", (e)=>{ if(e.target.id==="modalBackdrop") closeModal(); });
 
-    // ====== EXPORTAÇÃO 10×15 (pares) — Canvas + PDF (alta qualidade) ======
+    // ====== EXPORTAÇÃO 10×15 (pares) — Canvas + PDF ======
     const SHEET_W = 1772, SHEET_H = 1181;   // 10×15 landscape ~300dpi
     const HALF_H  = Math.floor(SHEET_H/2);
     const RIGHT_W = Math.round(SHEET_W * 0.20);
     const LEFT_W  = SHEET_W - RIGHT_W;
 
-    function fitFont(ctx, text, maxW, maxH, prefPx, fontFamily){
-      let lo=8, hi=prefPx||64, best=12;
-      while(lo<=hi){
-        const mid=(lo+hi>>1);
-        ctx.font = `600 ${mid}px ${fontFamily}`;
-        const m = ctx.measureText(text);
-        const h = mid*1.2;
-        if(m.width<=maxW && h<=maxH){ best=mid; lo=mid+1; } else hi=mid-1;
+    // --- parser HTML rico (br, b/strong, u, span: color/font-weight/font-size) ---
+    function parseRichHTML(html) {
+      const c = document.createElement('div'); c.innerHTML = html;
+      const lines = [[]];
+      function pushText(text, style){ if(!text) return; lines[lines.length-1].push({ text, ...style }); }
+      function trav(n, style){
+        if(n.nodeType===Node.TEXT_NODE){ pushText(n.textContent, style); return; }
+        if(n.nodeType!==Node.ELEMENT_NODE) return;
+        const tag=n.tagName.toLowerCase(); const next={...style};
+        if(tag==='br'){ lines.push([]); return; }
+        if(tag==='b'||tag==='strong') next.weight=700;
+        if(tag==='u') next.underline=true;
+        if(tag==='span'&&n.hasAttribute('style')){
+          const st=n.getAttribute('style');
+          const mC=st.match(/color:\s*([^;]+)/i);
+          const mW=st.match(/font-weight:\s*(\d+)/i);
+          const mS=st.match(/font-size:\s*(\d+)px/i);
+          if(mC) next.color=mC[1].trim();
+          if(mW) next.weight=parseInt(mW[1],10);
+          if(mS) next.size=parseInt(mS[1],10);
+        }
+        Array.from(n.childNodes).forEach(ch=>trav(ch,next));
       }
-      ctx.font = `600 ${best}px ${fontFamily}`;
-      return best;
+      trav(c,{weight:600,underline:false,color:'#0a0e14',size:null});
+      return lines;
     }
-    function drawCenteredText(ctx, text, x, y, w, h, prefPx, family){
-      ctx.save();
-      fitFont(ctx, text, w*0.9, h*0.8, prefPx, family);
-      ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillStyle="#0a0e14";
-      ctx.fillText(text, x + w/2, y + h/2);
-      ctx.restore();
+    function willFitRich(ctx, lines, w, h, basePx, family){
+      const lineHeights = lines.map(ln => Math.ceil(Math.max(basePx, ...ln.map(s=>s.size||0)) * 1.25));
+      const totalH = lineHeights.reduce((a,b)=>a+b,0);
+      let maxW=0;
+      for(const ln of lines){
+        let wSum=0;
+        for(const seg of ln){
+          const px = seg.size || basePx;
+          ctx.font = `${seg.weight} ${px}px ${family}`;
+          wSum += ctx.measureText(seg.text).width;
+        }
+        maxW = Math.max(maxW, wSum);
+      }
+      return (totalH <= h*0.9) && (maxW <= w*0.95);
     }
+    function drawRichCentered(ctx, html, x, y, w, h, basePx, family) {
+      const lines = parseRichHTML(html);
+      let lo=10, hi=basePx||64, best=18;
+      while(lo<=hi){ const mid=(lo+hi>>1); if(willFitRich(ctx, lines, w, h, mid, family)){ best=mid; lo=mid+1; } else hi=mid-1; }
+      const lineHeights = lines.map(ln => Math.ceil(Math.max(best, ...ln.map(s=>s.size||0)) * 1.25));
+      const totalH = lineHeights.reduce((a,b)=>a+b,0);
+      let curY = y + (h - totalH)/2;
+      for(let i=0;i<lines.length;i++){
+        const ln = lines[i];
+        let lineW=0; for(const seg of ln){ const px=seg.size||best; ctx.font=`${seg.weight} ${px}px ${family}`; lineW+=ctx.measureText(seg.text).width; }
+        let curX = x + (w - lineW)/2;
+        for(const seg of ln){
+          const px=seg.size||best;
+          ctx.font=`${seg.weight} ${px}px ${family}`;
+          ctx.fillStyle=seg.color||'#0a0e14';
+          ctx.textBaseline='alphabetic';
+          ctx.fillText(seg.text, curX, curY + px);
+          if(seg.underline){
+            const m=ctx.measureText(seg.text);
+            const underlineY = curY + px + 3;
+            ctx.beginPath(); ctx.moveTo(curX, underlineY); ctx.lineTo(curX+m.width, underlineY);
+            ctx.lineWidth=Math.max(1, Math.round(px/14));
+            ctx.strokeStyle=ctx.fillStyle; ctx.stroke();
+          }
+          curX += ctx.measureText(seg.text).width;
+        }
+        curY += lineHeights[i];
+      }
+    }
+
     function makeQRDataURL(url, size=300){
       return new Promise((resolve)=>{
         const holder = document.createElement("div");
-        holder.style.position="absolute"; holder.style.left="-9999px"; document.getElementById("offscreen").appendChild(holder);
+        holder.style.position="absolute"; holder.style.left="-9999px"; $offscreen.appendChild(holder);
         new QRCode(holder, { text:url, width:size, height:size, correctLevel: QRCode.CorrectLevel.Q });
         setTimeout(()=>{
           const cv = holder.querySelector("canvas");
           const dataURL = cv ? cv.toDataURL("image/png") : null;
           holder.remove();
           resolve(dataURL);
-        }, 50);
+        }, 60);
       });
     }
+
     async function renderPairToCanvas(cardA, cardB){
+      const SHEET_W = 1772, SHEET_H = 1181, HALF_H = Math.floor(SHEET_H/2);
+      const RIGHT_W = Math.round(SHEET_W * 0.20), LEFT_W = SHEET_W - RIGHT_W;
+
       const canvas = document.createElement("canvas");
       canvas.width = SHEET_W; canvas.height = SHEET_H;
       const ctx = canvas.getContext("2d");
       ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,SHEET_W,SHEET_H);
 
-      const cards = [cardA, cardB];
+      const cards=[cardA, cardB];
       for(let i=0;i<2;i++){
         const holder = cards[i].closest(".card-holder");
         const card = cards[i];
         const y0 = i===0 ? 0 : HALF_H;
 
-        // borda leve
+        // moldura
         ctx.strokeStyle="#e5e9f2"; ctx.lineWidth=2; ctx.strokeRect(8, y0+8, SHEET_W-16, HALF_H-16);
 
         const product   = card.getAttribute("data-product") || holder.querySelector("[data-title]")?.textContent || "Produto";
-        const topLeft   = card.getAttribute("data-top-left") || card.querySelector(".tl")?.textContent || product;
-        const bottomLeft= card.getAttribute("data-bottom-left") || card.querySelector(".bl")?.textContent || "";
+        const tlHTML    = getBlockHTML(card, 'tl') || product;
+        const blHTML    = getBlockHTML(card, 'bl') || "";
         const url       = holder.querySelector("[data-link]")?.textContent || "";
 
-        // esquerda (texto)
-        drawCenteredText(ctx, topLeft,  12, y0+12, LEFT_W-24, (HALF_H/2)-24, 60, "Marcellus, serif");
-        drawCenteredText(ctx, bottomLeft,12, y0+(HALF_H/2)+12, LEFT_W-24, (HALF_H/2)-24, 48, "Marcellus, serif");
+        // Esquerda (texto)
+        drawRichCentered(ctx, tlHTML,  12, y0+12, LEFT_W-24, (HALF_H/2)-24, 60, "MarcellusLocal, Marcellus, serif");
+        drawRichCentered(ctx, blHTML,  12, y0+(HALF_H/2)+12, LEFT_W-24, (HALF_H/2)-24, 48, "MarcellusLocal, Marcellus, serif");
 
-        // direita topo: logo
+        // Direita topo: LOGO
         const logoImg = new Image(); logoImg.crossOrigin="anonymous"; logoImg.src = LOGO_URL;
         await new Promise(res=>{ logoImg.onload=res; logoImg.onerror=res; });
         const logoBoxW=RIGHT_W-24, logoBoxH=(HALF_H/2)-24;
-        let lw = logoImg.naturalWidth, lh = logoImg.naturalHeight;
+        let lw = logoImg.naturalWidth||800, lh = logoImg.naturalHeight||300;
         const lr = Math.min(logoBoxW/lw, logoBoxH/lh);
         lw=Math.floor(lw*lr); lh=Math.floor(lh*lr);
         ctx.drawImage(logoImg, LEFT_W + (RIGHT_W-lw)/2, y0+12 + (logoBoxH-lh)/2, lw, lh);
 
-        // direita baixo: QR
+        // Direita baixo: QR
         const qrData = await makeQRDataURL(url, Math.min(RIGHT_W-24, (HALF_H/2)-24));
         if(qrData){
           const qrImg = new Image(); qrImg.src = qrData;
@@ -447,10 +545,12 @@
       }
       return canvas;
     }
+
     function downloadDataURL(dataURL, name){
       const a=document.createElement("a"); a.href=dataURL; a.download=name;
       document.body.appendChild(a); a.click(); a.remove();
     }
+
     async function exportPairs(as="png"){
       const cards = qsa(".card", $catalog);
       if(cards.length===0){ setStatus("Sem cartões.", false); return; }
@@ -458,10 +558,10 @@
       // Garante links prontos
       if(!($aff.value||"").trim()){ $aff.value="affiliate_demo"; regen(); }
 
-      const pairs = [];
+      const pairs=[];
       for(let i=0;i<cards.length;i+=2){
-        const a = cards[i];
-        const b = cards[i+1] || cards[i]; // duplica se ímpar
+        const a=cards[i];
+        const b=cards[i+1] || cards[i];
         pairs.push([a,b]);
       }
 
@@ -491,10 +591,13 @@
     document.getElementById("btnExportPDF").addEventListener("click", ()=>exportPairs("pdf"));
     $btnUpdate.addEventListener("click", regen);
 
+    // preencher conteúdos iniciais e QRs
     $aff.value = loadAff();
-    if($aff.value){ window.addEventListener("load", regen); }
-    window.addEventListener("load", ()=>{ if(!$aff.value){ $aff.value="affiliate_demo"; regen(); } });
-    handleLanding();
+    window.addEventListener("load", ()=>{
+      if(!$aff.value){ $aff.value="affiliate_demo"; }
+      regen();
+      handleLanding();
+    });
   })();
   </script>
 </body>
