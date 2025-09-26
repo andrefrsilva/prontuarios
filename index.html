@@ -16,20 +16,16 @@
       --card-font-head:"Marcellus", serif;
       --card-font-body:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
 
-      /* Cartões no site: maiores em desktop */
-      --site-card-min: 520px;     /* largura mínima do cartão em desktop */
-      --site-card-ratio: 3/2;     /* 3:2 landscape */
+      --site-card-min: 560px;      /* cartões maiores em desktop */
+      --site-card-ratio: 3/2;
 
-      /* Layout interno do cartão (80/20) */
       --right-col: 20%;
       --left-col: 80%;
 
-      /* Texto (site) com clamp para escalar sem overflow */
-      --tl-size: clamp(20px, 2.4vw, 40px);
-      --bl-size: clamp(18px, 2.1vw, 34px);
+      --tl-size: clamp(22px, 2.6vw, 42px);
+      --bl-size: clamp(18px, 2.2vw, 34px);
 
-      /* Texto impresso (o canvas ajusta automaticamente) */
-      --card-text-color: #0a0e14;   /* preto elegante */
+      --card-text-color: #0a0e14;
     }
 
     *{box-sizing:border-box}
@@ -62,7 +58,11 @@
       align-items:start
     }
 
-    /* Cartão (site) */
+    /* Título acima de cada cartão (nome do produto) */
+    .card-title{
+      margin:0 0 6px; font:600 14px/1 var(--card-font-body); color:#cdd8ea; letter-spacing:.2px
+    }
+
     .card{
       background:#fff;color:var(--card-text-color);
       border-radius:16px;border:1px solid #e8ecf2;
@@ -78,10 +78,9 @@
     .cell.top-right,.cell.bottom-right{padding:10px}
     .logo{max-width:100%;max-height:80%;object-fit:contain;display:block;margin:auto}
     .qrbox{width:100%;height:100%;display:grid;place-items:center}
-    .qrbox>div{width:min(92%,180px)!important;height:min(92%,180px)!important}
+    .qrbox>div{width:min(92%,190px)!important;height:min(92%,190px)!important}
 
-    /* Meta por baixo do cartão (não por cima) */
-    .meta-wrap{display:flex;align-items:center;gap:12px;margin-top:6px;color:#5d6a7f}
+    .meta-wrap{display:flex;align-items:center;gap:12px;margin-top:8px;color:#5d6a7f}
     .link{font-size:12px;color:#5d6a7f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
     .copy{font-size:12px;border:1px solid #e3e7ef;padding:6px 10px;border-radius:10px;background:#f6f8fc;color:#1d2736;cursor:pointer}
     .select-print{display:flex;align-items:center;gap:6px;font-size:12px}
@@ -89,7 +88,7 @@
     footer{max-width:1200px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:var(--muted)}
     footer .ok{color:var(--accent-2);font-weight:700}
 
-    /* Modal (UI escura, texto branco) */
+    /* Modal */
     .backdrop{position:fixed;inset:0;background:rgba(3,8,15,.74);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999}
     .modal{width:min(720px,92vw);background:linear-gradient(180deg,#0f1520,#0a1018);border:1px solid #26364d;border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
     .modal h3{margin:0 0 6px;color:#fff}
@@ -101,14 +100,18 @@
     .form textarea{min-height:110px;resize:vertical}
     .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
     .btn-pri{background:linear-gradient(135deg,var(--accent-2),#78e3b3);color:#062017;font-weight:900;padding:10px 16px;border-radius:12px;cursor:pointer;border:0}
+    /* Mobile: 1 campo/linha */
+    @media (max-width:640px){
+      .form{grid-template-columns:1fr}
+    }
 
-    /* Composer 10×15 (offscreen) — não usa CSS externo */
+    /* Offscreen render helpers */
     #offscreen{position:fixed;left:-9999px;top:-9999px}
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">v4 prontuarios.pt</div>
+    <div class="brand">v5 prontuarios.pt</div>
     <div class="panel" role="group" aria-label="Controlo">
       <div class="field">
         <label for="affiliate">Affiliate</label>
@@ -126,8 +129,9 @@
       <h2 style="margin:18px 0 6px;font-size:20px;">Catálogo</h2>
 
       <div class="grid" id="catalog">
-        <!-- ==== DUPLICA ESTES CARTÕES ==== -->
-        <div>
+        <!-- ==== DUPLICA ESTES BLOCOS ==== -->
+        <div class="card-holder">
+          <h3 class="card-title" data-title>Manual de Onboarding</h3>
           <article class="card" data-product="Manual de Onboarding"
                    data-top-left="Manual de Onboarding"
                    data-bottom-left="Acelera a integração">
@@ -143,7 +147,8 @@
           </div>
         </div>
 
-        <div>
+        <div class="card-holder">
+          <h3 class="card-title" data-title>Template de Proposta</h3>
           <article class="card" data-product="Template de Proposta"
                    data-top-left="Template de Proposta"
                    data-bottom-left="Feche negócios com clareza">
@@ -159,7 +164,8 @@
           </div>
         </div>
 
-        <div>
+        <div class="card-holder">
+          <h3 class="card-title" data-title>Checklist de Auditoria</h3>
           <article class="card" data-product="Checklist de Auditoria"
                    data-top-left="Checklist de Auditoria"
                    data-bottom-left="Rigor e conformidade">
@@ -190,6 +196,10 @@
       <p>Preenche os campos. O teu pedido será encaminhado internamente.</p>
 
       <form id="uiForm" class="form" novalidate>
+        <div class="full">
+          <label for="produtoView">Produto</label>
+          <input id="produtoView" type="text" disabled />
+        </div>
         <div>
           <label for="nome">Nome</label>
           <input id="nome" type="text" placeholder="O teu nome (opcional)" />
@@ -221,11 +231,11 @@
 
   <script>
   (function(){
-    // ====== CONFIG GOOGLE FORMS ======
+    // ====== GOOGLE FORMS ======
     const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeKazNy8WHQL5xqdJMk5PJZJKJAr6bMy2Nk14VZCiUGTY8-AA/formResponse";
-    const ENTRY_PROD = "entry.698615008";
-    const ENTRY_AFF  = "entry.645159200";
-    const ENTRY_TXT  = "entry.1002593961";
+    const ENTRY_PROD = "entry.698615008";   // NOME DO CARTÃO
+    const ENTRY_AFF  = "entry.645159200";   // AFFILIATE
+    const ENTRY_TXT  = "entry.1002593961";  // BLOCO (Nome/Contacto/Mensagem)
 
     // ====== SITE / QR ======
     const SITE_BASE = "https://prontuarios.pt/";
@@ -244,8 +254,10 @@
     const $uiForm = document.getElementById("uiForm");
     const $btnClose = document.getElementById("btnClose");
     const $formStatus = document.getElementById("formStatus");
+    const $produtoView = document.getElementById("produtoView");
     const $offscreen = document.getElementById("offscreen");
 
+    // Helpers
     const qs=(s,c=document)=>c.querySelector(s);
     const qsa=(s,c=document)=>Array.from(c.querySelectorAll(s));
     function setStatus(msg, ok=false){ $status.textContent = msg; $status.style.color = ok ? "var(--accent-2)" : "var(--muted)"; }
@@ -259,23 +271,26 @@
       const affiliate = ($aff.value||"").trim();
       if(!affiliate){ setStatus("⚠️ Introduz um affiliate e clica em Atualizar."); return; }
       saveAff(affiliate);
-      qsa(".card", $catalog).forEach(holder=>{
-        const card = holder; // article
-        const wrap = card.parentElement; // div à volta (para meta)
-        const product = card.getAttribute("data-product") || "Produto";
+      qsa(".card-holder", $catalog).forEach(holder=>{
+        const card = holder.querySelector(".card");
+        const titleEl = holder.querySelector("[data-title]");
+        const product = card.getAttribute("data-product") || titleEl?.textContent || "Produto";
+
+        // Mostra título coerente
+        if (titleEl) titleEl.textContent = product;
+
         const url = linkFor(product, affiliate);
 
-        // textos editáveis
-        const tlTxt = card.getAttribute("data-top-left") || qs(".tl", card)?.textContent || "";
-        const blTxt = card.getAttribute("data-bottom-left") || qs(".bl", card)?.textContent || "";
-        const elTL = qs(".tl", card); if(elTL) elTL.textContent = tlTxt;
-        const elBL = qs(".bl", card); if(elBL) elBL.textContent = blTxt;
+        // textos internos (se quiseres forçar pelos data-*)
+        const tl = card.getAttribute("data-top-left"); const bl = card.getAttribute("data-bottom-left");
+        if (tl) { const el = qs(".tl", card); if (el) el.textContent = tl; }
+        if (bl) { const el = qs(".bl", card); if (el) el.textContent = bl; }
 
         // url por baixo
-        const linkEl = qs("[data-link]", wrap); if(linkEl) linkEl.textContent = url;
+        const linkEl = holder.querySelector("[data-link]"); if(linkEl) linkEl.textContent = url;
 
         // copiar
-        const btnCopy = qs("[data-copy]", wrap);
+        const btnCopy = holder.querySelector("[data-copy]");
         if(btnCopy){
           btnCopy.onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); btnCopy.textContent="Copiado!"; setTimeout(()=>btnCopy.textContent="Copiar URL",1200);}catch{ alert(url);} };
         }
@@ -285,7 +300,7 @@
         if(qrbox){
           clear(qrbox);
           if(typeof QRCode === "undefined"){ setTimeout(regen,120); return; }
-          new QRCode(qrbox, { text:url, width:180, height:180, correctLevel: QRCode.CorrectLevel.M });
+          new QRCode(qrbox, { text:url, width:190, height:190, correctLevel: QRCode.CorrectLevel.M });
         }
       });
       setStatus("✅ QR Codes atualizados.", true);
@@ -301,32 +316,27 @@
       const p = getParam("p");
       const a = getParam("a");
       if(!p || !a) return;
-      window.__landing = { produto:p, affiliate:a }; // guardamos para envio
+      // Mostra o produto (readonly) para o utilizador
+      $produtoView.value = p;
+      // Guardar para submissão
+      window.__landing = { produto:p, affiliate:a };
       openModal();
     }
 
-    // ====== ENVIO “INTERNO” SEM APPS SCRIPT (janela 1×1 que fecha sozinha) ======
-    function postToGoogleFormsHidden(produto, affiliate, texto){
-      // 1) Abrir janela minúscula controlada por JS
-      const win = window.open("about:blank", "gforms_win", "noopener,noreferrer,width=1,height=1,left=0,top=0");
-      if(!win) { alert("Desativa o bloqueador de pop-ups para enviar o formulário."); return; }
-
-      // 2) Criar form temporário com target nessa janela
+    // ====== ENVIO ROBUSTO (mesma aba, POST nativo para Google Forms) ======
+    function postToGoogleFormsSameTab(produto, affiliate, texto){
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = FORM_ACTION;
-      form.target = "gforms_win";
+      form.action = FORM_ACTION;     // abre a página do Forms (robusto, sem pop-ups)
+      form.target = "_self";         // mesma aba
       form.style.position="absolute"; form.style.left="-9999px";
+
       const mk=(name,val)=>{const i=document.createElement("input"); i.type="hidden"; i.name=name; i.value=val; return i;};
       form.appendChild(mk(ENTRY_PROD, produto));
       form.appendChild(mk(ENTRY_AFF,  affiliate));
       form.appendChild(mk(ENTRY_TXT,  texto||""));
       document.body.appendChild(form);
-
-      // 3) Submeter & fechar a janela discretamente após curto período
       form.submit();
-      setTimeout(()=>{ try{ win.close(); }catch{} }, 1500); // tempo suficiente p/ enviar
-      form.remove();
     }
 
     $uiForm.addEventListener("submit", (e)=>{
@@ -347,17 +357,14 @@
         return;
       }
 
-      $formStatus.textContent = "A enviar…";
-      postToGoogleFormsHidden(produto, affiliate, texto);
-      $formStatus.textContent = "✅ Pedido enviado.";
-      setTimeout(closeModal, 900);
-      $uiForm.reset();
+      // Navega para a página do Forms (funciona em qualquer mobile/desktop, sem popups)
+      postToGoogleFormsSameTab(produto, affiliate, texto);
     });
 
-    $btnClose.addEventListener("click", closeModal);
-    $backdrop.addEventListener("click", (e)=>{ if(e.target===$backdrop) closeModal(); });
+    document.getElementById("btnClose").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", (e)=>{ if(e.target.id==="modalBackdrop") closeModal(); });
 
-    // ====== EXPORTAÇÃO 10×15 (pares) — Canvas 2D (alta qualidade) ======
+    // ====== EXPORTAÇÃO 10×15 (pares) — Canvas + PDF (alta qualidade) ======
     const SHEET_W = 1772, SHEET_H = 1181;   // 10×15 landscape ~300dpi
     const HALF_H  = Math.floor(SHEET_H/2);
     const RIGHT_W = Math.round(SHEET_W * 0.20);
@@ -375,35 +382,26 @@
       ctx.font = `600 ${best}px ${fontFamily}`;
       return best;
     }
-
     function drawCenteredText(ctx, text, x, y, w, h, prefPx, family){
       ctx.save();
-      const size = fitFont(ctx, text, w*0.9, h*0.8, prefPx, family);
+      fitFont(ctx, text, w*0.9, h*0.8, prefPx, family);
       ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillStyle="#0a0e14";
       ctx.fillText(text, x + w/2, y + h/2);
       ctx.restore();
     }
-
-    function makeQRDataURL(url, size=260){
+    function makeQRDataURL(url, size=300){
       return new Promise((resolve)=>{
         const holder = document.createElement("div");
-        holder.style.position="absolute"; holder.style.left="-9999px"; $offscreen.appendChild(holder);
-        const qr = new QRCode(holder, { text:url, width:size, height:size, correctLevel: QRCode.CorrectLevel.Q });
-        // obter canvas ou img
+        holder.style.position="absolute"; holder.style.left="-9999px"; document.getElementById("offscreen").appendChild(holder);
+        new QRCode(holder, { text:url, width:size, height:size, correctLevel: QRCode.CorrectLevel.Q });
         setTimeout(()=>{
-          let dataURL=null;
           const cv = holder.querySelector("canvas");
-          if(cv){ dataURL = cv.toDataURL("image/png"); }
-          else{
-            const img = holder.querySelector("img");
-            dataURL = img?.src || null;
-          }
+          const dataURL = cv ? cv.toDataURL("image/png") : null;
           holder.remove();
           resolve(dataURL);
         }, 50);
       });
     }
-
     async function renderPairToCanvas(cardA, cardB){
       const canvas = document.createElement("canvas");
       canvas.width = SHEET_W; canvas.height = SHEET_H;
@@ -412,21 +410,23 @@
 
       const cards = [cardA, cardB];
       for(let i=0;i<2;i++){
+        const holder = cards[i].closest(".card-holder");
         const card = cards[i];
         const y0 = i===0 ? 0 : HALF_H;
+
         // borda leve
         ctx.strokeStyle="#e5e9f2"; ctx.lineWidth=2; ctx.strokeRect(8, y0+8, SHEET_W-16, HALF_H-16);
 
-        const product   = card.getAttribute("data-product") || "Produto";
-        const topLeft   = card.getAttribute("data-top-left") || qs(".tl", card)?.textContent || product;
-        const bottomLeft= card.getAttribute("data-bottom-left") || qs(".bl", card)?.textContent || "";
-        const url       = qs("[data-link]", card.parentElement)?.textContent || "";
+        const product   = card.getAttribute("data-product") || holder.querySelector("[data-title]")?.textContent || "Produto";
+        const topLeft   = card.getAttribute("data-top-left") || card.querySelector(".tl")?.textContent || product;
+        const bottomLeft= card.getAttribute("data-bottom-left") || card.querySelector(".bl")?.textContent || "";
+        const url       = holder.querySelector("[data-link]")?.textContent || "";
 
-        // Esquerda (texto)
+        // esquerda (texto)
         drawCenteredText(ctx, topLeft,  12, y0+12, LEFT_W-24, (HALF_H/2)-24, 60, "Marcellus, serif");
         drawCenteredText(ctx, bottomLeft,12, y0+(HALF_H/2)+12, LEFT_W-24, (HALF_H/2)-24, 48, "Marcellus, serif");
 
-        // Direita top: LOGO
+        // direita topo: logo
         const logoImg = new Image(); logoImg.crossOrigin="anonymous"; logoImg.src = LOGO_URL;
         await new Promise(res=>{ logoImg.onload=res; logoImg.onerror=res; });
         const logoBoxW=RIGHT_W-24, logoBoxH=(HALF_H/2)-24;
@@ -435,8 +435,8 @@
         lw=Math.floor(lw*lr); lh=Math.floor(lh*lr);
         ctx.drawImage(logoImg, LEFT_W + (RIGHT_W-lw)/2, y0+12 + (logoBoxH-lh)/2, lw, lh);
 
-        // Direita bottom: QR
-        const qrData = await makeQRDataURL(url, 300);
+        // direita baixo: QR
+        const qrData = await makeQRDataURL(url, Math.min(RIGHT_W-24, (HALF_H/2)-24));
         if(qrData){
           const qrImg = new Image(); qrImg.src = qrData;
           await new Promise(res=>{ qrImg.onload=res; qrImg.onerror=res; });
@@ -447,17 +447,15 @@
       }
       return canvas;
     }
-
     function downloadDataURL(dataURL, name){
       const a=document.createElement("a"); a.href=dataURL; a.download=name;
       document.body.appendChild(a); a.click(); a.remove();
     }
-
     async function exportPairs(as="png"){
       const cards = qsa(".card", $catalog);
       if(cards.length===0){ setStatus("Sem cartões.", false); return; }
 
-      // Garante que cada cartão tem link pronto (se o utilizador não clicou “Atualizar”)
+      // Garante links prontos
       if(!($aff.value||"").trim()){ $aff.value="affiliate_demo"; regen(); }
 
       const pairs = [];
@@ -469,7 +467,7 @@
 
       if(as==="pdf"){
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ orientation:"landscape", unit:"mm", format:[150,100] }); // 150×100 mm ≈ 10×15
+        const pdf = new jsPDF({ orientation:"landscape", unit:"mm", format:[150,100] });
         for(let p=0;p<pairs.length;p++){
           if(p>0) pdf.addPage();
           const canvas = await renderPairToCanvas(pairs[p][0], pairs[p][1]);
@@ -489,9 +487,10 @@
     }
 
     // ====== ARRANQUE ======
+    document.getElementById("btnExportPNG").addEventListener("click", ()=>exportPairs("png"));
+    document.getElementById("btnExportPDF").addEventListener("click", ()=>exportPairs("pdf"));
     $btnUpdate.addEventListener("click", regen);
-    $btnExportPNG.addEventListener("click", ()=>exportPairs("png"));
-    $btnExportPDF.addEventListener("click", ()=>exportPairs("pdf"));
+
     $aff.value = loadAff();
     if($aff.value){ window.addEventListener("load", regen); }
     window.addEventListener("load", ()=>{ if(!$aff.value){ $aff.value="affiliate_demo"; regen(); } });
