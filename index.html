@@ -3,65 +3,102 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>v2 prontuarios.pt · Catálogo com QR dinâmicos</title>
-  <meta name="color-scheme" content="dark" />
+  <title>prontuarios.pt · Catálogo com QR dinâmicos</title>
+  <meta name="color-scheme" content="dark light" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Marcellus&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0b0f14;--card:#121923;--muted:#a9b7c9;--accent:#3ba0ff;--accent-2:#59d0a0;
-      --text:#eaf0f6;--ring:rgba(59,160,255,.35);--shadow:0 8px 24px rgba(0,0,0,.35);
-      --radius:18px
+      --bg:#0b0f14; --text:#eaf0f6; --muted:#9fb1c9;
+      --panel:#101720; --border:#213043; --ring:rgba(59,160,255,.35);
+      --accent:#3ba0ff; --accent-2:#59d0a0; --shadow:0 8px 24px rgba(0,0,0,.35);
+      --radius:18px;
+
+      --card-font-head:"Marcellus", serif;
+      --card-font-body:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+      --card-ratio:1.5;            /* 3:2 landscape */
+      --right-col:20%;
+      --left-col:80%;
+
+      --card-top-left-size:28px;
+      --card-bottom-left-size:24px;
+      --card-text-color:#0a0e14;   /* texto escuro para fundo branco */
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
     a{color:var(--accent);text-decoration:none}
-    header{max-width:1100px;margin:28px auto 10px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .brand{font-weight:800;font-size:clamp(20px,2.8vw,28px)}
-    .panel{background:linear-gradient(180deg,#0f1520,#0c131c);border:1px solid #213043;box-shadow:var(--shadow);border-radius:var(--radius);padding:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .field{display:flex;gap:10px;align-items:center;flex:1 1 340px}
+
+    header{max-width:1200px;margin:28px auto 10px;padding:0 16px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+    .brand{font-weight:800;font-size:clamp(20px,2.6vw,28px)}
+    .panel{background:linear-gradient(180deg,#0f1520,#0c131c);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:var(--radius);padding:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .field{display:flex;gap:10px;align-items:center;flex:1 1 320px}
     .field label{font-size:13px;color:var(--muted);white-space:nowrap}
-    .field input{flex:1;background:#0d141d;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none;transition:box-shadow .2s,border-color .2s}
+    .field input{flex:1;background:#0e1621;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none;transition:box-shadow .2s,border-color .2s}
     .field input:focus{border-color:#2a3e57;box-shadow:0 0 0 4px var(--ring)}
     .btn{appearance:none;border:0;background:linear-gradient(135deg,var(--accent),#6dc3ff);color:#041421;font-weight:800;padding:10px 16px;border-radius:12px;cursor:pointer}
+    .btn-sec{appearance:none;border:1px solid var(--border);background:#0e1520;color:#cfe4ff;font-weight:700;padding:10px 16px;border-radius:12px;cursor:pointer}
     .status{font-size:12px;color:var(--muted)}
-    main{max-width:1100px;margin:0 auto;padding:0 16px 40px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:18px}
-    .card{background:var(--card);border:1px solid #1f2a3a;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
-    .badge{font-size:12px;color:var(--muted);letter-spacing:.3px}
-    .name{font-size:18px;font-weight:800}
-    .qrcode{display:grid;place-items:center;background:#0b121b;border:1px dashed #243246;border-radius:14px;padding:10px;min-height:164px}
-    .cta{display:flex;justify-content:space-between;align-items:center;gap:8px}
-    .link{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
-    .copy{font-size:12px;border:1px solid #1f2a3a;padding:6px 10px;border-radius:10px;background:#0f1520;color:#cfe4ff;cursor:pointer}
-    footer{max-width:1100px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:var(--muted)}
+
+    main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
+    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));align-items:start}
+
+    /* Cartão (proporção 3:2) */
+    .card{
+      background:#fff;color:var(--card-text-color);
+      border-radius:16px;border:1px solid #e8ecf2;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      width:100%;aspect-ratio:3/2;
+      display:grid;grid-template-columns:var(--left-col) var(--right-col);grid-template-rows:1fr 1fr;gap:0;
+      position:relative;overflow:hidden;
+      font-family:var(--card-font-body);
+    }
+    .cell{display:flex;align-items:center;justify-content:center;padding:10px}
+    .cell.left{padding:14px}
+    .cell.top-left{font-family:var(--card-font-head);font-size:var(--card-top-left-size);text-align:center}
+    .cell.bottom-left{font-family:var(--card-font-head);font-size:var(--card-bottom-left-size);text-align:center}
+    .logo{max-width:100%;max-height:80%;object-fit:contain;display:block;margin:auto}
+    .qrbox{width:100%;height:100%;display:grid;place-items:center}
+    .qrbox>div{width:min(90%,160px)!important;height:min(90%,160px)!important}
+
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;position:absolute;left:10px;right:10px;bottom:10px}
+    .link{font-size:12px;color:#5d6a7f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
+    .copy{font-size:12px;border:1px solid #e3e7ef;padding:6px 10px;border-radius:10px;background:#f6f8fc;color:#1d2736;cursor:pointer}
+    .select-print{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:#5d6a7f}
+
+    footer{max-width:1200px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:var(--muted)}
     footer .ok{color:var(--accent-2);font-weight:700}
-    /* MODAL */
+
+    /* Modal (UI escura, texto branco) */
     .backdrop{position:fixed;inset:0;background:rgba(3,8,15,.74);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999}
     .modal{width:min(720px,92vw);background:linear-gradient(180deg,#0f1520,#0a1018);border:1px solid #26364d;border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
-    .modal h3{margin:0 0 6px;color:var(--text)}           /* branco */
+    .modal h3{margin:0 0 6px;color:#fff}
     .modal p{margin:0 0 12px;color:var(--muted)}
     .form{display:grid;gap:12px;grid-template-columns:1fr 1fr}
     .form .full{grid-column:1/-1}
-    .form label{color:var(--text)}                        /* branco */
-    .form input,.form textarea{width:100%;background:#0d141d;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none}
+    .form label{color:#fff}
+    .form input,.form textarea{width:100%;background:#0d141d;border:1px solid #1e2a3a;color:#eaf0f6;padding:10px 12px;border-radius:12px;outline:none}
     .form textarea{min-height:110px;resize:vertical}
     .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
-    .btn-sec{background:#0e1520;border:1px solid #26364d;color:#cde1f8;padding:10px 14px;border-radius:12px;cursor:pointer}
     .btn-pri{background:linear-gradient(135deg,var(--accent-2),#78e3b3);color:#062017;font-weight:900;padding:10px 16px;border-radius:12px;cursor:pointer;border:0}
-    .hide{display:none!important}
-    /* Placeholders claros */
-    ::placeholder{color:#9fb1c9;opacity:.85}
+
+    /* Composer 10×15 (offscreen) */
+    #printComposer{position:fixed;left:-9999px;top:-9999px;width:1772px;height:1181px;background:#fff;display:grid;grid-template-rows:1fr 1fr}
+    .print-slot{position:relative;width:100%;height:100%;background:#fff;display:grid;place-items:center}
+    .print-card{width:1640px;height:1093px;background:#fff;display:grid;grid-template-columns:var(--left-col) var(--right-col);grid-template-rows:1fr 1fr}
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">prontuarios.pt</div>
-    <div class="panel" role="group" aria-label="Controlo de QR Codes">
+    <div class="brand">v3 prontuarios.pt</div>
+    <div class="panel" role="group" aria-label="Controlo">
       <div class="field">
         <label for="affiliate">Affiliate</label>
         <input id="affiliate" type="text" placeholder="ex.: afiliado_joao" autocomplete="off" />
       </div>
       <button class="btn" id="btnUpdate">Atualizar QR Codes</button>
+      <button class="btn-sec" id="btnExport">Exportar 10×15 (PNG)</button>
       <span class="status" id="status">—</span>
     </div>
   </header>
@@ -70,33 +107,45 @@
     <section>
       <h2 style="margin:18px 0 6px;font-size:20px;">Catálogo</h2>
       <div class="grid" id="catalog">
-        <!-- ====== CATÁLOGO (duplica .card para mais produtos) ====== -->
-        <article class="card" data-product="Manual de Onboarding">
-          <div class="badge">Produto</div>
-          <div class="name">Manual de Onboarding</div>
-          <div class="qrcode" data-qr></div>
-          <div class="cta">
+        <!-- DUPLICA estes cartões e edita data-* -->
+        <article class="card" data-product="Manual de Onboarding"
+                 data-top-left="Manual de Onboarding"
+                 data-bottom-left="Acelera a integração">
+          <div class="cell top-left left"><div class="tl">Manual de Onboarding</div></div>
+          <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
+          <div class="cell bottom-left left"><div class="bl">Acelera a integração</div></div>
+          <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
+          <div class="meta">
             <span class="link" data-link>—</span>
+            <label class="select-print"><input type="checkbox" data-select /> Selecionar p/ impressão</label>
             <button class="copy" data-copy>Copiar URL</button>
           </div>
         </article>
 
-        <article class="card" data-product="Template de Proposta">
-          <div class="badge">Produto</div>
-          <div class="name">Template de Proposta</div>
-          <div class="qrcode" data-qr></div>
-          <div class="cta">
+        <article class="card" data-product="Template de Proposta"
+                 data-top-left="Template de Proposta"
+                 data-bottom-left="Feche negócios com clareza">
+          <div class="cell top-left left"><div class="tl">Template de Proposta</div></div>
+          <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
+          <div class="cell bottom-left left"><div class="bl">Feche negócios com clareza</div></div>
+          <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
+          <div class="meta">
             <span class="link" data-link>—</span>
+            <label class="select-print"><input type="checkbox" data-select /> Selecionar p/ impressão</label>
             <button class="copy" data-copy>Copiar URL</button>
           </div>
         </article>
 
-        <article class="card" data-product="Checklist de Auditoria">
-          <div class="badge">Produto</div>
-          <div class="name">Checklist de Auditoria</div>
-          <div class="qrcode" data-qr></div>
-          <div class="cta">
+        <article class="card" data-product="Checklist de Auditoria"
+                 data-top-left="Checklist de Auditoria"
+                 data-bottom-left="Rigor e conformidade">
+          <div class="cell top-left left"><div class="tl">Checklist de Auditoria</div></div>
+          <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
+          <div class="cell bottom-left left"><div class="bl">Rigor e conformidade</div></div>
+          <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
+          <div class="meta">
             <span class="link" data-link>—</span>
+            <label class="select-print"><input type="checkbox" data-select /> Selecionar p/ impressão</label>
             <button class="copy" data-copy>Copiar URL</button>
           </div>
         </article>
@@ -105,17 +154,16 @@
   </main>
 
   <footer>
-    ⚙️ Dica: o valor do affiliate fica gravado no teu navegador (localStorage).
+    ⚙️ O affiliate fica guardado (localStorage).
     <span class="ok" id="lastAction"></span>
   </footer>
 
-  <!-- ========= MODAL ========= -->
+  <!-- Modal (abre com ?p=...&a=...) -->
   <div class="backdrop" id="modalBackdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h3 id="modalTitle">Pedido de informação</h3>
       <p>Preenche os campos. O teu pedido será encaminhado internamente.</p>
 
-      <!-- Form VISÍVEL ao utilizador (não envia para o Google) -->
       <form id="uiForm" class="form" novalidate>
         <div>
           <label for="nome">Nome</label>
@@ -136,28 +184,34 @@
         </div>
         <p class="status full" id="formStatus">—</p>
       </form>
-
-      <!-- Form REAL que é submetido ao Google Forms (oculto) -->
-      <iframe name="gform_iframe" class="hide"></iframe>
-      <form id="gform" class="hide" action="https://docs.google.com/forms/d/e/1FAIpQLSeKazNy8WHQL5xqdJMk5PJZJKJAr6bMy2Nk14VZCiUGTY8-AA/formResponse" method="POST" target="gform_iframe">
-        <!-- Nome do produto -->
-        <input type="hidden" name="entry.698615008" id="gf_prod" />
-        <!-- Nome do affiliate -->
-        <input type="hidden" name="entry.645159200" id="gf_aff" />
-        <!-- Texto agregado (Nome, Contacto, Mensagem) -->
-        <input type="hidden" name="entry.1002593961" id="gf_texto" />
-      </form>
     </div>
   </div>
 
-  <!-- QRCode.js -->
+  <!-- Composer 10×15 -->
+  <div id="printComposer">
+    <div class="print-slot" id="slotTop"></div>
+    <div class="print-slot" id="slotBottom"></div>
+  </div>
+
+  <!-- libs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js" defer></script>
 
   <script>
   (function(){
+    // ====== CONFIG GOOGLE FORMS ======
+    const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSeKazNy8WHQL5xqdJMk5PJZJKJAr6bMy2Nk14VZCiUGTY8-AA/formResponse";
+    const ENTRY_PROD = "entry.698615008";
+    const ENTRY_AFF  = "entry.645159200";
+    const ENTRY_TXT  = "entry.1002593961";
+
+    // ====== SITE / QR ======
     const SITE_BASE = "https://prontuarios.pt/";
+
+    // ====== ELEMENTOS ======
     const $aff = document.getElementById("affiliate");
     const $btnUpdate = document.getElementById("btnUpdate");
+    const $btnExport = document.getElementById("btnExport");
     const $status = document.getElementById("status");
     const $lastAction = document.getElementById("lastAction");
     const $catalog = document.getElementById("catalog");
@@ -166,106 +220,161 @@
     const $uiForm = document.getElementById("uiForm");
     const $btnClose = document.getElementById("btnClose");
     const $formStatus = document.getElementById("formStatus");
-    const $gform = document.getElementById("gform");
-    const $gf_prod = document.getElementById("gf_prod");
-    const $gf_aff = document.getElementById("gf_aff");
-    const $gf_txt = document.getElementById("gf_texto");
 
-    const enc = encodeURIComponent;
-    const qs = (s,c=document)=>c.querySelector(s);
+    const qs=(s,c=document)=>c.querySelector(s);
     const qsa=(s,c=document)=>Array.from(c.querySelectorAll(s));
-
     function setStatus(msg, ok=false){ $status.textContent = msg; $status.style.color = ok ? "var(--accent-2)" : "var(--muted)"; }
     function saveAff(v){ try{localStorage.setItem("prontuarios_aff", v||"")}catch{} }
     function loadAff(){ try{return localStorage.getItem("prontuarios_aff")||""}catch{ return "" } }
     function linkFor(product, affiliate){ const u = new URL(SITE_BASE); u.searchParams.set("p", product); u.searchParams.set("a", affiliate); return u.toString(); }
     function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
 
-    // Gera QR para todos os cartões
+    // ====== QR CODES ======
     function regen(){
       const affiliate = ($aff.value||"").trim();
       if(!affiliate){ setStatus("⚠️ Introduz um affiliate e clica em Atualizar."); return; }
       saveAff(affiliate);
       qsa(".card", $catalog).forEach(card=>{
-        const product = card.getAttribute("data-product") || qs(".name", card).textContent.trim();
+        const product = card.getAttribute("data-product") || "Produto";
         const url = linkFor(product, affiliate);
-        // mostra link curto
+        const tl = card.getAttribute("data-top-left");
+        const bl = card.getAttribute("data-bottom-left");
+        if (tl) { const el = qs(".tl", card); if (el) el.textContent = tl; }
+        if (bl) { const el = qs(".bl", card); if (el) el.textContent = bl; }
         const linkEl = qs("[data-link]", card); if(linkEl) linkEl.textContent = url;
-        // copy
         const btnCopy = qs("[data-copy]", card);
         if(btnCopy){
           btnCopy.onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); btnCopy.textContent="Copiado!"; setTimeout(()=>btnCopy.textContent="Copiar URL",1200);}catch{ alert(url);} };
         }
-        // qrcode
-        const box = qs("[data-qr]", card);
-        if(box){
-          clear(box);
-          if(typeof QRCode === "undefined"){ setTimeout(regen, 120); return; }
-          new QRCode(box, {text:url, width:150, height:150, correctLevel: QRCode.CorrectLevel.M});
+        const qrbox = qs("[data-qr]", card);
+        if(qrbox){
+          clear(qrbox);
+          if(typeof QRCode === "undefined"){ setTimeout(regen,120); return; }
+          new QRCode(qrbox, { text:url, width:160, height:160, correctLevel: QRCode.CorrectLevel.M });
         }
       });
       setStatus("✅ QR Codes atualizados.", true);
       $lastAction.textContent = " · Affiliate ativo: " + affiliate;
     }
 
-    // Modal helpers
+    // ====== MODAL LANDING ======
+    function getParam(n){ try{ return new URL(window.location.href).searchParams.get(n) }catch{ return null } }
     function openModal(){ $backdrop.style.display="flex"; $backdrop.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; }
     function closeModal(){ $backdrop.style.display="none"; $backdrop.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
 
-    // Ler params
-    function getParam(n){ try{ return new URL(window.location.href).searchParams.get(n) }catch{ return null } }
-
-    // Se veio com ?p=...&a=... abrir modal e pré-preencher hidden para o Forms
     function handleLanding(){
       const p = getParam("p");
       const a = getParam("a");
       if(!p || !a) return;
-      $gf_prod.value = p;
-      $gf_aff.value = a;
+      window.__landing = { produto:p, affiliate:a }; // guardamos para o envio
       openModal();
     }
 
-    // Submissão: agregamos Nome/Contacto/Mensagem e submetemos ao Google Forms (form oculto em iframe)
-    $uiForm.addEventListener("submit", function(e){
+    // ====== ENVIO DIRETO PARA GOOGLE FORMS (nova aba; sem iframe/sem fetch) ======
+    function postToGoogleForms(produto, affiliate, texto){
+      // criamos um form temporário, escondido, com target=_blank
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = FORM_ACTION;
+      form.target = "_blank";
+      form.style.position = "absolute";
+      form.style.left = "-9999px";
+
+      const mk = (name, val) => { const i = document.createElement("input"); i.type="hidden"; i.name=name; i.value=val; return i; };
+      form.appendChild(mk(ENTRY_PROD, produto));
+      form.appendChild(mk(ENTRY_AFF,  affiliate));
+      form.appendChild(mk(ENTRY_TXT,  texto || ""));
+
+      // Opcional: estes campos ajudam em alguns formulários (não é obrigatório)
+      // form.appendChild(mk("fvv","1"));
+      // form.appendChild(mk("fbzx", Date.now().toString()));
+      // form.appendChild(mk("pageHistory","0"));
+
+      document.body.appendChild(form);
+      form.submit();           // abre nova aba do Google com a confirmação
+      form.remove();
+    }
+
+    $uiForm.addEventListener("submit", (e)=>{
       e.preventDefault();
-      const nome = (qs("#nome").value||"").trim();
-      const contacto = (qs("#contacto").value||"").trim();
-      const mensagem = (qs("#mensagem").value||"").trim();
+      const produto   = window.__landing?.produto || "";
+      const affiliate = window.__landing?.affiliate || "";
+      const nome      = (qs("#nome").value||"").trim();
+      const contacto  = (qs("#contacto").value||"").trim();
+      const mensagem  = (qs("#mensagem").value||"").trim();
       const partes = [];
       if(nome) partes.push("Nome: " + nome);
       if(contacto) partes.push("Contacto: " + contacto);
       if(mensagem) partes.push("Mensagem: " + mensagem);
-      $gf_txt.value = partes.join("\n");
+      const texto = partes.join("\n");
 
-      // Segurança básica: garantir que produto/affiliate existem (se alguém abre o modal manualmente)
-      if(!$gf_prod.value || !$gf_aff.value){
-        $formStatus.textContent = "⚠️ Falta informação do produto/affiliate no URL.";
+      if(!produto || !affiliate){
+        $formStatus.textContent = "⚠️ Falta produto/affiliate no URL.";
         return;
       }
 
-      // Submeter de forma nativa (sem CORS) para o Google Forms
       $formStatus.textContent = "A enviar…";
-      $gform.submit();
-
-      // Como o envio é para outro domínio num iframe oculto, assumimos sucesso após ~600ms
-      setTimeout(()=>{
-        $formStatus.textContent = "✅ Pedido enviado. Obrigado!";
-        $uiForm.reset();
-        setTimeout(closeModal, 900);
-      }, 650);
+      postToGoogleForms(produto, affiliate, texto);
+      $formStatus.textContent = "✅ Abrimos uma nova aba do Google Forms para concluir o envio.";
+      // Não fechamos imediatamente para o utilizador ler; se quiseres, fecha após X ms:
+      setTimeout(closeModal, 1200);
+      $uiForm.reset();
     });
 
-    // Eventos UI
-    $btnUpdate.addEventListener("click", regen);
     $btnClose.addEventListener("click", closeModal);
     $backdrop.addEventListener("click", (e)=>{ if(e.target===$backdrop) closeModal(); });
 
-    // Arranque
+    // ====== EXPORTAÇÃO 10×15 (PNG com 2 cartões) ======
+    async function export10x15(){
+      const selected = qsa(".card input[data-select]:checked").map(cb=>cb.closest(".card"));
+      let toExport = selected.slice(0,2);
+      if(toExport.length===0) toExport = qsa(".card").slice(0,2);
+      if(toExport.length===1) toExport = [toExport[0], toExport[0]];
+
+      const composer = document.getElementById("printComposer");
+      const slotTop = document.getElementById("slotTop");
+      const slotBottom = document.getElementById("slotBottom");
+      slotTop.innerHTML = ""; slotBottom.innerHTML = "";
+
+      toExport.forEach((card, idx)=>{
+        const clone = card.cloneNode(true);
+        clone.style.width = "1640px";
+        clone.style.height = "545px";
+        clone.style.boxShadow = "none";
+        clone.style.border = "1px solid #ddd";
+        clone.style.background = "#fff";
+        clone.querySelectorAll(".meta").forEach(m=>m.remove());
+        const qrBox = clone.querySelector(".qrbox");
+        if(qrBox){ qrBox.innerHTML = ""; }
+        const linkEl = card.querySelector("[data-link]");
+        const url = linkEl ? linkEl.textContent : "";
+        if (qrBox && url) new QRCode(qrBox, { text:url, width:220, height:220, correctLevel: QRCode.CorrectLevel.Q });
+        (idx===0?slotTop:slotBottom).appendChild(clone);
+      });
+
+      try{
+        const node = composer;
+        const dataUrl = await htmlToImage.toPng(node, { pixelRatio:1, quality:1 });
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = "prontuarios-10x15.png";
+        document.body.appendChild(a); a.click(); a.remove();
+        setStatus("✅ PNG 10×15 gerado.", true);
+      }catch(err){
+        console.error(err);
+        setStatus("⚠️ Não foi possível gerar a imagem.");
+      }
+    }
+
+    // ====== ARRANQUE ======
+    $btnUpdate.addEventListener("click", regen);
+    $btnExport.addEventListener("click", export10x15);
     $aff.value = loadAff();
     if($aff.value){ window.addEventListener("load", regen); }
+    // Garante algum conteúdo de QR mesmo sem affiliate (para preview)
+    window.addEventListener("load", ()=>{ if(!$aff.value){ $aff.value="affiliate_demo"; regen(); } });
     handleLanding();
   })();
   </script>
 </body>
 </html>
-
