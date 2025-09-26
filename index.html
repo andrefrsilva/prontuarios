@@ -1,334 +1,270 @@
-<!-- ===== PRONTUARIOS.PT – Catálogo com QR dinâmicos + Pop-up de captação ===== -->
-<!-- Colar num gadget HTML/JavaScript OU numa página estática do Blogger -->
-<style>
-  :root {
-    --bg: #0b0f14;
-    --card: #121923;
-    --muted: #7a8aa0;
-    --accent: #3ba0ff;
-    --accent-2: #59d0a0;
-    --text: #eaf0f6;
-    --ring: rgba(59,160,255,.35);
-    --shadow: 0 8px 24px rgba(0,0,0,.35);
-    --radius: 18px;
-  }
-  .qr-wrapper { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color: var(--text); }
-  .qr-shell { max-width: 1100px; margin: 40px auto; padding: 0 16px; }
-  .qr-head { display:flex; flex-wrap:wrap; align-items:center; gap:12px; justify-content:space-between; margin-bottom:22px; }
-  .qr-title { font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; letter-spacing:.2px; }
-  .qr-panel { background: linear-gradient(180deg, #0f1520, #0c131c); border:1px solid #213043; box-shadow: var(--shadow); border-radius: var(--radius); padding:14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
-  .qr-field { display:flex; gap:10px; align-items:center; flex: 1 1 340px; }
-  .qr-field label { font-size:13px; color: var(--muted); white-space:nowrap; }
-  .qr-field input { flex:1; background:#0d141d; border:1px solid #1e2a3a; color:var(--text); padding:10px 12px; border-radius: 12px; outline:none; box-shadow: inset 0 0 0 0 transparent; transition: box-shadow .2s, border-color .2s; }
-  .qr-field input:focus { border-color:#2a3e57; box-shadow: 0 0 0 4px var(--ring); }
-  .qr-btn { appearance:none; border:0; background: linear-gradient(135deg, var(--accent), #6dc3ff); color:#041421; font-weight:700; padding:10px 16px; border-radius:12px; cursor:pointer; transition: transform .06s ease; }
-  .qr-btn:active { transform: translateY(1px); }
-  .qr-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:16px; margin-top:18px; }
-  .qr-card { background: var(--card); border:1px solid #1f2a3a; border-radius: var(--radius); box-shadow: var(--shadow); padding:16px; display:flex; flex-direction:column; gap:12px; }
-  .qr-badge { font-size:12px; color:#a9b7c9; letter-spacing:.3px; }
-  .qr-name { font-size:18px; font-weight:700; line-height:1.25; }
-  .qr-qrcode { display:grid; place-items:center; background: #0b121b; border:1px dashed #243246; border-radius:14px; padding:10px; min-height: 164px; }
-  .qr-cta { display:flex; justify-content:space-between; align-items:center; gap:8px; }
-  .qr-link { font-size:12px; color: var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 70%; }
-  .qr-copy { font-size:12px; border:1px solid #1f2a3a; padding:6px 10px; border-radius:10px; background:#0f1520; color:#cfe4ff; cursor:pointer; }
-  .qr-footer { margin-top: 24px; font-size:12px; color: var(--muted); }
-  .qr-success { color: var(--accent-2); font-weight:600; }
-
-  /* Modal (pop-up) */
-  .qr-modal-backdrop { position: fixed; inset:0; background: rgba(3,8,15,.72); backdrop-filter: blur(4px); display:none; align-items:center; justify-content:center; z-index: 9999; }
-  .qr-modal { width:min(720px, 92vw); background: linear-gradient(180deg, #0f1520, #0a1018); border:1px solid #26364d; border-radius: 20px; padding: 18px; box-shadow: 0 20px 60px rgba(0,0,0,.55); }
-  .qr-modal h3 { margin:0 0 6px; font-size:22px; }
-  .qr-modal p { margin:0 0 12px; color: var(--muted); font-size:14px; }
-  .qr-form { display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
-  .qr-form .full { grid-column: 1 / -1; }
-  .qr-form input, .qr-form textarea { width:100%; background:#0d141d; border:1px solid #1e2a3a; color:var(--text); padding:10px 12px; border-radius:12px; outline:none; }
-  .qr-form textarea { min-height: 110px; resize: vertical; }
-  .qr-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:8px; }
-  .btn-sec { background:#0e1520; border:1px solid #26364d; color:#cde1f8; padding:10px 14px; border-radius:12px; cursor:pointer; }
-  .btn-pri { background: linear-gradient(135deg, var(--accent-2), #78e3b3); color:#062017; font-weight:800; padding:10px 16px; border-radius:12px; cursor:pointer; border:0; }
-  .qr-hide { display:none !important; }
-
-  /* Dark page background (opcional) */
-  body { background: var(--bg); }
-</style>
-
-<div class="qr-wrapper">
-  <div class="qr-shell">
-    <div class="qr-head">
-      <div class="qr-title">Catálogo · QR dinâmicos</div>
-      <div class="qr-panel" role="group" aria-label="Controlo de QR Codes">
-        <div class="qr-field">
-          <label for="affiliateInput">Affiliate</label>
-          <input id="affiliateInput" type="text" placeholder="ex.: afiliado_joao" autocomplete="off" />
-        </div>
-        <button class="qr-btn" id="btnAtualizar">Atualizar QR Codes</button>
-        <span id="statusMsg" class="qr-badge"></span>
-      </div>
-    </div>
-
-    <!-- ===== CATÁLOGO =====
-         Duplicar .qr-card para adicionar produtos. O nome do produto vem de data-product.
-    -->
-    <div class="qr-grid" id="catalogo">
-      <div class="qr-card" data-product="Manual de Onboarding">
-        <div class="qr-badge">Produto</div>
-        <div class="qr-name">Manual de Onboarding</div>
-        <div class="qr-qrcode" data-qr></div>
-        <div class="qr-cta">
-          <span class="qr-link" data-link>—</span>
-          <button class="qr-copy" data-copy>Copiar URL</button>
-        </div>
-      </div>
-
-      <div class="qr-card" data-product="Template de Proposta">
-        <div class="qr-badge">Produto</div>
-        <div class="qr-name">Template de Proposta</div>
-        <div class="qr-qrcode" data-qr></div>
-        <div class="qr-cta">
-          <span class="qr-link" data-link>—</span>
-          <button class="qr-copy" data-copy>Copiar URL</button>
-        </div>
-      </div>
-
-      <div class="qr-card" data-product="Checklist de Auditoria">
-        <div class="qr-badge">Produto</div>
-        <div class="qr-name">Checklist de Auditoria</div>
-        <div class="qr-qrcode" data-qr></div>
-        <div class="qr-cta">
-          <span class="qr-link" data-link>—</span>
-          <button class="qr-copy" data-copy>Copiar URL</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="qr-footer">
-      ⚙️ Dica: o valor do affiliate fica gravado no teu navegador (localStorage).
-      <span id="lastAction" class="qr-success"></span>
-    </div>
-  </div>
-</div>
-
-<!-- ===== MODAL (aparece quando a página abre com ?p=...&a=...) ===== -->
-<div class="qr-modal-backdrop" id="qrModalBackdrop" aria-hidden="true">
-  <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
-    <h3 id="qrModalTitle">Pedido de informação</h3>
-    <p>Preenche os campos. O teu pedido será encaminhado internamente.</p>
-
-    <form id="leadForm" class="qr-form" novalidate>
-      <input type="hidden" name="entry.698615008" id="gformProduto" /> <!-- produto -->
-      <input type="hidden" name="entry.645159200" id="gformAfiliado" /> <!-- affiliate -->
-      <input type="hidden" name="entry.1002593961" id="gformTexto" /> <!-- bloco de texto agregado -->
-
-      <div>
-        <label for="nome">Nome</label>
-        <input id="nome" type="text" placeholder="O teu nome (opcional)" />
-      </div>
-      <div>
-        <label for="contacto">Contacto</label>
-        <input id="contacto" type="text" placeholder="Email ou telemóvel (opcional)" />
-      </div>
-      <div class="full">
-        <label for="mensagem">Mensagem</label>
-        <textarea id="mensagem" placeholder="Escreve aqui a tua mensagem (opcional)"></textarea>
-      </div>
-
-      <div class="qr-actions full">
-        <button type="button" class="btn-sec" id="btnFechar">Fechar</button>
-        <button type="submit" class="btn-pri">Enviar</button>
-      </div>
-      <p id="formStatus" class="qr-badge full"></p>
-    </form>
-  </div>
-</div>
-
-<!-- ===== QRCode.js (CDN) ===== -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-
-<script>
-(function () {
-  const SITE_BASE = "https://prontuarios.pt/"; // domínio do site
-  const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSflzspmuBWoD3OA5cISJBwFWuLlIoYNpBAYi9KuG-fs2VYMjA/formResponse";
-
-  // Elementos principais
-  const $affiliateInput = document.getElementById("affiliateInput");
-  const $btnAtualizar = document.getElementById("btnAtualizar");
-  const $statusMsg = document.getElementById("statusMsg");
-  const $lastAction = document.getElementById("lastAction");
-  const $catalogo = document.getElementById("catalogo");
-
-  // Modal & Form
-  const $backdrop = document.getElementById("qrModalBackdrop");
-  const $leadForm = document.getElementById("leadForm");
-  const $btnFechar = document.getElementById("btnFechar");
-  const $formStatus = document.getElementById("formStatus");
-
-  const $gProduto = document.getElementById("gformProduto");
-  const $gAfiliado = document.getElementById("gformAfiliado");
-  const $gTexto = document.getElementById("gformTexto");
-
-  // Utils
-  const qs = (sel, ctx = document) => ctx.querySelector(sel);
-  const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-  const enc = encodeURIComponent;
-
-  function setStatus(msg, ok=false) {
-    $statusMsg.textContent = msg;
-    $statusMsg.style.color = ok ? "var(--accent-2)" : "var(--muted)";
-  }
-
-  function saveAffiliateLocal(value) {
-    try { localStorage.setItem("prontuarios_affiliate", value || ""); } catch {}
-  }
-
-  function loadAffiliateLocal() {
-    try { return localStorage.getItem("prontuarios_affiliate") || ""; } catch {}
-    return "";
-  }
-
-  function buildProductUrl(product, affiliate) {
-    const url = new URL(SITE_BASE);
-    url.searchParams.set("p", product);
-    url.searchParams.set("a", affiliate);
-    return url.toString();
-  }
-
-  function clearNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
-
-  // Gera/regera todos os QR codes com o affiliate atual
-  function regenerateQRCodes() {
-    const affiliate = ($affiliateInput.value || "").trim();
-    if (!affiliate) {
-      setStatus("⚠️ Introduz um affiliate e clica em Atualizar.");
-      return;
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>prontuarios.pt · Catálogo com QR dinâmicos</title>
+  <meta name="color-scheme" content="dark" />
+  <style>
+    :root{
+      --bg:#0b0f14;--card:#121923;--muted:#a9b7c9;--accent:#3ba0ff;--accent-2:#59d0a0;
+      --text:#eaf0f6;--ring:rgba(59,160,255,.35);--shadow:0 8px 24px rgba(0,0,0,.35);
+      --radius:18px
     }
-    saveAffiliateLocal(affiliate);
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+    a{color:var(--accent);text-decoration:none}
+    header{max-width:1100px;margin:28px auto 10px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{font-weight:800;font-size:clamp(20px,2.8vw,28px)}
+    .panel{background:linear-gradient(180deg,#0f1520,#0c131c);border:1px solid #213043;box-shadow:var(--shadow);border-radius:var(--radius);padding:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .field{display:flex;gap:10px;align-items:center;flex:1 1 340px}
+    .field label{font-size:13px;color:var(--muted);white-space:nowrap}
+    .field input{flex:1;background:#0d141d;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none;transition:box-shadow .2s,border-color .2s}
+    .field input:focus{border-color:#2a3e57;box-shadow:0 0 0 4px var(--ring)}
+    .btn{appearance:none;border:0;background:linear-gradient(135deg,var(--accent),#6dc3ff);color:#041421;font-weight:800;padding:10px 16px;border-radius:12px;cursor:pointer}
+    .status{font-size:12px;color:var(--muted)}
+    main{max-width:1100px;margin:0 auto;padding:0 16px 40px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:18px}
+    .card{background:var(--card);border:1px solid #1f2a3a;border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:12px}
+    .badge{font-size:12px;color:var(--muted);letter-spacing:.3px}
+    .name{font-size:18px;font-weight:800}
+    .qrcode{display:grid;place-items:center;background:#0b121b;border:1px dashed #243246;border-radius:14px;padding:10px;min-height:164px}
+    .cta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .link{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
+    .copy{font-size:12px;border:1px solid #1f2a3a;padding:6px 10px;border-radius:10px;background:#0f1520;color:#cfe4ff;cursor:pointer}
+    footer{max-width:1100px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:var(--muted)}
+    footer .ok{color:var(--accent-2);font-weight:700}
+    /* MODAL */
+    .backdrop{position:fixed;inset:0;background:rgba(3,8,15,.74);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:9999}
+    .modal{width:min(720px,92vw);background:linear-gradient(180deg,#0f1520,#0a1018);border:1px solid #26364d;border-radius:20px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+    .modal h3{margin:0 0 6px;color:var(--text)}           /* branco */
+    .modal p{margin:0 0 12px;color:var(--muted)}
+    .form{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    .form .full{grid-column:1/-1}
+    .form label{color:var(--text)}                        /* branco */
+    .form input,.form textarea{width:100%;background:#0d141d;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none}
+    .form textarea{min-height:110px;resize:vertical}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+    .btn-sec{background:#0e1520;border:1px solid #26364d;color:#cde1f8;padding:10px 14px;border-radius:12px;cursor:pointer}
+    .btn-pri{background:linear-gradient(135deg,var(--accent-2),#78e3b3);color:#062017;font-weight:900;padding:10px 16px;border-radius:12px;cursor:pointer;border:0}
+    .hide{display:none!important}
+    /* Placeholders claros */
+    ::placeholder{color:#9fb1c9;opacity:.85}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">prontuarios.pt</div>
+    <div class="panel" role="group" aria-label="Controlo de QR Codes">
+      <div class="field">
+        <label for="affiliate">Affiliate</label>
+        <input id="affiliate" type="text" placeholder="ex.: afiliado_joao" autocomplete="off" />
+      </div>
+      <button class="btn" id="btnUpdate">Atualizar QR Codes</button>
+      <span class="status" id="status">—</span>
+    </div>
+  </header>
 
-    const cards = qsa(".qr-card", $catalogo);
-    cards.forEach((card) => {
-      const product = card.getAttribute("data-product") || qs(".qr-name", card)?.textContent.trim() || "Produto";
-      const link = buildProductUrl(product, affiliate);
+  <main>
+    <section>
+      <h2 style="margin:18px 0 6px;font-size:20px;">Catálogo</h2>
+      <div class="grid" id="catalog">
+        <!-- ====== CATÁLOGO (duplica .card para mais produtos) ====== -->
+        <article class="card" data-product="Manual de Onboarding">
+          <div class="badge">Produto</div>
+          <div class="name">Manual de Onboarding</div>
+          <div class="qrcode" data-qr></div>
+          <div class="cta">
+            <span class="link" data-link>—</span>
+            <button class="copy" data-copy>Copiar URL</button>
+          </div>
+        </article>
 
-      // Mostra URL curto no cartão (apenas para debug/partilha rápida)
-      const linkEl = qs("[data-link]", card);
-      if (linkEl) linkEl.textContent = link;
+        <article class="card" data-product="Template de Proposta">
+          <div class="badge">Produto</div>
+          <div class="name">Template de Proposta</div>
+          <div class="qrcode" data-qr></div>
+          <div class="cta">
+            <span class="link" data-link>—</span>
+            <button class="copy" data-copy>Copiar URL</button>
+          </div>
+        </article>
 
-      // Botão copiar
-      const btnCopy = qs("[data-copy]", card);
-      if (btnCopy) {
-        btnCopy.onclick = async () => {
-          try { await navigator.clipboard.writeText(link); btnCopy.textContent = "Copiado!"; setTimeout(()=>btnCopy.textContent="Copiar URL", 1200); }
-          catch { alert(link); }
-        };
-      }
+        <article class="card" data-product="Checklist de Auditoria">
+          <div class="badge">Produto</div>
+          <div class="name">Checklist de Auditoria</div>
+          <div class="qrcode" data-qr></div>
+          <div class="cta">
+            <span class="link" data-link>—</span>
+            <button class="copy" data-copy>Copiar URL</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
 
-      // Gera QR
-      const qrBox = qs("[data-qr]", card);
-      if (qrBox) {
-        clearNode(qrBox);
-        // Aguarda carregamento do QRCode.js caso o defer ainda não tenha corrido
-        if (typeof QRCode === "undefined") {
-          setTimeout(() => regenerateQRCodes(), 150);
-          return;
+  <footer>
+    ⚙️ Dica: o valor do affiliate fica gravado no teu navegador (localStorage).
+    <span class="ok" id="lastAction"></span>
+  </footer>
+
+  <!-- ========= MODAL ========= -->
+  <div class="backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Pedido de informação</h3>
+      <p>Preenche os campos. O teu pedido será encaminhado internamente.</p>
+
+      <!-- Form VISÍVEL ao utilizador (não envia para o Google) -->
+      <form id="uiForm" class="form" novalidate>
+        <div>
+          <label for="nome">Nome</label>
+          <input id="nome" type="text" placeholder="O teu nome (opcional)" />
+        </div>
+        <div>
+          <label for="contacto">Contacto</label>
+          <input id="contacto" type="text" placeholder="Email ou telemóvel (opcional)" />
+        </div>
+        <div class="full">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" placeholder="Escreve aqui a tua mensagem (opcional)"></textarea>
+        </div>
+
+        <div class="actions full">
+          <button type="button" class="btn-sec" id="btnClose">Fechar</button>
+          <button type="submit" class="btn-pri">Enviar</button>
+        </div>
+        <p class="status full" id="formStatus">—</p>
+      </form>
+
+      <!-- Form REAL que é submetido ao Google Forms (oculto) -->
+      <iframe name="gform_iframe" class="hide"></iframe>
+      <form id="gform" class="hide" action="https://docs.google.com/forms/d/e/1FAIpQLSflzspmuBWoD3OA5cISJBwFWuLlIoYNpBAYi9KuG-fs2VYMjA/formResponse" method="POST" target="gform_iframe">
+        <!-- Nome do produto -->
+        <input type="hidden" name="entry.698615008" id="gf_prod" />
+        <!-- Nome do affiliate -->
+        <input type="hidden" name="entry.645159200" id="gf_aff" />
+        <!-- Texto agregado (Nome, Contacto, Mensagem) -->
+        <input type="hidden" name="entry.1002593961" id="gf_texto" />
+      </form>
+    </div>
+  </div>
+
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
+  <script>
+  (function(){
+    const SITE_BASE = "https://prontuarios.pt/";
+    const $aff = document.getElementById("affiliate");
+    const $btnUpdate = document.getElementById("btnUpdate");
+    const $status = document.getElementById("status");
+    const $lastAction = document.getElementById("lastAction");
+    const $catalog = document.getElementById("catalog");
+
+    const $backdrop = document.getElementById("modalBackdrop");
+    const $uiForm = document.getElementById("uiForm");
+    const $btnClose = document.getElementById("btnClose");
+    const $formStatus = document.getElementById("formStatus");
+    const $gform = document.getElementById("gform");
+    const $gf_prod = document.getElementById("gf_prod");
+    const $gf_aff = document.getElementById("gf_aff");
+    const $gf_txt = document.getElementById("gf_texto");
+
+    const enc = encodeURIComponent;
+    const qs = (s,c=document)=>c.querySelector(s);
+    const qsa=(s,c=document)=>Array.from(c.querySelectorAll(s));
+
+    function setStatus(msg, ok=false){ $status.textContent = msg; $status.style.color = ok ? "var(--accent-2)" : "var(--muted)"; }
+    function saveAff(v){ try{localStorage.setItem("prontuarios_aff", v||"")}catch{} }
+    function loadAff(){ try{return localStorage.getItem("prontuarios_aff")||""}catch{ return "" } }
+    function linkFor(product, affiliate){ const u = new URL(SITE_BASE); u.searchParams.set("p", product); u.searchParams.set("a", affiliate); return u.toString(); }
+    function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
+
+    // Gera QR para todos os cartões
+    function regen(){
+      const affiliate = ($aff.value||"").trim();
+      if(!affiliate){ setStatus("⚠️ Introduz um affiliate e clica em Atualizar."); return; }
+      saveAff(affiliate);
+      qsa(".card", $catalog).forEach(card=>{
+        const product = card.getAttribute("data-product") || qs(".name", card).textContent.trim();
+        const url = linkFor(product, affiliate);
+        // mostra link curto
+        const linkEl = qs("[data-link]", card); if(linkEl) linkEl.textContent = url;
+        // copy
+        const btnCopy = qs("[data-copy]", card);
+        if(btnCopy){
+          btnCopy.onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); btnCopy.textContent="Copiado!"; setTimeout(()=>btnCopy.textContent="Copiar URL",1200);}catch{ alert(url);} };
         }
-        new QRCode(qrBox, {
-          text: link,
-          width: 150,
-          height: 150,
-          correctLevel: QRCode.CorrectLevel.M
-        });
+        // qrcode
+        const box = qs("[data-qr]", card);
+        if(box){
+          clear(box);
+          if(typeof QRCode === "undefined"){ setTimeout(regen, 120); return; }
+          new QRCode(box, {text:url, width:150, height:150, correctLevel: QRCode.CorrectLevel.M});
+        }
+      });
+      setStatus("✅ QR Codes atualizados.", true);
+      $lastAction.textContent = " · Affiliate ativo: " + affiliate;
+    }
+
+    // Modal helpers
+    function openModal(){ $backdrop.style.display="flex"; $backdrop.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; }
+    function closeModal(){ $backdrop.style.display="none"; $backdrop.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
+
+    // Ler params
+    function getParam(n){ try{ return new URL(window.location.href).searchParams.get(n) }catch{ return null } }
+
+    // Se veio com ?p=...&a=... abrir modal e pré-preencher hidden para o Forms
+    function handleLanding(){
+      const p = getParam("p");
+      const a = getParam("a");
+      if(!p || !a) return;
+      $gf_prod.value = p;
+      $gf_aff.value = a;
+      openModal();
+    }
+
+    // Submissão: agregamos Nome/Contacto/Mensagem e submetemos ao Google Forms (form oculto em iframe)
+    $uiForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      const nome = (qs("#nome").value||"").trim();
+      const contacto = (qs("#contacto").value||"").trim();
+      const mensagem = (qs("#mensagem").value||"").trim();
+      const partes = [];
+      if(nome) partes.push("Nome: " + nome);
+      if(contacto) partes.push("Contacto: " + contacto);
+      if(mensagem) partes.push("Mensagem: " + mensagem);
+      $gf_txt.value = partes.join("\n");
+
+      // Segurança básica: garantir que produto/affiliate existem (se alguém abre o modal manualmente)
+      if(!$gf_prod.value || !$gf_aff.value){
+        $formStatus.textContent = "⚠️ Falta informação do produto/affiliate no URL.";
+        return;
       }
+
+      // Submeter de forma nativa (sem CORS) para o Google Forms
+      $formStatus.textContent = "A enviar…";
+      $gform.submit();
+
+      // Como o envio é para outro domínio num iframe oculto, assumimos sucesso após ~600ms
+      setTimeout(()=>{
+        $formStatus.textContent = "✅ Pedido enviado. Obrigado!";
+        $uiForm.reset();
+        setTimeout(closeModal, 900);
+      }, 650);
     });
 
-    setStatus("✅ QR Codes atualizados.", true);
-    $lastAction.textContent = " · Affiliate ativo: " + affiliate;
-  }
+    // Eventos UI
+    $btnUpdate.addEventListener("click", regen);
+    $btnClose.addEventListener("click", closeModal);
+    $backdrop.addEventListener("click", (e)=>{ if(e.target===$backdrop) closeModal(); });
 
-  // Inicializa valores guardados
-  $affiliateInput.value = loadAffiliateLocal();
-  if ($affiliateInput.value) {
-    // pré-gerar quando já existe affiliate guardado
-    window.addEventListener("load", regenerateQRCodes);
-  }
-
-  // Botão "Atualizar"
-  $btnAtualizar.addEventListener("click", regenerateQRCodes);
-
-  // ===== LADO “DESTINO” – quando o visitante chega com ?p=...&a=... abre o modal
-  function getParam(name) {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  }
-
-  function openModal() {
-    $backdrop.style.display = "flex";
-    $backdrop.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeModal() {
-    $backdrop.style.display = "none";
-    $backdrop.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  }
-
-  $btnFechar.addEventListener("click", closeModal);
-  $backdrop.addEventListener("click", (e) => { if (e.target === $backdrop) closeModal(); });
-
-  // Se vier com parâmetros, abrir pop-up e preencher escondidos
-  function handleLanding() {
-    const product = getParam("p");
-    const affiliate = getParam("a");
-    if (!product || !affiliate) return; // sem parâmetros, não abre
-    // Preenche campos escondidos para o Google Forms
-    $gProduto.value = product;
-    $gAfiliado.value = affiliate;
-    openModal();
-  }
-
-  // Submissão do formulário ao Google Forms
-  $leadForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    $formStatus.textContent = "A enviar…";
-
-    const nome = (document.getElementById("nome").value || "").trim();
-    const contacto = (document.getElementById("contacto").value || "").trim();
-    const mensagem = (document.getElementById("mensagem").value || "").trim();
-
-    // Monta bloco de texto para entry.1002593961
-    const blocos = [];
-    if (nome) blocos.push(`Nome: ${nome}`);
-    if (contacto) blocos.push(`Contacto: ${contacto}`);
-    if (mensagem) blocos.push(`Mensagem: ${mensagem}`);
-    const textoAgregado = blocos.join("\n");
-
-    $gTexto.value = textoAgregado;
-
-    // Construir payload (como application/x-www-form-urlencoded)
-    const formData = new URLSearchParams();
-    formData.set("entry.698615008", $gProduto.value);    // Nome do produto
-    formData.set("entry.645159200", $gAfiliado.value);   // Affiliate
-    formData.set("entry.1002593961", $gTexto.value);     // Texto agregado
-
-    try {
-      const resp = await fetch(FORM_ACTION, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: formData.toString(),
-        mode: "no-cors" // Google Forms não devolve CORS; consideramos envio concluído.
-      });
-      // Como não há CORS, assumimos sucesso se não houve erro de rede.
-      $formStatus.textContent = "✅ Pedido enviado. Obrigado!";
-      // Limpeza opcional
-      $leadForm.reset();
-      setTimeout(() => closeModal(), 900);
-    } catch (err) {
-      console.error(err);
-      $formStatus.textContent = "⚠️ Ocorreu um erro ao enviar. Tenta novamente.";
-    }
-  });
-
-  // Arranque
-  handleLanding();
-})();
-</script>
-<!-- ===== FIM ===== -->
+    // Arranque
+    $aff.value = loadAff();
+    if($aff.value){ window.addEventListener("load", regen); }
+    handleLanding();
+  })();
+  </script>
+</body>
+</html>
