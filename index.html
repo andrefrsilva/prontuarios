@@ -10,30 +10,44 @@
     :root{
       --bg:#0b0f14; --text:#eaf0f6; --muted:#9fb1c9;
       --panel:#101720; --border:#213043; --ring:rgba(59,160,255,.35);
-      --accent:#3ba0ff; --accent-2:#59d0a0; --shadow:0 8px 24px rgba(0,0,0,.35);
+      --accent:#3ba0ff; --accent-2:#59d0a0; --shadow:0 10px 28px rgba(0,0,0,.35);
       --radius:18px;
 
       --card-font-head:"Marcellus", serif;
       --card-font-body:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial;
 
-      --card-ratio:1.5;            /* 3:2 landscape */
-      --right-col:20%;
-      --left-col:80%;
+      /* Cartões no site: maiores em desktop */
+      --site-card-min: 520px;     /* largura mínima do cartão em desktop */
+      --site-card-ratio: 3/2;     /* 3:2 landscape */
 
-      --card-top-left-size:28px;
-      --card-bottom-left-size:24px;
-      --card-text-color:#0a0e14;   /* texto escuro para fundo branco */
+      /* Layout interno do cartão (80/20) */
+      --right-col: 20%;
+      --left-col: 80%;
+
+      /* Texto (site) com clamp para escalar sem overflow */
+      --tl-size: clamp(20px, 2.4vw, 40px);
+      --bl-size: clamp(18px, 2.1vw, 34px);
+
+      /* Texto impresso (o canvas ajusta automaticamente) */
+      --card-text-color: #0a0e14;   /* preto elegante */
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Inter",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 var(--card-font-body)}
     a{color:var(--accent);text-decoration:none}
 
-    header{max-width:1200px;margin:28px auto 10px;padding:0 16px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+    header{
+      max-width:1200px;margin:28px auto 10px;padding:0 16px;
+      display:flex;gap:10px;align-items:center;justify-content:space-between
+    }
     .brand{font-weight:800;font-size:clamp(20px,2.6vw,28px)}
-    .panel{background:linear-gradient(180deg,#0f1520,#0c131c);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:var(--radius);padding:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .field{display:flex;gap:10px;align-items:center;flex:1 1 320px}
+    .panel{
+      background:linear-gradient(180deg,#0f1520,#0c131c);
+      border:1px solid var(--border); box-shadow:var(--shadow);
+      border-radius:var(--radius); padding:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center
+    }
+    .field{display:flex;gap:10px;align-items:center;flex:1 1 360px}
     .field label{font-size:13px;color:var(--muted);white-space:nowrap}
     .field input{flex:1;background:#0e1621;border:1px solid #1e2a3a;color:var(--text);padding:10px 12px;border-radius:12px;outline:none;transition:box-shadow .2s,border-color .2s}
     .field input:focus{border-color:#2a3e57;box-shadow:0 0 0 4px var(--ring)}
@@ -42,30 +56,35 @@
     .status{font-size:12px;color:var(--muted)}
 
     main{max-width:1200px;margin:0 auto;padding:0 16px 40px}
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));align-items:start}
+    .grid{
+      display:grid;gap:22px;
+      grid-template-columns:repeat(auto-fill,minmax(min(100%, var(--site-card-min)),1fr));
+      align-items:start
+    }
 
-    /* Cartão (proporção 3:2) */
+    /* Cartão (site) */
     .card{
       background:#fff;color:var(--card-text-color);
       border-radius:16px;border:1px solid #e8ecf2;
       box-shadow:0 10px 30px rgba(0,0,0,.25);
-      width:100%;aspect-ratio:3/2;
+      width:100%;aspect-ratio:var(--site-card-ratio);
       display:grid;grid-template-columns:var(--left-col) var(--right-col);grid-template-rows:1fr 1fr;gap:0;
       position:relative;overflow:hidden;
       font-family:var(--card-font-body);
     }
-    .cell{display:flex;align-items:center;justify-content:center;padding:10px}
-    .cell.left{padding:14px}
-    .cell.top-left{font-family:var(--card-font-head);font-size:var(--card-top-left-size);text-align:center}
-    .cell.bottom-left{font-family:var(--card-font-head);font-size:var(--card-bottom-left-size);text-align:center}
+    .cell{display:flex;align-items:center;justify-content:center;padding:14px}
+    .cell.top-left{font-family:var(--card-font-head); font-size:var(--tl-size); text-align:center}
+    .cell.bottom-left{font-family:var(--card-font-head); font-size:var(--bl-size); text-align:center}
+    .cell.top-right,.cell.bottom-right{padding:10px}
     .logo{max-width:100%;max-height:80%;object-fit:contain;display:block;margin:auto}
     .qrbox{width:100%;height:100%;display:grid;place-items:center}
-    .qrbox>div{width:min(90%,160px)!important;height:min(90%,160px)!important}
+    .qrbox>div{width:min(92%,180px)!important;height:min(92%,180px)!important}
 
-    .meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;position:absolute;left:10px;right:10px;bottom:10px}
-    .link{font-size:12px;color:#5d6a7f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%}
+    /* Meta por baixo do cartão (não por cima) */
+    .meta-wrap{display:flex;align-items:center;gap:12px;margin-top:6px;color:#5d6a7f}
+    .link{font-size:12px;color:#5d6a7f;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
     .copy{font-size:12px;border:1px solid #e3e7ef;padding:6px 10px;border-radius:10px;background:#f6f8fc;color:#1d2736;cursor:pointer}
-    .select-print{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:#5d6a7f}
+    .select-print{display:flex;align-items:center;gap:6px;font-size:12px}
 
     footer{max-width:1200px;margin:16px auto 40px;padding:0 16px;font-size:12px;color:var(--muted)}
     footer .ok{color:var(--accent-2);font-weight:700}
@@ -83,22 +102,21 @@
     .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
     .btn-pri{background:linear-gradient(135deg,var(--accent-2),#78e3b3);color:#062017;font-weight:900;padding:10px 16px;border-radius:12px;cursor:pointer;border:0}
 
-    /* Composer 10×15 (offscreen) */
-    #printComposer{position:fixed;left:-9999px;top:-9999px;width:1772px;height:1181px;background:#fff;display:grid;grid-template-rows:1fr 1fr}
-    .print-slot{position:relative;width:100%;height:100%;background:#fff;display:grid;place-items:center}
-    .print-card{width:1640px;height:1093px;background:#fff;display:grid;grid-template-columns:var(--left-col) var(--right-col);grid-template-rows:1fr 1fr}
+    /* Composer 10×15 (offscreen) — não usa CSS externo */
+    #offscreen{position:fixed;left:-9999px;top:-9999px}
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">v3 prontuarios.pt</div>
+    <div class="brand">v4 prontuarios.pt</div>
     <div class="panel" role="group" aria-label="Controlo">
       <div class="field">
         <label for="affiliate">Affiliate</label>
         <input id="affiliate" type="text" placeholder="ex.: afiliado_joao" autocomplete="off" />
       </div>
       <button class="btn" id="btnUpdate">Atualizar QR Codes</button>
-      <button class="btn-sec" id="btnExport">Exportar 10×15 (PNG)</button>
+      <button class="btn-sec" id="btnExportPNG">Exportar 10×15 (PNG)</button>
+      <button class="btn-sec" id="btnExportPDF">Exportar 10×15 (PDF)</button>
       <span class="status" id="status">—</span>
     </div>
   </header>
@@ -106,49 +124,56 @@
   <main>
     <section>
       <h2 style="margin:18px 0 6px;font-size:20px;">Catálogo</h2>
+
       <div class="grid" id="catalog">
-        <!-- DUPLICA estes cartões e edita data-* -->
-        <article class="card" data-product="Manual de Onboarding"
-                 data-top-left="Manual de Onboarding"
-                 data-bottom-left="Acelera a integração">
-          <div class="cell top-left left"><div class="tl">Manual de Onboarding</div></div>
-          <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
-          <div class="cell bottom-left left"><div class="bl">Acelera a integração</div></div>
-          <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
-          <div class="meta">
+        <!-- ==== DUPLICA ESTES CARTÕES ==== -->
+        <div>
+          <article class="card" data-product="Manual de Onboarding"
+                   data-top-left="Manual de Onboarding"
+                   data-bottom-left="Acelera a integração">
+            <div class="cell top-left"><div class="tl">Manual de Onboarding</div></div>
+            <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
+            <div class="cell bottom-left"><div class="bl">Acelera a integração</div></div>
+            <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
+          </article>
+          <div class="meta-wrap">
             <span class="link" data-link>—</span>
             <label class="select-print"><input type="checkbox" data-select /> Selecionar p/ impressão</label>
             <button class="copy" data-copy>Copiar URL</button>
           </div>
-        </article>
+        </div>
 
-        <article class="card" data-product="Template de Proposta"
-                 data-top-left="Template de Proposta"
-                 data-bottom-left="Feche negócios com clareza">
-          <div class="cell top-left left"><div class="tl">Template de Proposta</div></div>
-          <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
-          <div class="cell bottom-left left"><div class="bl">Feche negócios com clareza</div></div>
-          <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
-          <div class="meta">
+        <div>
+          <article class="card" data-product="Template de Proposta"
+                   data-top-left="Template de Proposta"
+                   data-bottom-left="Feche negócios com clareza">
+            <div class="cell top-left"><div class="tl">Template de Proposta</div></div>
+            <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
+            <div class="cell bottom-left"><div class="bl">Feche negócios com clareza</div></div>
+            <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
+          </article>
+          <div class="meta-wrap">
             <span class="link" data-link>—</span>
             <label class="select-print"><input type="checkbox" data-select /> Selecionar p/ impressão</label>
             <button class="copy" data-copy>Copiar URL</button>
           </div>
-        </article>
+        </div>
 
-        <article class="card" data-product="Checklist de Auditoria"
-                 data-top-left="Checklist de Auditoria"
-                 data-bottom-left="Rigor e conformidade">
-          <div class="cell top-left left"><div class="tl">Checklist de Auditoria</div></div>
-          <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
-          <div class="cell bottom-left left"><div class="bl">Rigor e conformidade</div></div>
-          <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
-          <div class="meta">
+        <div>
+          <article class="card" data-product="Checklist de Auditoria"
+                   data-top-left="Checklist de Auditoria"
+                   data-bottom-left="Rigor e conformidade">
+            <div class="cell top-left"><div class="tl">Checklist de Auditoria</div></div>
+            <div class="cell top-right"><img class="logo" src="https://i.postimg.cc/J0vfbk2B/image.png" alt="Logótipo" /></div>
+            <div class="cell bottom-left"><div class="bl">Rigor e conformidade</div></div>
+            <div class="cell bottom-right"><div class="qrbox" data-qr></div></div>
+          </article>
+          <div class="meta-wrap">
             <span class="link" data-link>—</span>
             <label class="select-print"><input type="checkbox" data-select /> Selecionar p/ impressão</label>
             <button class="copy" data-copy>Copiar URL</button>
           </div>
-        </article>
+        </div>
       </div>
     </section>
   </main>
@@ -187,15 +212,12 @@
     </div>
   </div>
 
-  <!-- Composer 10×15 -->
-  <div id="printComposer">
-    <div class="print-slot" id="slotTop"></div>
-    <div class="print-slot" id="slotBottom"></div>
-  </div>
+  <!-- Offscreen helpers -->
+  <div id="offscreen"></div>
 
   <!-- libs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 
   <script>
   (function(){
@@ -207,11 +229,13 @@
 
     // ====== SITE / QR ======
     const SITE_BASE = "https://prontuarios.pt/";
+    const LOGO_URL = "https://i.postimg.cc/J0vfbk2B/image.png";
 
     // ====== ELEMENTOS ======
     const $aff = document.getElementById("affiliate");
     const $btnUpdate = document.getElementById("btnUpdate");
-    const $btnExport = document.getElementById("btnExport");
+    const $btnExportPNG = document.getElementById("btnExportPNG");
+    const $btnExportPDF = document.getElementById("btnExportPDF");
     const $status = document.getElementById("status");
     const $lastAction = document.getElementById("lastAction");
     const $catalog = document.getElementById("catalog");
@@ -220,6 +244,7 @@
     const $uiForm = document.getElementById("uiForm");
     const $btnClose = document.getElementById("btnClose");
     const $formStatus = document.getElementById("formStatus");
+    const $offscreen = document.getElementById("offscreen");
 
     const qs=(s,c=document)=>c.querySelector(s);
     const qsa=(s,c=document)=>Array.from(c.querySelectorAll(s));
@@ -229,28 +254,38 @@
     function linkFor(product, affiliate){ const u = new URL(SITE_BASE); u.searchParams.set("p", product); u.searchParams.set("a", affiliate); return u.toString(); }
     function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
 
-    // ====== QR CODES ======
+    // ====== QR CODES NO SITE ======
     function regen(){
       const affiliate = ($aff.value||"").trim();
       if(!affiliate){ setStatus("⚠️ Introduz um affiliate e clica em Atualizar."); return; }
       saveAff(affiliate);
-      qsa(".card", $catalog).forEach(card=>{
+      qsa(".card", $catalog).forEach(holder=>{
+        const card = holder; // article
+        const wrap = card.parentElement; // div à volta (para meta)
         const product = card.getAttribute("data-product") || "Produto";
         const url = linkFor(product, affiliate);
-        const tl = card.getAttribute("data-top-left");
-        const bl = card.getAttribute("data-bottom-left");
-        if (tl) { const el = qs(".tl", card); if (el) el.textContent = tl; }
-        if (bl) { const el = qs(".bl", card); if (el) el.textContent = bl; }
-        const linkEl = qs("[data-link]", card); if(linkEl) linkEl.textContent = url;
-        const btnCopy = qs("[data-copy]", card);
+
+        // textos editáveis
+        const tlTxt = card.getAttribute("data-top-left") || qs(".tl", card)?.textContent || "";
+        const blTxt = card.getAttribute("data-bottom-left") || qs(".bl", card)?.textContent || "";
+        const elTL = qs(".tl", card); if(elTL) elTL.textContent = tlTxt;
+        const elBL = qs(".bl", card); if(elBL) elBL.textContent = blTxt;
+
+        // url por baixo
+        const linkEl = qs("[data-link]", wrap); if(linkEl) linkEl.textContent = url;
+
+        // copiar
+        const btnCopy = qs("[data-copy]", wrap);
         if(btnCopy){
           btnCopy.onclick = async ()=>{ try{ await navigator.clipboard.writeText(url); btnCopy.textContent="Copiado!"; setTimeout(()=>btnCopy.textContent="Copiar URL",1200);}catch{ alert(url);} };
         }
+
+        // qrcode
         const qrbox = qs("[data-qr]", card);
         if(qrbox){
           clear(qrbox);
           if(typeof QRCode === "undefined"){ setTimeout(regen,120); return; }
-          new QRCode(qrbox, { text:url, width:160, height:160, correctLevel: QRCode.CorrectLevel.M });
+          new QRCode(qrbox, { text:url, width:180, height:180, correctLevel: QRCode.CorrectLevel.M });
         }
       });
       setStatus("✅ QR Codes atualizados.", true);
@@ -266,32 +301,31 @@
       const p = getParam("p");
       const a = getParam("a");
       if(!p || !a) return;
-      window.__landing = { produto:p, affiliate:a }; // guardamos para o envio
+      window.__landing = { produto:p, affiliate:a }; // guardamos para envio
       openModal();
     }
 
-    // ====== ENVIO DIRETO PARA GOOGLE FORMS (nova aba; sem iframe/sem fetch) ======
-    function postToGoogleForms(produto, affiliate, texto){
-      // criamos um form temporário, escondido, com target=_blank
+    // ====== ENVIO “INTERNO” SEM APPS SCRIPT (janela 1×1 que fecha sozinha) ======
+    function postToGoogleFormsHidden(produto, affiliate, texto){
+      // 1) Abrir janela minúscula controlada por JS
+      const win = window.open("about:blank", "gforms_win", "noopener,noreferrer,width=1,height=1,left=0,top=0");
+      if(!win) { alert("Desativa o bloqueador de pop-ups para enviar o formulário."); return; }
+
+      // 2) Criar form temporário com target nessa janela
       const form = document.createElement("form");
       form.method = "POST";
       form.action = FORM_ACTION;
-      form.target = "_blank";
-      form.style.position = "absolute";
-      form.style.left = "-9999px";
-
-      const mk = (name, val) => { const i = document.createElement("input"); i.type="hidden"; i.name=name; i.value=val; return i; };
+      form.target = "gforms_win";
+      form.style.position="absolute"; form.style.left="-9999px";
+      const mk=(name,val)=>{const i=document.createElement("input"); i.type="hidden"; i.name=name; i.value=val; return i;};
       form.appendChild(mk(ENTRY_PROD, produto));
       form.appendChild(mk(ENTRY_AFF,  affiliate));
-      form.appendChild(mk(ENTRY_TXT,  texto || ""));
-
-      // Opcional: estes campos ajudam em alguns formulários (não é obrigatório)
-      // form.appendChild(mk("fvv","1"));
-      // form.appendChild(mk("fbzx", Date.now().toString()));
-      // form.appendChild(mk("pageHistory","0"));
-
+      form.appendChild(mk(ENTRY_TXT,  texto||""));
       document.body.appendChild(form);
-      form.submit();           // abre nova aba do Google com a confirmação
+
+      // 3) Submeter & fechar a janela discretamente após curto período
+      form.submit();
+      setTimeout(()=>{ try{ win.close(); }catch{} }, 1500); // tempo suficiente p/ enviar
       form.remove();
     }
 
@@ -314,64 +348,152 @@
       }
 
       $formStatus.textContent = "A enviar…";
-      postToGoogleForms(produto, affiliate, texto);
-      $formStatus.textContent = "✅ Abrimos uma nova aba do Google Forms para concluir o envio.";
-      // Não fechamos imediatamente para o utilizador ler; se quiseres, fecha após X ms:
-      setTimeout(closeModal, 1200);
+      postToGoogleFormsHidden(produto, affiliate, texto);
+      $formStatus.textContent = "✅ Pedido enviado.";
+      setTimeout(closeModal, 900);
       $uiForm.reset();
     });
 
     $btnClose.addEventListener("click", closeModal);
     $backdrop.addEventListener("click", (e)=>{ if(e.target===$backdrop) closeModal(); });
 
-    // ====== EXPORTAÇÃO 10×15 (PNG com 2 cartões) ======
-    async function export10x15(){
-      const selected = qsa(".card input[data-select]:checked").map(cb=>cb.closest(".card"));
-      let toExport = selected.slice(0,2);
-      if(toExport.length===0) toExport = qsa(".card").slice(0,2);
-      if(toExport.length===1) toExport = [toExport[0], toExport[0]];
+    // ====== EXPORTAÇÃO 10×15 (pares) — Canvas 2D (alta qualidade) ======
+    const SHEET_W = 1772, SHEET_H = 1181;   // 10×15 landscape ~300dpi
+    const HALF_H  = Math.floor(SHEET_H/2);
+    const RIGHT_W = Math.round(SHEET_W * 0.20);
+    const LEFT_W  = SHEET_W - RIGHT_W;
 
-      const composer = document.getElementById("printComposer");
-      const slotTop = document.getElementById("slotTop");
-      const slotBottom = document.getElementById("slotBottom");
-      slotTop.innerHTML = ""; slotBottom.innerHTML = "";
+    function fitFont(ctx, text, maxW, maxH, prefPx, fontFamily){
+      let lo=8, hi=prefPx||64, best=12;
+      while(lo<=hi){
+        const mid=(lo+hi>>1);
+        ctx.font = `600 ${mid}px ${fontFamily}`;
+        const m = ctx.measureText(text);
+        const h = mid*1.2;
+        if(m.width<=maxW && h<=maxH){ best=mid; lo=mid+1; } else hi=mid-1;
+      }
+      ctx.font = `600 ${best}px ${fontFamily}`;
+      return best;
+    }
 
-      toExport.forEach((card, idx)=>{
-        const clone = card.cloneNode(true);
-        clone.style.width = "1640px";
-        clone.style.height = "545px";
-        clone.style.boxShadow = "none";
-        clone.style.border = "1px solid #ddd";
-        clone.style.background = "#fff";
-        clone.querySelectorAll(".meta").forEach(m=>m.remove());
-        const qrBox = clone.querySelector(".qrbox");
-        if(qrBox){ qrBox.innerHTML = ""; }
-        const linkEl = card.querySelector("[data-link]");
-        const url = linkEl ? linkEl.textContent : "";
-        if (qrBox && url) new QRCode(qrBox, { text:url, width:220, height:220, correctLevel: QRCode.CorrectLevel.Q });
-        (idx===0?slotTop:slotBottom).appendChild(clone);
+    function drawCenteredText(ctx, text, x, y, w, h, prefPx, family){
+      ctx.save();
+      const size = fitFont(ctx, text, w*0.9, h*0.8, prefPx, family);
+      ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillStyle="#0a0e14";
+      ctx.fillText(text, x + w/2, y + h/2);
+      ctx.restore();
+    }
+
+    function makeQRDataURL(url, size=260){
+      return new Promise((resolve)=>{
+        const holder = document.createElement("div");
+        holder.style.position="absolute"; holder.style.left="-9999px"; $offscreen.appendChild(holder);
+        const qr = new QRCode(holder, { text:url, width:size, height:size, correctLevel: QRCode.CorrectLevel.Q });
+        // obter canvas ou img
+        setTimeout(()=>{
+          let dataURL=null;
+          const cv = holder.querySelector("canvas");
+          if(cv){ dataURL = cv.toDataURL("image/png"); }
+          else{
+            const img = holder.querySelector("img");
+            dataURL = img?.src || null;
+          }
+          holder.remove();
+          resolve(dataURL);
+        }, 50);
       });
+    }
 
-      try{
-        const node = composer;
-        const dataUrl = await htmlToImage.toPng(node, { pixelRatio:1, quality:1 });
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = "prontuarios-10x15.png";
-        document.body.appendChild(a); a.click(); a.remove();
-        setStatus("✅ PNG 10×15 gerado.", true);
-      }catch(err){
-        console.error(err);
-        setStatus("⚠️ Não foi possível gerar a imagem.");
+    async function renderPairToCanvas(cardA, cardB){
+      const canvas = document.createElement("canvas");
+      canvas.width = SHEET_W; canvas.height = SHEET_H;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,SHEET_W,SHEET_H);
+
+      const cards = [cardA, cardB];
+      for(let i=0;i<2;i++){
+        const card = cards[i];
+        const y0 = i===0 ? 0 : HALF_H;
+        // borda leve
+        ctx.strokeStyle="#e5e9f2"; ctx.lineWidth=2; ctx.strokeRect(8, y0+8, SHEET_W-16, HALF_H-16);
+
+        const product   = card.getAttribute("data-product") || "Produto";
+        const topLeft   = card.getAttribute("data-top-left") || qs(".tl", card)?.textContent || product;
+        const bottomLeft= card.getAttribute("data-bottom-left") || qs(".bl", card)?.textContent || "";
+        const url       = qs("[data-link]", card.parentElement)?.textContent || "";
+
+        // Esquerda (texto)
+        drawCenteredText(ctx, topLeft,  12, y0+12, LEFT_W-24, (HALF_H/2)-24, 60, "Marcellus, serif");
+        drawCenteredText(ctx, bottomLeft,12, y0+(HALF_H/2)+12, LEFT_W-24, (HALF_H/2)-24, 48, "Marcellus, serif");
+
+        // Direita top: LOGO
+        const logoImg = new Image(); logoImg.crossOrigin="anonymous"; logoImg.src = LOGO_URL;
+        await new Promise(res=>{ logoImg.onload=res; logoImg.onerror=res; });
+        const logoBoxW=RIGHT_W-24, logoBoxH=(HALF_H/2)-24;
+        let lw = logoImg.naturalWidth, lh = logoImg.naturalHeight;
+        const lr = Math.min(logoBoxW/lw, logoBoxH/lh);
+        lw=Math.floor(lw*lr); lh=Math.floor(lh*lr);
+        ctx.drawImage(logoImg, LEFT_W + (RIGHT_W-lw)/2, y0+12 + (logoBoxH-lh)/2, lw, lh);
+
+        // Direita bottom: QR
+        const qrData = await makeQRDataURL(url, 300);
+        if(qrData){
+          const qrImg = new Image(); qrImg.src = qrData;
+          await new Promise(res=>{ qrImg.onload=res; qrImg.onerror=res; });
+          const qbW=RIGHT_W-24, qbH=(HALF_H/2)-24;
+          const qSize = Math.floor(Math.min(qbW, qbH));
+          ctx.drawImage(qrImg, LEFT_W + (RIGHT_W-qSize)/2, y0+(HALF_H/2)+12 + (qbH-qSize)/2, qSize, qSize);
+        }
+      }
+      return canvas;
+    }
+
+    function downloadDataURL(dataURL, name){
+      const a=document.createElement("a"); a.href=dataURL; a.download=name;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    async function exportPairs(as="png"){
+      const cards = qsa(".card", $catalog);
+      if(cards.length===0){ setStatus("Sem cartões.", false); return; }
+
+      // Garante que cada cartão tem link pronto (se o utilizador não clicou “Atualizar”)
+      if(!($aff.value||"").trim()){ $aff.value="affiliate_demo"; regen(); }
+
+      const pairs = [];
+      for(let i=0;i<cards.length;i+=2){
+        const a = cards[i];
+        const b = cards[i+1] || cards[i]; // duplica se ímpar
+        pairs.push([a,b]);
+      }
+
+      if(as==="pdf"){
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation:"landscape", unit:"mm", format:[150,100] }); // 150×100 mm ≈ 10×15
+        for(let p=0;p<pairs.length;p++){
+          if(p>0) pdf.addPage();
+          const canvas = await renderPairToCanvas(pairs[p][0], pairs[p][1]);
+          const data = canvas.toDataURL("image/png", 1.0);
+          pdf.addImage(data, "PNG", 0, 0, 150, 100);
+        }
+        pdf.save("prontuarios-10x15.pdf");
+        setStatus("✅ PDF 10×15 gerado.", true);
+      }else{
+        for(let p=0;p<pairs.length;p++){
+          const canvas = await renderPairToCanvas(pairs[p][0], pairs[p][1]);
+          const data = canvas.toDataURL("image/png", 1.0);
+          downloadDataURL(data, `prontuarios-10x15-${p+1}.png`);
+        }
+        setStatus("✅ PNG(s) 10×15 gerado(s).", true);
       }
     }
 
     // ====== ARRANQUE ======
     $btnUpdate.addEventListener("click", regen);
-    $btnExport.addEventListener("click", export10x15);
+    $btnExportPNG.addEventListener("click", ()=>exportPairs("png"));
+    $btnExportPDF.addEventListener("click", ()=>exportPairs("pdf"));
     $aff.value = loadAff();
     if($aff.value){ window.addEventListener("load", regen); }
-    // Garante algum conteúdo de QR mesmo sem affiliate (para preview)
     window.addEventListener("load", ()=>{ if(!$aff.value){ $aff.value="affiliate_demo"; regen(); } });
     handleLanding();
   })();
