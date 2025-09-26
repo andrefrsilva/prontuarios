@@ -1,1528 +1,334 @@
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/zvXJpKLP/image-8.png">
-  <meta property="og:title" content="Prontuários">
-<meta property="og:description" content="Prontuários para a disciplina de Decisão Terapêutica!">
-<meta property="og:image" content="https://i.postimg.cc/zvXJpKLP/image-8.png">
-<meta property="og:url" content="https://prontuarios.pt">
-<meta name="twitter:card" content="summary_large_image">
-  <script src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-  
-    <title>Prontuários</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-</head>
-
-<body>
-  
-<center>
-  <a href="https://prontuarios.pt/">
-    <img src="https://i.postimg.cc/Vv2sxds8/PRONTU-RIO-TERAP-UTICO-07-10-2024-2.gif" width="300">
-  </a>
-</center>
-
-<div class="container">
-  <img class="drug-box" src="https://i.postimg.cc/zvXJpKLP/image-8.png" alt="Drug box" data-id="1">
-  <img class="drug-box" src="https://i.postimg.cc/Y9XS5dww/image-8.png" alt="Drug box" data-id="2">
-  <img class="drug-box" src="https://i.postimg.cc/y6bdnpPm/image-8-C-pia.png" alt="Drug box" data-id="3">
-  <img class="drug-box" src="https://i.postimg.cc/15Vzd0CL/image-8-C-pia.png" alt="Drug box" data-id="4">
-  <img class="drug-box" src="https://i.postimg.cc/7LwYbFHk/image-8-C-pia.png" alt="Drug box" data-id="5">
-</div>
-
-<div id="mynetwork" style="display: none;"></div>
-  
-<div class="info-sections">
-  <div id="section-1" class="info-section">
-    <h1>Paracetamol</h1>
-    
-  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
-
-  <br /><br />
-  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
-
-  <label>
-    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
-    Ver Todos os Descendentes ao Clicar
-  </label>
-  <br><br>
-
-  <label>
-    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
-  </label>
-  
-  <div id="groupToggles"></div>
-
-  <!--<div id="mynetwork"></div>-->
-
-  <input type="text" id="dataURL" style="display:none;"/>
-  <button id="loadDataButton" style="display:none;">Load</button>
-  <button id="shareButton" style="display:none;">Share</button> 
-  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
-  <button onclick="degree()" style="display:none;">Info</button>
-  <canvas id="degreeChart"></canvas>
-  <div id="nodeDegreeResults" style="display:none;"></div>
-  <br /><br />
-  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
-  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
-  <canvas id="clusteringChart"></canvas>
-  <div id="clusteringResults" style="display:none;"></div>
-    
-   <h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
-<p><strong>Denominação Comum Internacional (DCI):</strong> Paracetamol (Acetaminofeno).</p>
-<p><strong>Grupo farmacoterapêutico:</strong> Analgésicos não opiáceos e antipiréticos. Código ATC: N02BE01. Pertence à classe das anilidas derivadas do para-aminofenol, com efeito analgésico e antipirético, mas pouca ação anti-inflamatória.</p>
-
-<h2>2. Indicações Principais</h2>
-<p>O paracetamol é utilizado para o tratamento sintomático de:</p>
-<ul>
-    <li>Dores ligeiras a moderadas, como cefaleias, enxaquecas, dores dentárias, otalgias, dores traumáticas, musculares e articulares.</li>
-    <li>Febre associada a estados gripais, pós-vacinação, ou outras condições febris.</li>
-    <li>Osteoartrose e outras condições reumáticas não inflamatórias.</li>
-    <li>Dismenorreia.</li>
-    <li>Alívio da dor pré e pós-operatória.</li>
-</ul>
-<p>É também um analgésico de primeira linha para a maioria das formas de dor aguda e crónica, podendo ser utilizado isoladamente para dores ligeiras ou em combinação com outros analgésicos (como opioides ou AINEs) para dores mais intensas.</p>
-
-<h2>3. Mecanismos de Ação</h2>
-<ul>
-    <li>Inibe a síntese de prostaglandinas no SNC, atuando como co-substrato redutor no que se pensa ser a COX-3 (uma variante diferente das COX-1 e COX-2), resultando em analgesia e antipirese.</li>
-    <li>Atua no centro de termorregulação do hipotálamo, reduzindo as concentrações de prostaglandina E2 (PGE2) e promovendo vasodilatação e sudorese para reduzir a febre.</li>
-    <li>Tem pouca inibição periférica das prostaglandinas, justificando a ausência de ação anti-inflamatória significativa, devido à inibição da sua ação por peróxidos nos tecidos inflamados.</li>
-    <li>Pode também ativar vias serotoninérgicas descendentes e inibir a recaptação de canabinoides endógenos, contribuindo para o seu efeito analgésico.</li>
-    <li>Não interfere na função plaquetária nem causa irritação gastrointestinal, diferenciando-se dos AINEs.</li>
-</ul>
-
-<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
-<p><strong>Adultos:</strong> A dose habitual de paracetamol para adultos é de 500 mg a 1 g, administrada 2 a 4 vezes por dia. Deve ser respeitado um intervalo mínimo de 4 horas entre as administrações, preferencialmente de 6 a 8 horas. A dose máxima diária não deve exceder 4 g para evitar o risco de hepatotoxicidade.</p>
-
-<p><strong>População pediátrica:</strong> A dosagem para crianças deve ser ajustada conforme o peso corporal, com base na recomendação de <strong>10 a 15 mg/kg/dose</strong>, administrada a cada 4 a 6 horas. A dose máxima diária para crianças é de <strong>60 mg/kg/dia</strong>, sem exceder 4 doses em 24 horas. Existem formulações pediátricas específicas.</p>
-
-<p><strong>Insuficiência hepática:</strong> Em doentes com insuficiência hepática, a dose de paracetamol deve ser reduzida para um máximo de <strong>2 g/dia</strong>, devido ao risco aumentado de toxicidade hepática. Monitorização frequente da função hepática é essencial.</p>
-
-<p><strong>Insuficiência renal:</strong> O ajustamento da dose depende do clearance de creatinina (ClCr):
-<ul>
-    <li><strong>ClCr 50-10 ml/min:</strong> 500 mg a cada 6 horas.</li>
-    <li><strong>ClCr &lt;10 ml/min:</strong> 500 mg a cada 8 horas.</li>
-</ul>
-Monitorização da função renal é recomendada em casos de insuficiência renal grave.</p>
-
-<p><strong>Via de administração:</strong> Paracetamol pode ser administrado por via oral (tem biodisponibilidade de 88% e atinge o pico de concentração plasmática 90 minutos depois da ingestão), retal ou intravenosa (IV). A via IV deve ser reservada para pacientes incapazes de tomar medicamentos por via oral e, devido ao custo elevado, deve ser substituída pela via oral o mais rapidamente possível.</p>
-
-<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
-<p><strong>Efeitos adversos comuns:</strong> O paracetamol é geralmente bem tolerado, mas pode causar náuseas, vómitos, sonolência ligeira e sudorese.</p>
-
-<p><strong>Efeitos adversos raros:</strong> Reações alérgicas graves (anafilaxia), trombocitopenia e agranulocitose, alterações hepáticas, incluindo hepatite medicamentosa.</p>
-
-<p><strong>Precauções:</strong> O uso prolongado de paracetamol pode levar à hepatotoxicidade, especialmente em doentes com:
-<ul>
-    <li><strong>Alcoolismo crónico:</strong> Aumento da produção de NAPQI, com risco aumentado de toxicidade hepática.</li>
-    <li><strong>Malnutrição e baixo peso corporal:</strong> Depleção das reservas de glutationo, aumentando o risco de dano hepático.</li>
-    <li><strong>Insuficiência hepática grave:</strong> Monitorização rigorosa da função hepática.</li>
-</ul>
-Em casos de sobredosagem, acetilcisteína deve ser administrada para prevenir hepatotoxicidade.</p>
-
-<h2>6. Interações Clinicamente Relevantes</h2>
-<ul>
-    <li><strong>Indutores enzimáticos</strong> (carbamazepina, fenitoína): Aumentam a produção de NAPQI, aumentando o risco de hepatotoxicidade.</li>
-    <li><strong>Álcool crónico:</strong> Potencia o risco de toxicidade hepática.</li>
-</ul>
-
-<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
-
-<ul>
-    <li><strong>Gravidez:</strong> O paracetamol é considerado seguro durante a gravidez quando utilizado em doses adequadas, sendo a escolha preferida para o alívio da dor e febre. Deve ser utilizado na menor dose eficaz e pelo menor período de tempo possível para evitar possíveis riscos ao feto.</li>
-
-    <li><strong>Aleitamento:</strong> Paracetamol é excretado no leite materno em quantidades insignificantes, o que o torna seguro para uso durante a amamentação. Não há efeitos adversos significativos conhecidos em lactentes expostos ao paracetamol através do leite materno.</li>
-
-    <li><strong>Idosos:</strong> Nos idosos, não há necessidade de ajuste de dose em geral, mas é importante considerar a função hepática e renal. A possibilidade de polimedicação e interações com outros fármacos deve ser cuidadosamente monitorizada, especialmente em casos de insuficiência renal ou hepática subjacentes.</li>
-
-    <li><strong>Insuficiência hepática:</strong> Em doentes com insuficiência hepática leve a moderada, a dose deve ser reduzida, com monitorização frequente da função hepática. Em casos graves, como cirrose descompensada, o uso de paracetamol deve ser restrito ou cuidadosamente monitorizado devido ao risco de hepatotoxicidade.</li>
-
-    <li><strong>Insuficiência renal:</strong> A insuficiência renal grave requer ajustes na dose e no intervalo de administração para evitar a acumulação de metabolitos tóxicos. Recomenda-se monitorização rigorosa da função renal em doentes com insuficiência renal crónica, especialmente quando a depuração de creatinina é inferior a 30 mL/min.</li>
-
-    <li><strong>Alcoolismo crónico:</strong> O uso de paracetamol em alcoólicos crónicos deve ser limitado a doses menores, como 2 g/dia, devido ao aumento da produção de NAPQI e à depleção das reservas de glutationo, aumentando o risco de hepatotoxicidade. A função hepática deve ser monitorizada com frequência.</li>
-
-    <li><strong>Baixo peso corporal (menos de 50 kg):</strong> Doentes com peso corporal abaixo de 50 kg devem receber doses reduzidas de paracetamol, uma vez que o risco de toxicidade hepática é aumentado devido ao menor volume de distribuição do fármaco e à potencial redução das reservas de glutationa.</li>
-
-    <li><strong>Doentes com malnutrição:</strong> Em doentes desnutridos, as reservas de glutationa no fígado podem estar reduzidas, aumentando o risco de hepatotoxicidade. Nestes casos, a dose máxima diária de paracetamol deve ser ajustada para 2 g/dia, e a função hepática monitorizada regularmente.</li>
-
-    <li><strong>Crianças:</strong> O uso de paracetamol em crianças é seguro quando as doses são ajustadas de acordo com o peso corporal. É importante monitorizar a frequência e quantidade de administração para evitar sobredosagens, especialmente ao utilizar formas líquidas ou supositórios.</li>
-
-    <li><strong>Pacientes em estado crítico:</strong> Em pacientes gravemente enfermos ou em estado crítico (ex. unidades de cuidados intensivos), especialmente os que estão a receber infusões IV de paracetamol, a dose deve ser cuidadosamente ajustada, considerando fatores como insuficiência hepática ou renal e desnutrição.</li>
-
-    <li><strong>Doentes com hepatite viral ativa ou história de hepatite:</strong> Embora o paracetamol possa ser utilizado com cautela em doentes com hepatite viral prévia ou atual, deve-se monitorizar atentamente a função hepática para evitar exacerbações da doença hepática.</li>
-</ul>
-
-<h2>8. Informação aos Doentes</h2>
-<ul>
-    <li>Explicar que o paracetamol é eficaz na redução da dor e febre, com efeito dentro de 30 minutos após a ingestão.</li>
-    <li>Alertar para não exceder a dose diária máxima (4 g) e verificar se outros medicamentos contêm paracetamol para evitar sobredosagem.</li>
-    <li>Reforçar a importância de evitar o consumo de álcool durante o tratamento.</li>
-</ul>
-
-<h2>9. Monitorização</h2>
-<p><strong>Eficácia:</strong> Monitorizar o alívio da dor com escalas de dor e rever o tratamento conforme necessário.</p>
-<p><strong>Segurança:</strong> Monitorização da função hepática em pacientes de risco ou em tratamentos prolongados. Em caso de sobredosagem, monitorizar níveis de paracetamol no sangue e função hepática.</p>
-
-<h2>10. Notas Adicionais</h2>
- 
-     <ul>
-       
-          <li>O paracetamol está amplamente disponível em formas genéricas a baixo custo. É comparticipado em algumas formulações, dependendo da indicação clínica. Estudos recentes sugerem uma eficácia limitada em condições como osteoartrose.</li>
-    <li>Não há evidência de alta qualidade que suporte ou refute o uso de paracetamol isoladamente ou em combinação com opiáceos nos primeiros dois passos da escada analgésica da OMS para dor oncológica. (<a href="#wiffen2017">Wiffen et al., 2017</a>)</li>
-    <li>Paracetamol 1000 mg proporcionou um pequeno benefício em termos de alívio da dor a duas horas para pessoas com cefaleia tensional episódica aguda de intensidade moderada a severa. (<a href="#stephens2016">Stephens et al., 2016</a>)</li>
-    <li>Uma dose única de paracetamol pode melhorar o alívio da dor perineal após o parto vaginal, mas são necessários mais estudos para avaliar os efeitos adversos maternos e neonatais. (<a href="#abalos2021">Abalos et al., 2021</a>)</li>
-    <li>As evidências sobre a eficácia do paracetamol ou AINEs no alívio da dor de ouvido a curto prazo em crianças com otite média aguda são limitadas e incertas. (<a href="#sevaux2023">Sévaux et al., 2023</a>)</li>
-    <li>O paracetamol pode reduzir a necessidade de morfina após grandes cirurgias em recém-nascidos, mas as evidências atuais são insuficientes para determinar o seu papel na redução da dor em neonatos. (<a href="#ohlsson2020">Ohlsson & Shah, 2020</a>)</li>
-    <li>Paracetamol 1000 mg é estatisticamente superior ao placebo no tratamento de enxaqueca aguda, mas outros analgésicos têm NNTs inferiores. (<a href="#derry2013">Derry & Moore, 2013</a>)</li>
-    <li>Não existem ensaios clínicos randomizados que suportem ou refutem o uso de paracetamol para dor crónica não-oncológica em crianças e adolescentes. (<a href="#cooper2017">Cooper et al., 2017</a>)</li>
-    <li>Há poucas evidências comparando diferentes intervenções para a sobredosagem de paracetamol; o carvão ativado parece ser a melhor escolha para reduzir a absorção. (<a href="#chiew2018">Chiew et al., 2018</a>)</li>
-    <li>Uma dose única de paracetamol oferece alívio eficaz da dor pós-operatória em adultos por cerca de quatro horas, com poucos efeitos adversos leves. (<a href="#toms2008">Toms et al., 2008</a>)</li>
-    <li>O paracetamol pode ajudar a aliviar a obstrução nasal e a rinorreia, mas não melhora outros sintomas da constipação comum. (<a href="#li2013">Li et al., 2013</a>)</li>
-    <li>Paracetamol não apresentou melhores resultados do que o placebo no tratamento da dor lombar aguda, levantando incertezas sobre a sua recomendação como primeira linha de tratamento. (<a href="#saragiotto2016">Saragiotto et al., 2016</a>)</li>
-    <li>Paracetamol oferece apenas melhorias mínimas na dor e função para pessoas com osteoartrite do joelho ou anca, sem aumento do risco de eventos adversos. (<a href="#leopoldino2019">Leopoldino et al., 2019</a>)</li>
-    <li>Acetaminofeno 1000 mg é significativamente mais eficaz do que o placebo no tratamento de enxaquecas episódicas e moderadas, proporcionando também melhorias nos sintomas associados, como náusea e fotofobia. (<a href="#prior2010">Prior et al., 2010</a>)</li>
-</ul>
-
-<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
-<ul>
-    <li><strong>Sobredosagem:</strong> O paracetamol é uma causa importante de insuficiência hepática aguda; o tratamento com N-acetilcisteína deve ser iniciado o mais precocemente possível.</li>
-    <li><strong>Eficácia em enxaquecas:</strong> 1000 mg de paracetamol pode ser eficaz em crises moderadas; combinar com metoclopramida aumenta a eficácia.</li>
-    <li><strong>Monitorização rigorosa:</strong> Necessária em doentes com risco de hepatotoxicidade, como alcoólicos ou desnutridos.</li>
-</ul>
-    
-<h2 id="bibliografia">12. Bibliografia</h2>
-
-   <p><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></p>    
-        <p><a href="https://go.drugbank.com/drugs/DB00316" target="_blank">Drug Bank</i></a></p>
-  <p><a href="https://go.drugbank.com/drugs/DB00316" target="_blank">Hitchings, A., Lonsdale, D., Burrage, D., & Baker, E. (2023). The top 100 drugs: Clinical pharmacology and practical prescribing (3ª ed.). Elsevier.</i></a></p>
-
-<p id="wiffen2017"><a href="https://doi.org/10.1002/14651858.CD012637.pub2" target="_blank">Wiffen, P. J., Derry, S., Moore, R. A., McNicol, E. D., Bell, R. F., Carr, D. B., McIntyre, M., & Wee, B. (2017). Oral paracetamol (acetaminophen) for cancer pain. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="stephens2016"><a href="https://doi.org/10.1002/14651858.CD011889.pub2" target="_blank">Stephens, G., Derry, S., & Moore, R. A. (2016). Paracetamol (acetaminophen) for acute treatment of episodic tension-type headache in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="abalos2021"><a href="https://doi.org/10.1002/14651858.CD008407.pub3" target="_blank">Abalos, E., Sguassero, Y., & Gyte, G. M. (2021). Paracetamol/acetaminophen (single administration) for perineal pain in the early postpartum period. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="sevaux2023"><a href="https://doi.org/10.1002/14651858.CD011534.pub3" target="_blank">Sévaux, J. L. H., Damoiseaux, R. A. M. J., van de Pol, A. C., Lutje, V., Hay, A. D., Little, P., Schilder, A. G. M., & Venekamp, R. P. (2023). Paracetamol (acetaminophen) or non-steroidal anti-inflammatory drugs, alone or combined, for pain relief in acute otitis media in children. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="ohlsson2020"><a href="https://doi.org/10.1002/14651858.CD011219.pub4" target="_blank">Ohlsson, A., & Shah, P. S. (2020). Paracetamol (acetaminophen) for prevention or treatment of pain in newborns. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="derry2013"><a href="https://doi.org/10.1002/14651858.CD008040.pub3" target="_blank">Derry, S., & Moore, R. A. (2013). Paracetamol (acetaminophen) with or without an antiemetic for acute migraine headaches in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="cooper2017"><a href="https://doi.org/10.1002/14651858.CD012539.pub2" target="_blank">Cooper, T. E., Fisher, E., Anderson, B., Wilkinson, N. M. R., Williams, D. G., & Eccleston, C. (2017). Paracetamol (acetaminophen) for chronic non-cancer pain in children and adolescents. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="chiew2018"><a href="https://doi.org/10.1002/14651858.CD003328.pub3" target="_blank">Chiew, A. L., Gluud, C., Brok, J., & Buckley, N. A. (2018). Intervenções para sobredosagem de paracetamol (acetaminofeno). <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="toms2008"><a href="https://doi.org/10.1002/14651858.CD004602.pub2" target="_blank">Toms, L., McQuay, H. J., Derry, S., & Moore, R. A. (2008). Single dose oral paracetamol (acetaminophen) for postoperative pain in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="li2013"><a href="https://doi.org/10.1002/14651858.CD008800.pub2" target="_blank">Li, S., Yue, J., Dong, B. R., Yang, M., Lin, X., & Wu, T. (2013). Acetaminophen (paracetamol) for the common cold in adults. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="saragiotto2016"><a href="https://doi.org/10.1002/14651858.CD012230" target="_blank">Saragiotto, B. T., Machado, G. C., Ferreira, M. L., Pinheiro, M. B., Shaheed, C. A., & Maher, C. G. (2016). Paracetamol for low back pain. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="leopoldino2019"><a href="https://doi.org/10.1002/14651858.CD013273" target="_blank">Leopoldino, A. O., Machado, G. C., Ferreira, P. H., Pinheiro, M. B., Day, R., McLachlan, A. J., Hunter, D. J., & Ferreira, M. L. (2019). Paracetamol versus placebo for knee and hip osteoarthritis. <i>Cochrane Database of Systematic Reviews</i>.</a></p>
-
-<p id="prior2010"><a href="https://doi.org/10.1111/j.1526-4610.2010.01638.x" target="_blank">Prior, M. J., Codispoti, J. R., & Fu, M. (2010). A randomized, placebo-controlled trial of acetaminophen for treatment of migraine headache. <i>Headache: The Journal of Head and Face Pain</i>.</a></p>
-    
-<br>
-<!-- At the end of each section -->
-<button class="btn btn-primary print-page">Imprimir</button>
-     
-  </div>
-  <div id="section-2" class="info-section">
-    <h1>Bisoprolol</h1>
-    
-  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
-
-  <br /><br />
-  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
-
-  <label>
-    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
-    Ver Todos os Descendentes ao Clicar
-  </label>
-  <br><br>
-
-  <label>
-    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
-  </label>
-  
-  <div id="groupToggles"></div>
-
-  <!--<div id="mynetwork"></div>-->
-
-  <input type="text" id="dataURL" style="display:none;"/>
-  <button id="loadDataButton" style="display:none;">Load</button>
-  <button id="shareButton" style="display:none;">Share</button> 
-  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
-  <button onclick="degree()" style="display:none;">Info</button>
-  <canvas id="degreeChart"></canvas>
-  <div id="nodeDegreeResults" style="display:none;"></div>
-  <br /><br />
-  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
-  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
-  <canvas id="clusteringChart"></canvas>
-  <div id="clusteringResults" style="display:none;"></div>
-    
-<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
-<p><strong>Denominação Comum Internacional (DCI):</strong> Bisoprolol.</p>
-<p><strong>Grupo farmacoterapêutico:</strong> Bloqueadores seletivos dos recetores beta-adrenérgicos (beta-bloqueadores cardioselectivos). Código ATC: C07AB07. O bisoprolol é um agente bloqueador beta<sub>1</sub>-adrenérgico altamente seletivo, sem atividade simpatomimética intrínseca e com atividade estabilizadora de membrana negligenciável.</p>
-<h2>2. Indicações Principais</h2>
-<p>O bisoprolol está indicado para o tratamento de:</p>
-<ul>
-   <li><strong>Hipertensão arterial:</strong> Como monoterapia ou em associação com outros agentes anti-hipertensores.</li>
-   <li><strong>Angina de peito crónica estável:</strong> Reduzindo a frequência e a gravidade dos episódios anginosos.</li>
-   <li><strong>Insuficiência cardíaca crónica estável:</strong> Com função sistólica ventricular esquerda reduzida, em combinação com inibidores da ECA, diuréticos e, opcionalmente, glicosídeos cardíacos.</li>
-</ul>
-<h2>3. Mecanismos de Ação</h2>
-<ul>
-   <li>O bisoprolol é um bloqueador competitivo e seletivo dos recetores beta<sub>1</sub>-adrenérgicos, localizados predominantemente no coração.</li>
-   <li>A redução da estimulação beta<sub>1</sub>-adrenérgica diminui a frequência cardíaca, o débito cardíaco e a pressão arterial, reduzindo a carga de trabalho do coração e o consumo de oxigénio.</li>
-   <li>Inibe a libertação de renina pelos rins, contribuindo para o efeito anti-hipertensor.</li>
-   <li>Em doses terapêuticas, apresenta mínima afinidade pelos recetores beta<sub>2</sub>-adrenérgicos dos músculos lisos vasculares e brônquicos, reduzindo o risco de efeitos adversos pulmonares e vasculares periféricos.</li>
-   <li>A seletividade beta<sub>1</sub> mantém-se até doses elevadas; contudo, em doses muito altas, pode ocorrer bloqueio beta<sub>2</sub>, levando a broncoconstrição e vasoconstrição.</li>
-</ul>
-<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
-<p><strong>Hipertensão arterial e angina de peito crónica estável:</strong></p>
-<ul>
-   <li><strong>Adultos:</strong> A dose inicial habitual é de 5 mg uma vez ao dia. Em casos leves, pode iniciar-se com 2,5 mg. Se necessário, a dose pode ser aumentada para 10 mg uma vez ao dia. A dose máxima recomendada é de 20 mg por dia.</li>
-   <li><strong>Idosos:</strong> Não é necessário ajuste de dose, mas recomenda-se iniciar com a menor dose eficaz.</li>
-   <li><strong>Insuficiência renal ou hepática:</strong> Em casos de insuficiência renal ou hepática ligeira a moderada, não é necessário ajuste de dose. Em insuficiências graves, a dose diária não deve exceder 10 mg.</li>
-</ul>
-<p><strong>Insuficiência cardíaca crónica estável:</strong></p>
-<p>O tratamento requer uma fase de titulação cuidadosa sob supervisão médica:</p>
-<ul>
-   <li><strong>Semana 1:</strong> 1,25 mg uma vez ao dia.</li>
-   <li><strong>Semana 2:</strong> 2,5 mg uma vez ao dia.</li>
-   <li><strong>Semana 3:</strong> 3,75 mg uma vez ao dia.</li>
-   <li><strong>Semanas 4-7:</strong> 5 mg uma vez ao dia.</li>
-   <li><strong>Semanas 8-11:</strong> 7,5 mg uma vez ao dia.</li>
-   <li><strong>A partir da semana 12:</strong> 10 mg uma vez ao dia (dose de manutenção).</li>
-</ul>
-<p>Durante a titulação, monitorizar frequentemente os sinais vitais e sintomas de agravamento da insuficiência cardíaca. Se necessário, a dose pode ser ajustada ou reduzida temporariamente.</p>
-<p><strong>População pediátrica:</strong> Não se recomenda o uso de bisoprolol em crianças e adolescentes, devido à falta de dados de segurança e eficácia.</p>
-<p><strong>Modo de administração:</strong> Os comprimidos devem ser tomados de manhã, com ou sem alimentos, e ingeridos com água. Não devem ser mastigados ou esmagados.</p>
-<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
-<p><strong>Efeitos adversos comuns:</strong></p>
-<ul>
-   <li><strong>Sistema nervoso:</strong> Tonturas, cefaleias, especialmente no início do tratamento.</li>
-   <li><strong>Cardíacos:</strong> Bradicardia, agravamento da insuficiência cardíaca, hipotensão.</li>
-   <li><strong>Gastrointestinais:</strong> Náuseas, vómitos, diarreia, obstipação.</li>
-   <li><strong>Musculoesqueléticos:</strong> Fraqueza muscular, cãibras.</li>
-   <li><strong>Geral:</strong> Fadiga, astenia.</li>
-</ul>
-<p><strong>Precauções:</strong></p>
-<ul>
-   <li><strong>Asma brônquica e DPOC:</strong> Utilizar com precaução; pode ser necessário ajustar a dose de broncodilatadores.</li>
-   <li><strong>Diabetes mellitus:</strong> Pode mascarar sintomas de hipoglicemia; monitorização regular da glicemia é recomendada.</li>
-   <li><strong>Insuficiência cardíaca:</strong> Iniciar tratamento apenas em condições estáveis; titulação cuidadosa é essencial.</li>
-   <li><strong>Feocromocitoma:</strong> Não iniciar bisoprolol sem bloqueio alfa prévio.</li>
-   <li><strong>Doenças vasculares periféricas:</strong> Pode agravar sintomas de claudicação intermitente ou síndrome de Raynaud.</li>
-   <li><strong>Psoríase:</strong> Pode exacerbar sintomas; avaliar risco-benefício.</li>
-   <li><strong>Reações alérgicas severas:</strong> Pode aumentar a sensibilidade aos alérgenos e a gravidade das reações anafiláticas.</li>
-</ul>
-<p><strong>Contraindicações:</strong></p>
-<ul>
-   <li>Hipersensibilidade ao bisoprolol ou a qualquer excipiente.</li>
-   <li>Insuficiência cardíaca aguda ou descompensação que requeira terapêutica inotrópica intravenosa.</li>
-   <li>Choque cardiogénico.</li>
-   <li>Bloqueio auriculoventricular de segundo ou terceiro grau sem pacemaker.</li>
-   <li>Síndrome do nódulo sinusal.</li>
-   <li>Bradicardia sintomática.</li>
-   <li>Hipotensão sintomática.</li>
-   <li>Asma brônquica grave ou doença pulmonar obstrutiva crónica severa.</li>
-   <li>Acidose metabólica.</li>
-   <li>Feocromocitoma não tratado.</li>
-</ul>
-<h2>6. Interações Clinicamente Relevantes</h2>
-<ul>
-   <li><strong>Antagonistas do cálcio (verapamilo, diltiazem):</strong> Risco aumentado de bradicardia, hipotensão e bloqueio AV; evitar uso concomitante.</li>
-   <li><strong>Antiarrítmicos de classe I (quinidina, disopiramida):</strong> Potenciam efeitos negativos na condução AV e função miocárdica.</li>
-   <li><strong>Medicamentos anti-hipertensores de ação central (clonidina, metildopa):</strong> Podem diminuir o tónus simpático; risco de hipertensão de rebote na descontinuação abrupta.</li>
-   <li><strong>Insulina e antidiabéticos orais:</strong> Potenciam o efeito hipoglicemiante; podem mascarar sinais de hipoglicemia.</li>
-   <li><strong>Anestésicos gerais:</strong> Podem atenuar a taquicardia reflexa e aumentar o risco de hipotensão; informar o anestesista antes da cirurgia.</li>
-   <li><strong>Glicosídeos digitálicos:</strong> Podem aumentar o tempo de condução AV e induzir bradicardia.</li>
-   <li><strong>AINEs:</strong> Podem diminuir o efeito anti-hipertensor do bisoprolol.</li>
-   <li><strong>Simpaticomiméticos beta (isoprenalina, dobutamina):</strong> Efeito reduzido quando usados concomitantemente.</li>
-   <li><strong>Simpaticomiméticos alfa e beta (noradrenalina, adrenalina):</strong> Podem causar hipertensão e exacerbação da claudicação intermitente.</li>
-   <li><strong>Mefloquina:</strong> Aumenta o risco de bradicardia.</li>
-   <li><strong>Inibidores da MAO (exceto MAO-B):</strong> Podem potenciar o efeito hipotensor do bisoprolol.</li>
-</ul>
-<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
-<ul>
-   <li><strong>Gravidez:</strong> Bisoprolol pode causar efeitos nocivos no feto; utilizar apenas se estritamente necessário. Monitorizar fluxo uteroplacentário e crescimento fetal.</li>
-   <li><strong>Aleitamento:</strong> Não se sabe se o bisoprolol é excretado no leite materno; não se recomenda o aleitamento durante o tratamento.</li>
-   <li><strong>Idosos:</strong> Geralmente não requer ajuste de dose, mas iniciar com doses baixas e monitorizar a resposta.</li>
-   <li><strong>Insuficiência renal ou hepática:</strong> Em casos graves, não exceder 10 mg por dia; monitorização cuidadosa é necessária.</li>
-   <li><strong>Crianças:</strong> A segurança e eficácia não foram estabelecidas; não recomendado em pacientes pediátricos.</li>
-   <li><strong>Doença pulmonar obstrutiva crónica:</strong> Utilizar com precaução; risco de broncospasmo.</li>
-   <li><strong>Diabetes mellitus:</strong> Pode mascarar sinais de hipoglicemia; monitorizar glicemia regularmente.</li>
-   <li><strong>Psoríase:</strong> Pode agravar a doença; utilizar apenas após avaliação cuidadosa.</li>
-   <li><strong>Distúrbios da circulação periférica:</strong> Pode agravar sintomas; monitorizar cuidadosamente.</li>
-   <li><strong>Feocromocitoma:</strong> Não iniciar sem bloqueio alfa prévio; risco de crise hipertensiva.</li>
-</ul>
-<h2>8. Informação aos Doentes</h2>
-<ul>
-   <li>Tomar o medicamento exatamente como prescrito, preferencialmente de manhã.</li>
-   <li>Não interromper o tratamento abruptamente sem consultar o médico.</li>
-   <li>Informar o médico sobre qualquer dificuldade respiratória, fadiga extrema ou batimentos cardíacos lentos.</li>
-   <li>Se for diabético, monitorizar a glicemia regularmente, pois os sintomas de hipoglicemia podem ser mascarados.</li>
-   <li>Informar profissionais de saúde sobre o uso de bisoprolol antes de qualquer cirurgia ou tratamento médico.</li>
-   <li>Evitar o consumo excessivo de álcool, pois pode potenciar os efeitos hipotensores.</li>
-</ul>
-<h2>9. Monitorização</h2>
-<p><strong>Eficácia:</strong> Monitorizar a pressão arterial, frequência cardíaca e sintomas associados à condição tratada (angina, insuficiência cardíaca).</p>
-<p><strong>Segurança:</strong> Observar sinais de bradicardia, hipotensão, broncospasmo e reações alérgicas. Em pacientes com insuficiência renal ou hepática, monitorizar função renal e hepática periodicamente.</p>
-<h2>10. Notas Adicionais</h2>
-<ul>
-   <li><strong>Estudos clínicos:</strong> O estudo CIBIS II demonstrou que o bisoprolol reduz significativamente a mortalidade e hospitalizações em pacientes com insuficiência cardíaca crónica estável.</li>
-   <li><strong>Formas farmacêuticas disponíveis:</strong> Comprimidos revestidos por película de 1,25 mg, 2,5 mg, 5 mg e 10 mg, permitindo ajuste flexível da dose.</li>
-   <li><strong>Descontinuação:</strong> A interrupção do tratamento deve ser feita gradualmente ao longo de 1-2 semanas para evitar efeitos de rebote.</li>
-   <li><strong>Uso em cirurgia:</strong> Informar o anestesista sobre o uso de bisoprolol; pode ser necessário ajustar a terapêutica antes de procedimentos cirúrgicos.</li>
-</ul>
-<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
-<ul>
-   <li><strong>Titulação cuidadosa:</strong> Fundamental em pacientes com insuficiência cardíaca para minimizar o risco de descompensação.</li>
-   <li><strong>Cardioselectividade:</strong> A preferência por bisoprolol em pacientes com doenças pulmonares obstrutivas devido à sua seletividade beta<sub>1</sub>.</li>
-   <li><strong>Monitorização regular:</strong> Importante para ajustar a dose e garantir a segurança do paciente, especialmente durante alterações na terapêutica.</li>
-   <li><strong>Interrupção gradual:</strong> Evita potenciais efeitos adversos associados à retirada abrupta, como exacerbação da angina ou arritmias.</li>
-   <li><strong>Educação do paciente:</strong> Esclarecer sobre a importância da adesão ao tratamento e comunicação de quaisquer efeitos adversos.</li>
-</ul>
-    
-<h2 id="bibliografia">12. Bibliografia</h2>
-
-   <p><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></p>    
-        <p><a href="https://go.drugbank.com/drugs/DB00612" target="_blank">Drug Bank</i></a></p>
-  <p><a href="https://www.amazon.co.uk/Top-100-Drugs-Pharmacology-Prescribing/dp/0323834450" target="_blank">Hitchings, A., Lonsdale, D., Burrage, D., & Baker, E. (2023). The top 100 drugs: Clinical pharmacology and practical prescribing (3ª ed.). Elsevier.</i></a></p>
-    
-<br>
-<!-- At the end of each section -->
-<button class="btn btn-primary print-page">Imprimir</button>
-     
-  </div>
-  <div id="section-3" class="info-section">
-    <h1>Semaglutido</h1>
-    
-  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
-
-  <br /><br />
-  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
-
-  <label>
-    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
-    Ver Todos os Descendentes ao Clicar
-  </label>
-  <br><br>
-
-  <label>
-    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
-  </label>
-  
-  <div id="groupToggles"></div>
-
-  <!--<div id="mynetwork"></div>-->
-
-  <input type="text" id="dataURL" style="display:none;"/>
-  <button id="loadDataButton" style="display:none;">Load</button>
-  <button id="shareButton" style="display:none;">Share</button> 
-  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
-  <button onclick="degree()" style="display:none;">Info</button>
-  <canvas id="degreeChart"></canvas>
-  <div id="nodeDegreeResults" style="display:none;"></div>
-  <br /><br />
-  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
-  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
-  <canvas id="clusteringChart"></canvas>
-  <div id="clusteringResults" style="display:none;"></div>
-    
-<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
-<p><strong>Denominação Comum Internacional (DCI):</strong> Semaglutido.</p>
-<p><strong>Grupo farmacoterapêutico:</strong> Medicamentos usados no tratamento da diabetes, análogos do péptido-1 semelhante ao glucagon (GLP-1). Código ATC: A10BJ06.</p>
-<h2>2. Indicações Principais</h2>
-<p>O semaglutido é indicado para o tratamento de adultos com diabetes mellitus tipo 2 insuficientemente controlada, como adjuvante à dieta e exercício físico, para melhorar o controlo glicémico. As principais indicações incluem:</p>
-<ul>
-   <li><strong>Monoterapia:</strong> Quando a metformina é considerada inapropriada devido a intolerância ou contraindicações.</li>
-   <li><strong>Terapia combinada:</strong> Em associação com outros medicamentos para o tratamento da diabetes, como metformina, sulfonilureias, tiazolidinedionas, inibidores do SGLT2 ou insulina basal.</li>
-</ul>
-<p>Além disso, o semaglutido é indicado para a gestão crónica do peso em adultos com:</p>
-<ul>
-   <li>Índice de Massa Corporal (IMC) ≥30 kg/m² (obesidade).</li>
-   <li>IMC ≥27 kg/m² a &lt;30 kg/m² (excesso de peso) com pelo menos uma comorbilidade relacionada com o peso, como hipertensão, dislipidemia, apneia obstrutiva do sono ou diabetes tipo 2.</li>
-</ul>
-<p>Também demonstrou eficácia na redução do risco de eventos cardiovasculares major em adultos com diabetes tipo 2 e doença cardiovascular estabelecida.</p>
-<h2>3. Mecanismos de Ação</h2>
-<ul>
-   <li><strong>Agonista do recetor de GLP-1:</strong> O semaglutido é um análogo do GLP-1 humano que se liga seletivamente aos recetores de GLP-1, estimulando a secreção de insulina pelas células beta do pâncreas de forma dependente da glicose.</li>
-   <li><strong>Redução da secreção de glucagon:</strong> Diminui a secreção de glucagon pelas células alfa do pâncreas, reduzindo a produção hepática de glicose.</li>
-   <li><strong>Atraso do esvaziamento gástrico:</strong> Retarda o esvaziamento gástrico, contribuindo para a diminuição das excursões glicémicas pós-prandiais.</li>
-   <li><strong>Supressão do apetite:</strong> Atua nos centros hipotalâmicos de regulação do apetite, levando a uma redução da ingestão calórica e promovendo a perda de peso.</li>
-   <li><strong>Efeitos cardiovasculares:</strong> Pode melhorar parâmetros cardiovasculares, incluindo a redução da pressão arterial sistólica e melhorias no perfil lipídico, diminuindo o risco cardiovascular.</li>
-</ul>
-<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
-<p><strong>Posologia inicial:</strong> A dose inicial recomendada é de 0,25 mg de semaglutido administrada uma vez por semana durante as primeiras 4 semanas. Esta dose inicial tem como objetivo reduzir a ocorrência de efeitos adversos gastrointestinais e não proporciona controlo glicémico pleno.</p>
-<p><strong>Aumento gradual da dose:</strong> Após 4 semanas, a dose deve ser aumentada para 0,5 mg uma vez por semana. Se for necessário um maior controlo glicémico, a dose pode ser aumentada para 1 mg uma vez por semana após, pelo menos, 4 semanas com a dose de 0,5 mg. Em alguns casos, pode ser considerada a titulação até 2 mg uma vez por semana, seguindo o mesmo intervalo de tempo.</p>
-<p><strong>Administração:</strong> O semaglutido é administrado por via subcutânea no abdómen, coxa ou braço. O local da injeção pode ser alterado sem necessidade de ajuste da dose.</p>
-<p><strong>Horário de administração:</strong> Deve ser administrado no mesmo dia todas as semanas, a qualquer hora do dia, com ou sem alimentos.</p>
-<p><strong>Omissão de uma dose:</strong> Se uma dose for esquecida, pode ser administrada dentro de 5 dias após a data prevista. Se tiverem passado mais de 5 dias, a dose omitida deve ser ignorada e retomar o esquema habitual no próximo dia programado.</p>
-<p><strong>Ajuste de dose com outros antidiabéticos:</strong> Ao iniciar o semaglutido em combinação com sulfonilureias ou insulina, pode ser necessário reduzir a dose destes medicamentos para minimizar o risco de hipoglicemia.</p>
-<p><strong>Populações especiais:</strong></p>
-<ul>
-   <li><strong>Idosos:</strong> Não é necessário ajuste de dose com base na idade. A experiência em doentes com mais de 75 anos é limitada.</li>
-   <li><strong>Compromisso renal:</strong> Não é necessário ajuste de dose em doentes com compromisso renal ligeiro, moderado ou grave. A utilização em doentes com doença renal terminal não é recomendada devido à experiência limitada.</li>
-   <li><strong>Compromisso hepático:</strong> Não é necessário ajuste de dose. Deve haver precaução em doentes com compromisso hepático grave devido à experiência limitada.</li>
-</ul>
-<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
-<p><strong>Efeitos adversos gastrointestinais:</strong> Os efeitos adversos mais comuns incluem náuseas, vómitos, diarreia e obstipação. Geralmente são ligeiros a moderados e tendem a diminuir com o tempo. A titulação gradual da dose pode ajudar a reduzir a incidência destes efeitos.</p>
-<p><strong>Hipoglicemia:</strong> Quando combinado com sulfonilureias ou insulina, existe um risco aumentado de hipoglicemia. Pode ser necessário ajustar a dose destes medicamentos para reduzir este risco.</p>
-<p><strong>Pancreatite aguda:</strong> Foram relatados casos de pancreatite aguda. Se houver suspeita ou confirmação de pancreatite, o tratamento com semaglutido deve ser descontinuado.</p>
-<p><strong>Retinopatia diabética:</strong> Pode ocorrer agravamento da retinopatia diabética, especialmente em doentes com historial da doença e tratados com insulina. Recomenda-se monitorização cuidadosa.</p>
-<p><strong>Reações de hipersensibilidade:</strong> Foram reportadas reações de hipersensibilidade, incluindo anafilaxia e angioedema. Na ocorrência de reações graves, o tratamento deve ser interrompido imediatamente.</p>
-<p><strong>Contraindicações:</strong> Hipersensibilidade conhecida ao semaglutido ou a qualquer um dos excipientes. Não deve ser utilizado em doentes com história pessoal ou familiar de carcinoma medular da tiroide ou com síndrome de neoplasia endócrina múltipla tipo 2.</p>
-<p><strong>Precauções:</strong> Não está indicado para o tratamento da diabetes tipo 1 ou cetoacidose diabética. O atraso do esvaziamento gástrico pode afetar a absorção de medicamentos orais; deve-se ter cautela em doentes a tomar medicamentos com margem terapêutica estreita ou que requerem absorção rápida.</p>
-<h2>6. Interações Clinicamente Relevantes</h2>
-<ul>
-   <li><strong>Medicamentos orais:</strong> O atraso no esvaziamento gástrico pode afetar a absorção de medicamentos orais. Deve-se monitorizar a eficácia de medicamentos críticos e ajustar a administração conforme necessário.</li>
-   <li><strong>Varfarina e anticoagulantes cumarínicos:</strong> Pode haver alterações na Razão Normalizada Internacional (RNI). Recomenda-se monitorização frequente da RNI ao iniciar ou ajustar a dose de semaglutido.</li>
-   <li><strong>Sulfonilureias e insulina:</strong> A combinação aumenta o risco de hipoglicemia. Pode ser necessário reduzir a dose destes medicamentos.</li>
-   <li><strong>Paracetamol:</strong> O semaglutido pode atrasar a absorção do paracetamol; no entanto, não é necessário ajuste de dose.</li>
-   <li><strong>Contracetivos orais:</strong> A eficácia dos contracetivos orais não é afetada, mas recomenda-se precaução devido ao potencial atraso na absorção.</li>
-</ul>
-<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
-<ul>
-   <li><strong>Gravidez:</strong> Contraindicado durante a gravidez devido à falta de dados em humanos e evidência de toxicidade reprodutiva em estudos animais. Deve ser interrompido pelo menos 2 meses antes de uma gravidez planeada.</li>
-   <li><strong>Aleitamento:</strong> Não é recomendado durante a amamentação, pois não se sabe se é excretado no leite materno e não se pode excluir risco para o lactente.</li>
-   <li><strong>Idosos:</strong> Não é necessário ajuste de dose baseado na idade. Deve-se considerar a função renal e hepática.</li>
-   <li><strong>Compromisso renal:</strong> Sem necessidade de ajuste de dose em compromisso renal ligeiro a grave. O uso não é recomendado em doença renal terminal devido à experiência limitada.</li>
-   <li><strong>Compromisso hepático:</strong> Não é necessário ajuste de dose. Deve-se ter precaução em compromisso hepático grave pela experiência limitada.</li>
-   <li><strong>Crianças e adolescentes:</strong> A segurança e eficácia não foram estabelecidas em menores de 18 anos. Não é recomendado nesta população.</li>
-   <li><strong>Retinopatia diabética:</strong> Monitorização cuidadosa é necessária, especialmente em doentes com historial da doença e em tratamento com insulina.</li>
-</ul>
-<h2>8. Informação aos Doentes</h2>
-<ul>
-   <li>Ensinar a técnica correta de injeção e a importância de rodar os locais de aplicação.</li>
-   <li>Informar sobre os possíveis efeitos gastrointestinais e que geralmente diminuem com o tempo.</li>
-   <li>Alertar para os sinais de hipoglicemia e como agir em caso de ocorrência, especialmente se estiver a tomar sulfonilureias ou insulina.</li>
-   <li>Orientar para notificar imediatamente qualquer sintoma de pancreatite (dor abdominal intensa persistente).</li>
-   <li>Explicar a importância de aderir a uma dieta equilibrada e atividade física regular.</li>
-   <li>Informar sobre a necessidade de comunicar ao médico qualquer intenção de engravidar ou se ocorrer gravidez.</li>
-</ul>
-<h2>9. Monitorização</h2>
-<p><strong>Eficácia:</strong> Monitorizar regularmente a HbA1c para avaliar o controlo glicémico. Avaliar o peso corporal e os parâmetros metabólicos associados.</p>
-<p><strong>Segurança:</strong> Observar para sintomas de pancreatite e retinopatia diabética. Monitorizar a RNI em doentes a tomar varfarina. Vigiar sinais de hipoglicemia em doentes em terapia combinada com sulfonilureias ou insulina.</p>
-<h2>10. Notas Adicionais</h2>
-<ul>
-   <li>Estudos clínicos demonstraram que o semaglutido é superior a outros antidiabéticos na redução da HbA1c e do peso corporal (<a href="#marso2016">Marso et al., 2016</a>).</li>
-   <li>O semaglutido reduziu significativamente o risco de eventos cardiovasculares major em doentes com diabetes tipo 2 e doença cardiovascular estabelecida (<a href="#marso2016cv">Marso et al., 2016</a>).</li>
-   <li>A formulação oral de semaglutido foi desenvolvida para melhorar a adesão ao tratamento, embora apresente menor biodisponibilidade em comparação com a via subcutânea (<a href="#baekdal2017">Baekdal et al., 2017</a>).</li>
-   <li>Estudos recentes indicam a eficácia do semaglutido na gestão do peso em indivíduos com obesidade sem diabetes, mostrando perdas de peso significativas (<a href="#wilding2021">Wilding et al., 2021</a>).</li>
-   <li>O semaglutido mostrou melhorias em parâmetros de risco cardiovascular, incluindo redução da pressão arterial e melhoria do perfil lipídico (<a href="#pratley2018">Pratley et al., 2018</a>).</li>
-   <li>A conveniência da administração semanal pode melhorar a adesão ao tratamento em comparação com medicamentos de administração diária.</li>
-   <li>A monitorização regular e educação do doente são essenciais para maximizar os benefícios terapêuticos e minimizar os riscos.</li>
-</ul>
-<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
-<ul>
-   <li><strong>Titulação gradual:</strong> Aumentar a dose de forma progressiva ajuda a minimizar efeitos gastrointestinais e melhorar a tolerabilidade.</li>
-   <li><strong>Perda de peso significativa:</strong> Além do controlo glicémico, o semaglutido promove perda de peso substancial, beneficiando doentes com excesso de peso ou obesidade.</li>
-   <li><strong>Benefícios cardiovasculares:</strong> Considerar em doentes com alto risco cardiovascular devido à redução comprovada de eventos cardiovasculares major.</li>
-   <li><strong>Educação do doente:</strong> A formação adequada sobre a utilização do dispositivo de administração e gestão de efeitos adversos é fundamental para a adesão ao tratamento.</li>
-   <li><strong>Atenção às interações:</strong> Estar atento a medicamentos cuja absorção possa ser afetada pelo atraso do esvaziamento gástrico.</li>
-   <li><strong>Acompanhamento multidisciplinar:</strong> A colaboração entre endocrinologistas, nutricionistas e outros profissionais de saúde otimiza os resultados terapêuticos.</li>
-</ul>
-    
-<h2 id="bibliografia">12. Bibliografia</h2>
-
-
-    
-<ul>
-     <li><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></li>    
-        <li><a href="https://go.drugbank.com/drugs/DB13928" target="_blank">Drug Bank</i></a></li>
-
-   <li id="marso2016cv">Marso SP et al. Semaglutide and Cardiovascular Outcomes in Patients with Type 2 Diabetes. N Engl J Med. 2016;375(19):1834-1844.</li>
-   <li id="baekdal2017">Baekdal TA et al. Pharmacokinetics, safety and tolerability of oral semaglutide in healthy male subjects: A randomized controlled trial. Clin Pharmacokinet. 2017;56(6):703-712.</li>
-   <li id="wilding2021">Wilding JPH et al. Once-Weekly Semaglutide in Adults with Overweight or Obesity. N Engl J Med. 2021;384(11):989-1002.</li>
-   <li id="pratley2018">Pratley RE et al. Cardiovascular Safety and Benefits of Semaglutide in Subjects with Type 2 Diabetes at High Cardiovascular Risk. Diabetes Obes Metab. 2018;20(9):2102-2110.</li>
-</ul>
-
-<br>
-<!-- At the end of each section -->
-<button class="btn btn-primary print-page">Imprimir</button>
-     
-  </div>
-  <div id="section-4" class="info-section">
-    <h1>Quetiapina</h1>
-    
-  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
-
-  <br /><br />
-  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
-
-  <label>
-    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
-    Ver Todos os Descendentes ao Clicar
-  </label>
-  <br><br>
-
-  <label>
-    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
-  </label>
-  
-  <div id="groupToggles"></div>
-
-  <!--<div id="mynetwork"></div>-->
-
-  <input type="text" id="dataURL" style="display:none;"/>
-  <button id="loadDataButton" style="display:none;">Load</button>
-  <button id="shareButton" style="display:none;">Share</button> 
-  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
-  <button onclick="degree()" style="display:none;">Info</button>
-  <canvas id="degreeChart"></canvas>
-  <div id="nodeDegreeResults" style="display:none;"></div>
-  <br /><br />
-  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
-  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
-  <canvas id="clusteringChart"></canvas>
-  <div id="clusteringResults" style="display:none;"></div>
-    
-<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
-<p><strong>Denominação Comum Internacional (DCI):</strong> Quetiapina.</p>
-<p><strong>Grupo farmacoterapêutico:</strong> Antipsicóticos atípicos; diazepinas, oxazepinas, tiazepinas e oxepinas. Código ATC: N05AH04.</p>
-<h2>2. Indicações Principais</h2>
-<p>A quetiapina é utilizada no tratamento de:</p>
-<ul>
-   <li><strong>Esquizofrenia</strong>: Gestão de sintomas positivos e negativos em doentes adultos.</li>
-   <li>
-      <strong>Perturbação bipolar</strong>: 
-      <ul>
-         <li>Episódios maníacos moderados a graves associados à perturbação bipolar.</li>
-         <li>Episódios depressivos major na perturbação bipolar.</li>
-         <li>Prevenção de recorrências em doentes com perturbação bipolar que responderam previamente ao tratamento com quetiapina.</li>
-      </ul>
-   </li>
-   <li><strong>Perturbação Depressiva Major (PDM)</strong>: Terapia adjuvante para episódios depressivos major em doentes que não responderam adequadamente à monoterapia antidepressiva.</li>
-</ul>
-<h2>3. Mecanismos de Ação</h2>
-<ul>
-   <li>A quetiapina é um antipsicótico atípico que atua como antagonista dos recetores de serotonina (5-HT<sub>2</sub>) e dopamina D<sub>1</sub> e D<sub>2</sub>, contribuindo para os seus efeitos antipsicóticos e estabilizadores do humor.</li>
-   <li>Possui afinidade para recetores histaminérgicos H<sub>1</sub> e adrenérgicos α<sub>1</sub> e α<sub>2</sub>, o que explica efeitos como sedação e hipotensão ortostática.</li>
-   <li>O metabolito ativo norquetiapina inibe o transportador de norepinefrina (NET) e atua como agonista parcial dos recetores 5-HT<sub>1A</sub>, contribuindo para a eficácia antidepressiva.</li>
-   <li>Os efeitos anticolinérgicos resultam da afinidade da norquetiapina para os recetores muscarínicos M<sub>1</sub>, podendo levar a efeitos como boca seca e obstipação.</li>
-   <li>O perfil farmacológico com menor afinidade para recetores dopaminérgicos D<sub>2</sub> em relação aos 5-HT<sub>2</sub> está associado a um menor risco de sintomas extrapiramidais comparativamente aos antipsicóticos típicos.</li>
-</ul>
-<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
-<p><strong>Esquizofrenia e episódios maníacos na perturbação bipolar:</strong></p>
-<ul>
-   <li><strong>Dia 1:</strong> 300 mg uma vez ao dia.</li>
-   <li><strong>Dia 2:</strong> 600 mg uma vez ao dia.</li>
-   <li><strong>Manutenção:</strong> Dose diária recomendada de 600 mg, podendo ser ajustada entre 400 mg e 800 mg/dia conforme a resposta clínica e tolerabilidade.</li>
-</ul>
-<p><strong>Episódios depressivos na perturbação bipolar:</strong></p>
-<ul>
-   <li><strong>Dia 1:</strong> 50 mg ao deitar.</li>
-   <li><strong>Dia 2:</strong> 100 mg ao deitar.</li>
-   <li><strong>Dia 3:</strong> 200 mg ao deitar.</li>
-   <li><strong>Dia 4:</strong> 300 mg ao deitar (dose diária recomendada).</li>
-   <li><strong>Ajustes:</strong> Em alguns doentes, a dose pode ser aumentada até 600 mg/dia ou reduzida até um mínimo de 200 mg/dia, dependendo da tolerabilidade.</li>
-</ul>
-<p><strong>Perturbação Depressiva Major (PDM) como terapia adjuvante:</strong></p>
-<ul>
-   <li><strong>Dias 1 e 2:</strong> 50 mg ao deitar.</li>
-   <li><strong>Dias 3 e 4:</strong> 150 mg ao deitar.</li>
-   <li><strong>Manutenção:</strong> Dose entre 50 mg e 300 mg/dia, utilizando a dose eficaz mais baixa possível.</li>
-</ul>
-<p><strong>Populações especiais:</strong></p>
-<ul>
-   <li><strong>Idosos:</strong> Iniciar com 50 mg/dia, aumentando gradualmente em incrementos de 50 mg/dia conforme tolerabilidade.</li>
-   <li><strong>Compromisso hepático:</strong> Iniciar com 50 mg/dia, ajustando a dose conforme a resposta clínica.</li>
-   <li><strong>Compromisso renal:</strong> Não é necessário ajuste posológico.</li>
-</ul>
-<p><strong>Modo de administração:</strong> A quetiapina deve ser administrada por via oral, uma vez ao dia, preferencialmente sem alimentos. Os comprimidos devem ser engolidos inteiros, sem partir, mastigar ou esmagar.</p>
-<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
-<p><strong>Efeitos adversos comuns:</strong></p>
-<ul>
-   <li>Sonolência e sedação.</li>
-   <li>Tonturas e hipotensão ortostática.</li>
-   <li>Boca seca.</li>
-   <li>Aumento de peso.</li>
-   <li>Obstipação.</li>
-   <li>Sintomas extrapiramidais (SEP), especialmente em doses elevadas.</li>
-   <li>Aumento dos níveis de prolactina.</li>
-   <li>Elevações transitórias das transaminases hepáticas (ALT, AST).</li>
-</ul>
-<p><strong>Efeitos adversos graves:</strong></p>
-<ul>
-   <li>Síndrome neuroléptica maligna.</li>
-   <li>Discinesia tardia.</li>
-   <li>Convulsões.</li>
-   <li>Neutropenia grave e agranulocitose.</li>
-   <li>Prolongamento do intervalo QT e arritmias cardíacas.</li>
-   <li>Reações cutâneas graves (p.ex., Síndrome de Stevens-Johnson).</li>
-   <li>Priapismo.</li>
-</ul>
-<p><strong>Precauções:</strong></p>
-<ul>
-   <li><strong>Doenças cardiovasculares:</strong> Utilizar com precaução devido ao risco de hipotensão ortostática e prolongamento do intervalo QT.</li>
-   <li><strong>Sintomas extrapiramidais:</strong> Monitorizar, especialmente em doentes jovens e em doses elevadas.</li>
-   <li><strong>Síndrome neuroléptica maligna:</strong> Suspender o tratamento se surgirem sinais como hipertermia, rigidez muscular e instabilidade autonómica.</li>
-   <li><strong>Convulsões:</strong> Utilizar com cautela em doentes com história de convulsões.</li>
-   <li><strong>Metabolismo:</strong> Monitorizar glicemia e perfil lipídico devido ao risco de hiperglicemia e dislipidemia.</li>
-   <li><strong>Hematologia:</strong> Observar sinais de neutropenia ou agranulocitose; realizar hemogramas periódicos.</li>
-   <li><strong>Descontinuação:</strong> Suspender gradualmente para evitar sintomas de abstinência.</li>
-   <li><strong>Interações:</strong> Evitar coadministração com inibidores potentes do CYP3A4.</li>
-</ul>
-<p><strong>Contraindicações:</strong></p>
-<ul>
-   <li>Hipersensibilidade à quetiapina ou a qualquer excipiente.</li>
-   <li>Administração concomitante com inibidores do CYP3A4 (p.ex., inibidores da protease, cetoconazol, eritromicina, claritromicina, nefazodona).</li>
-</ul>
-<h2>6. Interações Clinicamente Relevantes</h2>
-<ul>
-   <li><strong>Indutores do CYP3A4</strong> (p.ex., carbamazepina, fenitoína): Diminuem os níveis plasmáticos de quetiapina, podendo reduzir a eficácia. Considerar substituição por agentes não indutores.</li>
-   <li><strong>Inibidores do CYP3A4</strong> (p.ex., cetoconazol, itraconazol): Aumentam os níveis plasmáticos de quetiapina, aumentando o risco de efeitos adversos. A coadministração é contraindicada.</li>
-   <li><strong>Fármacos que prolongam o intervalo QT</strong> (p.ex., antiarrítmicos classe IA e III): Podem aumentar o risco de arritmias cardíacas.</li>
-   <li><strong>Álcool e depressores do SNC</strong>: Podem potenciar os efeitos sedativos da quetiapina.</li>
-   <li><strong>Fármacos anticolinérgicos</strong>: Aumentam o risco de efeitos anticolinérgicos, como retenção urinária e obstipação.</li>
-</ul>
-<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
-<ul>
-   <li><strong>Gravidez:</strong> Utilizar apenas se os benefícios justificarem os potenciais riscos. Recém-nascidos expostos no terceiro trimestre devem ser monitorizados para sintomas extrapiramidais e de abstinência.</li>
-   <li><strong>Aleitamento:</strong> A decisão de continuar a amamentação ou o tratamento deve ser tomada considerando os benefícios para a mãe e para a criança, pois a quetiapina é excretada no leite materno em quantidades limitadas.</li>
-   <li><strong>Idosos:</strong> Iniciar com doses mais baixas (50 mg/dia) e aumentar gradualmente. Maior susceptibilidade a hipotensão ortostática e sedação. Precaução em doentes com demência devido ao aumento do risco de eventos cerebrovasculares e mortalidade.</li>
-   <li><strong>Crianças e adolescentes:</strong> Não recomendado em menores de 18 anos devido à falta de dados de segurança e eficácia. Maior incidência de efeitos adversos como aumento de peso e sintomas extrapiramidais.</li>
-   <li><strong>Compromisso hepático:</strong> Iniciar com 50 mg/dia e ajustar a dose conforme tolerabilidade, devido à metabolização hepática extensiva da quetiapina.</li>
-   <li><strong>Compromisso renal:</strong> Não é necessário ajuste posológico, mas deve-se ter precaução.</li>
-   <li><strong>História de abuso de substâncias:</strong> Utilizar com precaução; foram reportados casos de uso indevido e abuso.</li>
-</ul>
-<h2>8. Informação aos Doentes</h2>
-<ul>
-   <li>Tomar a medicação conforme prescrito, mesmo que os sintomas melhorem.</li>
-   <li>Evitar conduzir ou operar máquinas até conhecer os efeitos da quetiapina, devido à possibilidade de sonolência e tonturas.</li>
-   <li>Adotar uma dieta equilibrada e prática regular de exercício físico para controlar o peso.</li>
-   <li>Informar imediatamente o médico se surgirem sintomas como febre alta, rigidez muscular ou confusão.</li>
-   <li>Não interromper o tratamento sem consultar o médico, para evitar sintomas de abstinência.</li>
-   <li>Evitar o consumo de álcool durante o tratamento.</li>
-</ul>
-<h2>9. Monitorização</h2>
-<p><strong>Eficácia:</strong> Avaliar regularmente a melhoria dos sintomas utilizando escalas clínicas apropriadas (p.ex., PANSS para esquizofrenia, YMRS para mania, MADRS para depressão).</p>
-<p><strong>Segurança:</strong></p>
-<ul>
-   <li>Monitorizar peso, IMC e perímetro abdominal.</li>
-   <li>Avaliar glicemia em jejum e perfil lipídico periodicamente.</li>
-   <li>Controlar a pressão arterial, especialmente no início do tratamento.</li>
-   <li>Realizar hemogramas para detetar possíveis alterações hematológicas.</li>
-   <li>Monitorizar sinais de sintomas extrapiramidais e discinesia tardia.</li>
-   <li>Realizar ECG em doentes com fatores de risco cardíaco.</li>
-</ul>
-<h2>10. Notas Adicionais</h2>
-<ul>
-   <li>A quetiapina está disponível em formulações de libertação imediata e prolongada, permitindo flexibilidade na administração e ajuste posológico.</li>
-   <li>O uso de quetiapina para tratamento de insónia não é recomendado devido ao perfil de efeitos adversos e falta de evidência robusta (<a id="anderson2014" href="https://doi.org/10.2146/ajhp130221">Anderson & Vande Griend, 2014</a>).</li>
-   <li>Há relatos de uso indevido e abuso de quetiapina, particularmente em indivíduos com história de abuso de substâncias (<a id="modestolowe2021" href="https://doi.org/10.3949/ccjm.88a.20164">Modesto-Lowe et al., 2021</a>).</li>
-   <li>A quetiapina pode estar associada a efeitos metabólicos adversos, incluindo síndrome metabólica; a monitorização regular é essencial (<a id="carrizo2008" href="https://academic.oup.com/qjmed/article/108/3/245/1606572">Jalota et al., 2012</a>).</li>
-   <li>A evidência suporta a eficácia da quetiapina como adjuvante no tratamento da depressão resistente, mas os riscos e benefícios devem ser avaliados individualmente (<a id="komossa2010" href="https://doi.org/10.1002/14651858.CD008121.pub2">Komossa et al., 2010</a>).</li>
-</ul>
-<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
-<ul>
-   <li><strong>Sedação:</strong> Útil em doentes com agitação ou insónia associadas a doenças psicóticas ou afetivas, mas deve-se evitar sedação excessiva.</li>
-   <li><strong>Risco Metabólico:</strong> Implementar medidas preventivas e monitorização regular devido ao potencial de aumento de peso e alterações metabólicas.</li>
-   <li><strong>Descontinuação Gradual:</strong> Reduzir a dose gradualmente para minimizar o risco de sintomas de abstinência.</li>
-   <li><strong>Ajuste Posológico Individualizado:</strong> Considerar características individuais do doente, como idade, função hepática e presença de comorbilidades, ao ajustar a dose.</li>
-   <li><strong>Educação do Doente:</strong> Informar sobre a importância da adesão ao tratamento e comunicar quaisquer efeitos adversos ou preocupações.</li>
-</ul>
-    
-<h2 id="bibliografia">12. Bibliografia</h2>
-
-
-    
-<ul>
-     <li><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</i></a></li>    
-        <li><a href="https://go.drugbank.com/drugs/DB01224" target="_blank">Drug Bank</i></a></li>
-
-   <li id="anderson2014">Anderson, Sarah L., and Joseph P. Vande Griend. (2014) Quetiapine for insomnia: a review of the literature. American journal of health-system pharmacy 71(5), 394-402.</li>
-   <li id="carrizo2008">Carrizo, E., Fernández, V., Quintero, J., Connell, L., Rodríguez, Z., Mosquera, M., ... & Baptista, T. (2008). Coagulation and inflammation markers during atypical or typical antipsychotic treatment in schizophrenia patients and drug-free first-degree relatives. Schizophrenia research, 103(1-3), 83-93.</li>
-   <li id="wilding2021">Jalota, R., Bond, C., & Jose, R. J. (2015). Quetiapine and the development of the metabolic syndrome. QJM: An International Journal of Medicine, 108(3), 245-247.</li>
-   <li id="pratley2018">Komossa, K., Depping, A. M., Gaudchau, A., Kissling, W., & Leucht, S. (2010). Second‐generation antipsychotics for major depressive disorder and dysthymia. Cochrane Database of Systematic Reviews, (12).</li>
-</ul>
-
-<br>
-<!-- At the end of each section -->
-<button class="btn btn-primary print-page">Imprimir</button>
-     
-  </div>
-   <div id="section-5" class="info-section">
-    <h1>Pantoprazol</h1>
-    
-  <br /><br /><button id="toggleFullscreen">Ecrã Inteiro</button> 
-
-  <br /><br />
-  <input type="checkbox" id="physicsCheck" checked> Física<br><br>
-
-  <label>
-    <input type="checkbox" id="seeAllDescendantsCheckbox" name="seeAllDescendants">
-    Ver Todos os Descendentes ao Clicar
-  </label>
-  <br><br>
-
-  <label>
-    <input type="checkbox" id="curvedEdgesCheckbox"> Ligações Curvas
-  </label>
-  
-  <div id="groupToggles"></div>
-
-  <!--<div id="mynetwork"></div>-->
-
-  <input type="text" id="dataURL" style="display:none;"/>
-  <button id="loadDataButton" style="display:none;">Load</button>
-  <button id="shareButton" style="display:none;">Share</button> 
-  <button id="calculateNodeDegrees" style="display:none;">Nodes' Degrees</button>
-  <button onclick="degree()" style="display:none;">Info</button>
-  <canvas id="degreeChart"></canvas>
-  <div id="nodeDegreeResults" style="display:none;"></div>
-  <br /><br />
-  <button id="calculateClusteringCoefficient" style="display:none;">Clustering Coefficient</button>
-  <button onclick="clusteringCoefficient()" style="display:none;">Info</button>
-  <canvas id="clusteringChart"></canvas>
-  <div id="clusteringResults" style="display:none;"></div>
-    
-<h2>1. Grupo Farmacoterapêutico e DCI(s)</h2>
-<p><strong>Denominação Comum Internacional (DCI):</strong> Pantoprazol.</p>
-<p><strong>Grupo farmacoterapêutico:</strong> Antiácidos e antiulcerosos. Modificadores da secreção gástrica. Inibidores da bomba de protões. Código ATC: A02BC02.</p>
-<h2>2. Indicações Principais</h2>
-<p>Pantoprazol é utilizado para o tratamento e prevenção de condições associadas ao excesso de ácido gástrico:</p>
-<ul>
-   <li><strong>Doença de refluxo gastroesofágico (DRGE):</strong> Alívio dos sintomas como azia, regurgitação ácida e disfagia.</li>
-   <li><strong>Esofagite de refluxo:</strong> Tratamento e prevenção de recidivas.</li>
-   <li><strong>Úlceras gástricas e duodenais:</strong> Tratamento de úlceras pépticas.</li>
-   <li><strong>Erradicação de Helicobacter pylori:</strong> Em combinação com terapêutica antibiótica adequada.</li>
-   <li><strong>Síndrome de Zollinger-Ellison e outras condições de hipersecreção patológica:</strong> Tratamento a longo prazo para controlar a secreção ácida excessiva.</li>
-   <li><strong>Prevenção de úlceras gastroduodenais induzidas por anti-inflamatórios não esteroides (AINEs):</strong> Em doentes de risco que necessitam de terapia contínua com AINEs.</li>
-</ul>
-<h2>3. Mecanismos de Ação</h2>
-<ul>
-   <li>Pantoprazol é um inibidor da bomba de protões que atua bloqueando irreversivelmente a enzima H<sup>+</sup>/K<sup>+</sup>-ATPase nas células parietais gástricas.</li>
-   <li>Inibe a etapa final da produção de ácido clorídrico, reduzindo tanto a secreção basal como a estimulada de ácido gástrico.</li>
-   <li>A redução da acidez gástrica promove a cicatrização de lesões na mucosa gastrointestinal e alivia os sintomas associados ao refluxo ácido.</li>
-   <li>É um pró-fármaco que, após administração oral, é ativado no ambiente ácido dos canalículos das células parietais.</li>
-   <li>O efeito inibitório sobre a secreção ácida é dose-dependente e pode durar mais de 24 horas, permitindo uma administração diária única.</li>
-</ul>
-<h2>4. Aspectos-Chave da Posologia e Modo de Administração</h2>
-<p><strong>Adultos e adolescentes a partir dos 12 anos:</strong></p>
-<ul>
-   <li><strong>Doença de refluxo gastroesofágico e sintomas associados:</strong> 20 mg uma vez por dia. O alívio dos sintomas é geralmente alcançado em 2 a 4 semanas; se necessário, o tratamento pode ser prolongado por mais 4 semanas.</li>
-   <li><strong>Esofagite de refluxo:</strong> 40 mg uma vez por dia durante 4 semanas, podendo ser prolongado por mais 4 semanas se não houver cicatrização completa.</li>
-   <li><strong>Prevenção de úlceras induzidas por AINEs:</strong> 20 mg uma vez por dia em doentes de risco que necessitam de tratamento contínuo com AINEs.</li>
-</ul>
-<p><strong>Adultos:</strong></p>
-<ul>
-   <li><strong>Erradicação de Helicobacter pylori:</strong> 40 mg duas vezes por dia em combinação com antibióticos (por exemplo, claritromicina e amoxicilina ou metronidazol) durante 7 a 14 dias.</li>
-   <li><strong>Síndrome de Zollinger-Ellison e outras condições hipersecretoras:</strong> Dose inicial de 80 mg por dia, ajustada conforme necessário; doses superiores a 80 mg devem ser divididas em duas administrações diárias.</li>
-</ul>
-<p><strong>Insuficiência hepática:</strong> Em doentes com insuficiência hepática grave, a dose diária não deve exceder 20 mg; monitorização regular das enzimas hepáticas é recomendada.</p>
-<p><strong>Insuficiência renal:</strong> Não é necessário ajuste de dose.</p>
-<p><strong>Idosos:</strong> Não é necessário ajuste de dose; no entanto, deve-se considerar a função renal e hepática.</p>
-<p><strong>Modo de administração:</strong> Os comprimidos gastrorresistentes devem ser engolidos inteiros com água uma hora antes da refeição; não devem ser mastigados ou partidos.</p>
-<h2>5. Efeitos Adversos e Precauções/Contraindicações Relevantes</h2>
-<p><strong>Efeitos adversos comuns:</strong></p>
-<ul>
-   <li>Cefaleias.</li>
-   <li>Diarreia, náuseas, vómitos, distensão abdominal, flatulência, obstipação.</li>
-   <li>Erupções cutâneas, prurido.</li>
-   <li>Tonturas, visão turva.</li>
-</ul>
-<p><strong>Efeitos adversos raros:</strong></p>
-<ul>
-   <li>Reações alérgicas graves (anafilaxia, angioedema).</li>
-   <li>Hipomagnesemia com possíveis consequências como tetania, arritmias ventriculares; pode levar a hipocalcemia e hipocaliemia.</li>
-   <li>Fraturas ósseas, especialmente da anca, punho e coluna, associadas ao uso prolongado e em doses elevadas.</li>
-   <li>Lúpus eritematoso cutâneo subagudo.</li>
-   <li>Reações cutâneas graves como síndrome de Stevens-Johnson e necrólise epidérmica tóxica.</li>
-</ul>
-<p><strong>Precauções:</strong></p>
-<ul>
-   <li>Em doentes com sintomas de alarme (por exemplo, perda de peso não intencional, hemorragia gastrointestinal), excluir malignidade gástrica antes do tratamento.</li>
-   <li>Monitorizar magnésio sérico em tratamentos prolongados ou quando usados concomitantemente com medicamentos que podem causar hipomagnesemia (por exemplo, diuréticos).</li>
-   <li>Usar com precaução em doentes com risco de osteoporose; considerar suplementação de vitamina D e cálcio.</li>
-   <li>A coadministração com atazanavir e outros inibidores da protease do VIH dependentes do pH ácido não é recomendada.</li>
-</ul>
-<p><strong>Contraindicações:</strong></p>
-<ul>
-   <li>Hipersensibilidade ao pantoprazol, a outros benzimidazóis substituídos ou a qualquer excipiente da formulação.</li>
-</ul>
-<h2>6. Interações Clinicamente Relevantes</h2>
-<ul>
-   <li><strong>Medicamentos dependentes do pH gástrico para absorção:</strong> Pode diminuir a absorção de cetoconazol, itraconazol, posaconazol, erlotinib, entre outros.</li>
-   <li><strong>Varfarina e outros anticoagulantes cumarínicos:</strong> Possível aumento do INR e tempo de protrombina; monitorizar parâmetros de coagulação.</li>
-   <li><strong>Metotrexato:</strong> Pode aumentar os níveis séricos de metotrexato; pode ser necessário suspender temporariamente o pantoprazol em altas doses de metotrexato.</li>
-   <li><strong>Inibidores da protease do VIH:</strong> A coadministração com atazanavir é desaconselhada devido à redução da eficácia deste.</li>
-</ul>
-<h2>7. Aspectos-Chave da Utilização em Populações Especiais</h2>
-<ul>
-   <li><strong>Gravidez:</strong> Deve ser utilizado apenas se o benefício justificar o potencial risco para o feto; estudos em animais não indicam efeitos prejudiciais diretos ou indiretos.</li>
-   <li><strong>Aleitamento:</strong> Excretado no leite materno; a decisão de continuar ou interromper o aleitamento deve considerar o benefício para a mãe e o potencial risco para o lactente.</li>
-   <li><strong>Idosos:</strong> Geralmente bem tolerado; considerar a função renal e hepática e o risco de fraturas ósseas em uso prolongado.</li>
-   <li><strong>Insuficiência hepática:</strong> Não exceder 20 mg por dia em insuficiência hepática grave; monitorizar enzimas hepáticas.</li>
-   <li><strong>Insuficiência renal:</strong> Não é necessário ajuste de dose.</li>
-   <li><strong>Crianças e adolescentes:</strong> A segurança e eficácia não foram estabelecidas em crianças com menos de 12 anos.</li>
-   <li><strong>Osteoporose:</strong> Doentes com risco devem receber cuidados adequados e suplementação de cálcio e vitamina D.</li>
-</ul>
-<h2>8. Informação aos Doentes</h2>
-<ul>
-   <li>Tomar o medicamento uma hora antes da refeição, engolindo o comprimido inteiro com água.</li>
-   <li>Não partir ou mastigar os comprimidos.</li>
-   <li>Não interromper o tratamento sem consultar o médico, mesmo que os sintomas melhorem.</li>
-   <li>Informar o médico sobre todos os medicamentos que está a tomar, incluindo medicamentos sem receita médica.</li>
-   <li>Contactar o médico se surgirem sintomas como perda de peso involuntária, vómitos persistentes, dificuldade em engolir, sangue nas fezes ou anemia.</li>
-</ul>
-<h2>9. Monitorização</h2>
-<p><strong>Eficácia:</strong> Avaliação clínica dos sintomas gastrointestinais; endoscopia se indicado.</p>
-<p><strong>Segurança:</strong> Monitorizar enzimas hepáticas em doentes com insuficiência hepática; níveis de magnésio em tratamentos prolongados; parâmetros de coagulação se usado com varfarina.</p>
-<h2>10. Notas Adicionais</h2>
-<ul>
-   <li><strong>Disponibilidade de formulações:</strong> Pantoprazol está disponível em comprimidos gastrorresistentes de 20 mg e 40 mg, permitindo ajustes posológicos conforme a necessidade clínica.</li>
-   <li><strong>Uso intravenoso:</strong> Existe formulação intravenosa para situações em que a administração oral não é possível; deve ser substituída pela via oral assim que possível.</li>
-   <li><strong>Uso prolongado:</strong> Tratamentos de longa duração podem aumentar o risco de efeitos adversos como hipomagnesemia, fraturas ósseas e deficiência de vitamina B12; recomenda-se uso na menor dose eficaz pelo menor tempo necessário.</li>
-   <li><strong>Estudos recentes:</strong></li>
-</ul>
-<p>Vários estudos têm investigado os efeitos do pantoprazol e outros inibidores da bomba de protões (IBPs):</p>
-<ul>
-   <li>Estudos observacionais sugerem uma possível associação entre o uso prolongado de IBPs e o aumento do risco de doença renal crónica; no entanto, a relação causal não está estabelecida e são necessários mais estudos (<a href="#lazarus2016">Lazarus et al., 2016</a>).</li>
-   <li>O uso prolongado de IBPs tem sido associado a um risco aumentado de fraturas osteoporóticas, possivelmente devido à redução da absorção de cálcio e magnésio (<a href="#corley2010">Corley et al., 2010</a>).</li>
-   <li>A hipomagnesemia induzida por IBPs é um efeito adverso raro mas potencialmente grave; a monitorização dos níveis de magnésio é recomendada em tratamentos prolongados ou quando usados com outros medicamentos que possam causar hipomagnesemia (<a href="#cheung2015">Cheungpasitporn et al., 2015</a>).</li>
-   <li>Alguns estudos indicam que os IBPs podem interferir na eficácia de certos medicamentos antineoplásicos devido à alteração do pH gástrico e consequente absorção dos fármacos (<a href="#liu2013">Liu et al., 2013</a>).</li>
-</ul>
-
-<h2>11. Pérolas para a Utilização na Prática Clínica</h2>
-<ul>
-   <li><strong>Uso racional:</strong> Avaliar periodicamente a necessidade contínua de terapia com pantoprazol, especialmente em tratamentos prolongados.</li>
-   <li><strong>Interações medicamentosas:</strong> Estar atento a medicamentos cuja absorção depende do pH gástrico; ajustar terapêuticas conforme necessário.</li>
-   <li><strong>Monitorização:</strong> Considerar a monitorização de eletrólitos (magnésio, cálcio) em doentes em terapêutica prolongada.</li>
-   <li><strong>Sintomas mascarados:</strong> O alívio sintomático pode atrasar o diagnóstico de condições graves; investigar adequadamente se persistirem sintomas alarmantes.</li>
-   <li><strong>Educação do doente:</strong> Informar sobre a importância de seguir as instruções de administração e de não exceder a dose recomendada.</li>
-</ul>
-     
-    <h2 id="bibliografia">12. Bibliografia</h2>
-<ul>
-   <li><a href="https://extranet.infarmed.pt/INFOMED-fo/index.xhtml" target="_blank">INFOMED</a></li>
-   <li><a href="https://go.drugbank.com/drugs/DB00213" target="_blank">DrugBank</a></li>
-   <li id="lazarus2016">Lazarus, B., Chen, Y., Wilson, F. P., Sang, Y., Chang, A. R., Coresh, J., & Grams, M. E. (2016). Proton pump inhibitor use and the risk of chronic kidney disease. <em>JAMA Internal Medicine</em>, 176(2), 238-246.</li>
-   <li id="corley2010">Corley, D. A., Kubo, A., Zhao, W., & Quesenberry, C. (2010). Proton pump inhibitors and histamine-2 receptor antagonists are associated with hip fractures among at-risk patients. <em>Gastroenterology</em>, 139(1), 93-101.</li>
-   <li id="cheung2015">Cheungpasitporn, W., Thongprayoon, C., Kittanamongkolchai, W., Brabec, B. A., O'Corragain, O. A., Edmonds, P. J., & Erickson, S. B. (2015). Proton pump inhibitors linked to hypomagnesemia: a systematic review and meta-analysis of observational studies. <em>Renal Failure</em>, 37(7), 1237-1241.</li>
-   <li id="liu2013">Liu, J., Shen, J., & Yu, H. G. (2013). Effect of pantoprazole on the pharmacokinetics of erlotinib in patients with advanced solid tumors. <em>Anti-Cancer Drugs</em>, 24(9), 1000-1006.</li>
-</ul>
-     
-<br>
-<!-- At the end of each section -->
-<button class="btn btn-primary print-page">Imprimir</button>
-     
-  </div>
-</div>
-
-
-<button id="loadDataButton1" style="display:none;">Load Data 1</button>
-<button id="loadDataButton2" style="display:none;">Load Data 2</button>
-<button id="loadDataButton3" style="display:none;">Load Data 3</button>
-<button id="loadDataButton4" style="display:none;">Load Data 4</button>
-<button id="loadDataButton5" style="display:none;">Load Data 5</button>
-
-<center>
-  <p>André Filipe Rodrigues da Silva (36162)</p>
-  <p>Decisão Terapêutica</p>  
-  <p>FMUL</p>
-  <p>prontuarios.pt</p>
-  <p>2024</p>
-  </center>
-  
+<!-- ===== PRONTUARIOS.PT – Catálogo com QR dinâmicos + Pop-up de captação ===== -->
+<!-- Colar num gadget HTML/JavaScript OU numa página estática do Blogger -->
 <style>
-  
- 
-
-    @media print {
-      body {
-        width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    }
-  
-  
-    .group-toggle-container {
-      margin-bottom: 10px;
-    }
-    .group-toggle {
-      cursor: pointer;
-      padding: 5px 10px;
-      margin: 5px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 3px;
-    }
-    .group-toggle.off {
-      background-color: #ccc;
-      color: #666;
-    }    
-    .deleteButton { cursor: pointer; padding: 5px 10px; margin: 5px; background-color: #f44336; color: white; border: none; border-radius: 3px; }
-    .deleteButton:hover { background-color: #cc0000; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
-    th { background-color: #f2f2f2; }
-    .button { cursor: pointer; padding: 5px 10px; margin: 5px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; }
-    .button:hover { background-color: #45a049; }
-    #resetButton { background-color: #f44336; }
-    #resetButton:hover { background-color: #cc0000; }
-    .copyButton { padding: 4px 8px; }
-    #degreeChart, #clusteringChart {
-      display: none;
-      height: 400px;
-    }
-    .vis-tooltip {
-      z-index: 10000 !important;
-    }
-#mynetwork {
-  width: 100%;
-  height: 500px;
-  border: 1px solid lightgray;
-  background-color: white;
-  position: relative;
-  page-break-inside: avoid; /* Ensure the network graph doesn't break */
-}
-
-    #watermark {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      color: gray;
-      opacity: 0.5; /* Adjust transparency */
-      font-size: 12px;
-      z-index: 1000; /* Ensure it stays on top */
-    }
-    #watermark a {
-      color: gray; /* Match the text color of the watermark */
-      text-decoration: none; /* No underline for the link */
-    }
-  
-  @property --_l {
-    syntax: "<length>";
-    initial-value: 0px;
-    inherits: true;
+  :root {
+    --bg: #0b0f14;
+    --card: #121923;
+    --muted: #7a8aa0;
+    --accent: #3ba0ff;
+    --accent-2: #59d0a0;
+    --text: #eaf0f6;
+    --ring: rgba(59,160,255,.35);
+    --shadow: 0 8px 24px rgba(0,0,0,.35);
+    --radius: 18px;
   }
-  @property --_r {
-    syntax: "<length>";
-    initial-value: 0px;
-    inherits: true;
-  }
+  .qr-wrapper { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; color: var(--text); }
+  .qr-shell { max-width: 1100px; margin: 40px auto; padding: 0 16px; }
+  .qr-head { display:flex; flex-wrap:wrap; align-items:center; gap:12px; justify-content:space-between; margin-bottom:22px; }
+  .qr-title { font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; letter-spacing:.2px; }
+  .qr-panel { background: linear-gradient(180deg, #0f1520, #0c131c); border:1px solid #213043; box-shadow: var(--shadow); border-radius: var(--radius); padding:14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .qr-field { display:flex; gap:10px; align-items:center; flex: 1 1 340px; }
+  .qr-field label { font-size:13px; color: var(--muted); white-space:nowrap; }
+  .qr-field input { flex:1; background:#0d141d; border:1px solid #1e2a3a; color:var(--text); padding:10px 12px; border-radius: 12px; outline:none; box-shadow: inset 0 0 0 0 transparent; transition: box-shadow .2s, border-color .2s; }
+  .qr-field input:focus { border-color:#2a3e57; box-shadow: 0 0 0 4px var(--ring); }
+  .qr-btn { appearance:none; border:0; background: linear-gradient(135deg, var(--accent), #6dc3ff); color:#041421; font-weight:700; padding:10px 16px; border-radius:12px; cursor:pointer; transition: transform .06s ease; }
+  .qr-btn:active { transform: translateY(1px); }
+  .qr-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:16px; margin-top:18px; }
+  .qr-card { background: var(--card); border:1px solid #1f2a3a; border-radius: var(--radius); box-shadow: var(--shadow); padding:16px; display:flex; flex-direction:column; gap:12px; }
+  .qr-badge { font-size:12px; color:#a9b7c9; letter-spacing:.3px; }
+  .qr-name { font-size:18px; font-weight:700; line-height:1.25; }
+  .qr-qrcode { display:grid; place-items:center; background: #0b121b; border:1px dashed #243246; border-radius:14px; padding:10px; min-height: 164px; }
+  .qr-cta { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .qr-link { font-size:12px; color: var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 70%; }
+  .qr-copy { font-size:12px; border:1px solid #1f2a3a; padding:6px 10px; border-radius:10px; background:#0f1520; color:#cfe4ff; cursor:pointer; }
+  .qr-footer { margin-top: 24px; font-size:12px; color: var(--muted); }
+  .qr-success { color: var(--accent-2); font-weight:600; }
 
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Horizontal spacing between boxes */
-    justify-content: center;
-    margin-bottom: 40px; /* Vertical spacing between rows on larger screens */
-  }
+  /* Modal (pop-up) */
+  .qr-modal-backdrop { position: fixed; inset:0; background: rgba(3,8,15,.72); backdrop-filter: blur(4px); display:none; align-items:center; justify-content:center; z-index: 9999; }
+  .qr-modal { width:min(720px, 92vw); background: linear-gradient(180deg, #0f1520, #0a1018); border:1px solid #26364d; border-radius: 20px; padding: 18px; box-shadow: 0 20px 60px rgba(0,0,0,.55); }
+  .qr-modal h3 { margin:0 0 6px; font-size:22px; }
+  .qr-modal p { margin:0 0 12px; color: var(--muted); font-size:14px; }
+  .qr-form { display:grid; gap:12px; grid-template-columns: 1fr 1fr; }
+  .qr-form .full { grid-column: 1 / -1; }
+  .qr-form input, .qr-form textarea { width:100%; background:#0d141d; border:1px solid #1e2a3a; color:var(--text); padding:10px 12px; border-radius:12px; outline:none; }
+  .qr-form textarea { min-height: 110px; resize: vertical; }
+  .qr-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:8px; }
+  .btn-sec { background:#0e1520; border:1px solid #26364d; color:#cde1f8; padding:10px 14px; border-radius:12px; cursor:pointer; }
+  .btn-pri { background: linear-gradient(135deg, var(--accent-2), #78e3b3); color:#062017; font-weight:800; padding:10px 16px; border-radius:12px; cursor:pointer; border:0; }
+  .qr-hide { display:none !important; }
 
-  .drug-box {
-    --d: 18px;  /* the depth */
-    --a: 20deg; /* the angle */
-    --x: 10px;  /* lateral width */
-
-    width: 300px; /* Width for the frontal face */
-    aspect-ratio: 2.2;
-    object-fit: cover;
-    padding-block: var(--d);
-    transform: perspective(600px) rotateY(calc(var(--_i, 1) * var(--a)));
-    outline: var(--d) solid #0008;
-    outline-offset: calc(-1 * var(--d));
-    --_d: calc(100% - var(--d));
-    --_l: 0px;
-    --_r: 0px;
-    clip-path: polygon(
-      var(--_l) calc(var(--_d) - var(--x)),
-      var(--_l) calc(var(--d) + var(--x)), 
-      var(--d) var(--d), var(--_d) var(--d),
-      calc(var(--_d) + var(--_r)) calc(var(--d) + var(--x)),
-      calc(var(--_d) + var(--_r)) calc(var(--_d) - var(--x)),  
-      var(--_d) var(--_d), var(--d) var(--_d)
-    );
-    transition: transform .3s, --_r .15s, --_l .15s .15s;
-    transition-timing-function: linear;
-    cursor: pointer;
-    display: block;
-    max-width: 100%;
-  }
-
-  .drug-box:hover,
-  .drug-box.alt {
-    --_l: var(--d);
-    --_r: var(--d);
-    --_i: -1;
-    transition-delay: 0s, .15s, 0s;
-  }
-
-  /* Information section styles */
-  .info-sections {
-    display: block; /* Ensure this container is visible */
-    margin-top: 20px;
-  }
-
-  .info-section {
-    display: none;
-    padding: 20px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-  }
-
-  /* Responsive vertical spacing for larger screens */
-  @media (min-width: 1024px) {
-    .container {
-      row-gap: 40px; /* Increased vertical gap for large screens */
-    }
-  }
+  /* Dark page background (opcional) */
+  body { background: var(--bg); }
 </style>
 
+<div class="qr-wrapper">
+  <div class="qr-shell">
+    <div class="qr-head">
+      <div class="qr-title">Catálogo · QR dinâmicos</div>
+      <div class="qr-panel" role="group" aria-label="Controlo de QR Codes">
+        <div class="qr-field">
+          <label for="affiliateInput">Affiliate</label>
+          <input id="affiliateInput" type="text" placeholder="ex.: afiliado_joao" autocomplete="off" />
+        </div>
+        <button class="qr-btn" id="btnAtualizar">Atualizar QR Codes</button>
+        <span id="statusMsg" class="qr-badge"></span>
+      </div>
+    </div>
+
+    <!-- ===== CATÁLOGO =====
+         Duplicar .qr-card para adicionar produtos. O nome do produto vem de data-product.
+    -->
+    <div class="qr-grid" id="catalogo">
+      <div class="qr-card" data-product="Manual de Onboarding">
+        <div class="qr-badge">Produto</div>
+        <div class="qr-name">Manual de Onboarding</div>
+        <div class="qr-qrcode" data-qr></div>
+        <div class="qr-cta">
+          <span class="qr-link" data-link>—</span>
+          <button class="qr-copy" data-copy>Copiar URL</button>
+        </div>
+      </div>
+
+      <div class="qr-card" data-product="Template de Proposta">
+        <div class="qr-badge">Produto</div>
+        <div class="qr-name">Template de Proposta</div>
+        <div class="qr-qrcode" data-qr></div>
+        <div class="qr-cta">
+          <span class="qr-link" data-link>—</span>
+          <button class="qr-copy" data-copy>Copiar URL</button>
+        </div>
+      </div>
+
+      <div class="qr-card" data-product="Checklist de Auditoria">
+        <div class="qr-badge">Produto</div>
+        <div class="qr-name">Checklist de Auditoria</div>
+        <div class="qr-qrcode" data-qr></div>
+        <div class="qr-cta">
+          <span class="qr-link" data-link>—</span>
+          <button class="qr-copy" data-copy>Copiar URL</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="qr-footer">
+      ⚙️ Dica: o valor do affiliate fica gravado no teu navegador (localStorage).
+      <span id="lastAction" class="qr-success"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL (aparece quando a página abre com ?p=...&a=...) ===== -->
+<div class="qr-modal-backdrop" id="qrModalBackdrop" aria-hidden="true">
+  <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+    <h3 id="qrModalTitle">Pedido de informação</h3>
+    <p>Preenche os campos. O teu pedido será encaminhado internamente.</p>
+
+    <form id="leadForm" class="qr-form" novalidate>
+      <input type="hidden" name="entry.698615008" id="gformProduto" /> <!-- produto -->
+      <input type="hidden" name="entry.645159200" id="gformAfiliado" /> <!-- affiliate -->
+      <input type="hidden" name="entry.1002593961" id="gformTexto" /> <!-- bloco de texto agregado -->
+
+      <div>
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" placeholder="O teu nome (opcional)" />
+      </div>
+      <div>
+        <label for="contacto">Contacto</label>
+        <input id="contacto" type="text" placeholder="Email ou telemóvel (opcional)" />
+      </div>
+      <div class="full">
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" placeholder="Escreve aqui a tua mensagem (opcional)"></textarea>
+      </div>
+
+      <div class="qr-actions full">
+        <button type="button" class="btn-sec" id="btnFechar">Fechar</button>
+        <button type="submit" class="btn-pri">Enviar</button>
+      </div>
+      <p id="formStatus" class="qr-badge full"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ===== QRCode.js (CDN) ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+
 <script>
-  // Initialize global variables
-  var nodes = new vis.DataSet([]);
-  var edges = new vis.DataSet([]);
-  var network = null;
-  var options = null;
+(function () {
+  const SITE_BASE = "https://prontuarios.pt/"; // domínio do site
+  const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSflzspmuBWoD3OA5cISJBwFWuLlIoYNpBAYi9KuG-fs2VYMjA/formResponse";
 
-  const boxes = document.querySelectorAll('.drug-box');
-  const sections = document.querySelectorAll('.info-section');  
-  const networkContainer = document.getElementById('mynetwork');
+  // Elementos principais
+  const $affiliateInput = document.getElementById("affiliateInput");
+  const $btnAtualizar = document.getElementById("btnAtualizar");
+  const $statusMsg = document.getElementById("statusMsg");
+  const $lastAction = document.getElementById("lastAction");
+  const $catalogo = document.getElementById("catalogo");
 
-  // Smooth scroll function
-  function smoothScroll(target, duration) {
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-    const startPosition = window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    let startTime = null;
+  // Modal & Form
+  const $backdrop = document.getElementById("qrModalBackdrop");
+  const $leadForm = document.getElementById("leadForm");
+  const $btnFechar = document.getElementById("btnFechar");
+  const $formStatus = document.getElementById("formStatus");
 
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const run = easeInOut(timeElapsed, startPosition, distance, duration);
-      window.scrollTo(0, run);
-      if (timeElapsed < duration) requestAnimationFrame(animation);
-    }
+  const $gProduto = document.getElementById("gformProduto");
+  const $gAfiliado = document.getElementById("gformAfiliado");
+  const $gTexto = document.getElementById("gformTexto");
 
-    function easeInOut(t, b, c, d) {
-      t /= d / 2;
-      if (t < 1) return c / 2 * t * t + b;
-      t--;
-      return -c / 2 * (t * (t - 2) - 1) + b;
-    }
+  // Utils
+  const qs = (sel, ctx = document) => ctx.querySelector(sel);
+  const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+  const enc = encodeURIComponent;
 
-    requestAnimationFrame(animation);
+  function setStatus(msg, ok=false) {
+    $statusMsg.textContent = msg;
+    $statusMsg.style.color = ok ? "var(--accent-2)" : "var(--muted)";
   }
 
-  // Define the Excel URLs
-  const excelURLs = [
-    null, // Index 0 placeholder
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3Ve9RmvGHPomdLhlL8vcKw92ysBoLLW3Z7GCt-6_1-Eo9zRpxfM2J2O22uXZ7-2XP8yoMgW6-qvRa/pub?output=xlsx', 
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx', 
- 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx', 
-     'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx', 
-     'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzO3-Yc2FVcr26te3S1FUK_Q3N0NIbPiSr7iBgZWfeRzmGCjOTNrrzkS2mdY_UMJt9gI8LM_pRR0R7/pub?output=xlsx'
-  ];
-
-  document.addEventListener("DOMContentLoaded", function() {
-    // Initialize the network
-    var container = document.getElementById("mynetwork");
-    var data = {
-      nodes: nodes,
-      edges: edges,
-    };
-    options = {
-      layout: { randomSeed: 2 },
-      physics: {
-        enabled: true,
-        solver: "barnesHut",
-        barnesHut: {
-          gravitationalConstant: -8000,
-          springLength: 10,
-          centralGravity: 0.01,
-        },
-        maxVelocity: 135,
-        timestep: 0.35,
-        stabilization: {
-          enabled: true,
-          iterations: 600,
-          updateInterval: 10,
-          onlyDynamicEdges: false,
-          fit: true
-        }
-      },
-      nodes: {
-        shape: "dot",
-        scaling: {
-          customScalingFunction: function (min, max, total, value) {
-            return value / total;
-          },
-          min: 5,
-          max: 50,
-        },
-      },
-      edges: {
-        color: {
-          inherit: false,
-        },
-        scaling: {
-          min: 0.5,
-          max: 3,
-        },
-        smooth: {
-          enabled: false,
-          type: 'dynamic',
-        },
-      },
-    };
-    network = new vis.Network(container, data, options);
-
-    boxes.forEach(box => {
-      box.addEventListener('click', () => {
-        // Close all sections
-        sections.forEach(section => {
-          section.style.display = 'none';
-        });
-
-        // Get the associated section
-        const id = box.getAttribute('data-id');
-        const section = document.getElementById(`section-${id}`);
-
-        // Open the associated section
-        section.style.display = 'block';
-
-        // Move the network container into the current section, after the main title
-        const h1 = section.querySelector('h1');
-        if (h1) {
-          h1.insertAdjacentElement('afterend', networkContainer);
-        } else {
-          section.insertAdjacentElement('afterbegin', networkContainer);
-        }
-
-        // Ensure the network container is visible
-        networkContainer.style.display = 'block';
-
-        // Smooth scroll to the section
-        smoothScroll(section, 1300);
-
-        // Load the data for this section
-        loadDataForSection(id);
-      });
-    });
-
-    // Event listener for physics checkbox
-    document.getElementById("physicsCheck").addEventListener("change", function() {
-      options.physics.enabled = this.checked; // Toggle physics
-      network.setOptions(options); // Update network options
-      network.redraw(); // Redraw network
-    });
-
-    // Event listener for curved edges
-    document.getElementById("curvedEdgesCheckbox").addEventListener("change", function () {
-      options.edges.smooth.enabled = this.checked;
-      network.setOptions(options);
-      network.redraw();
-    });
-
-    // Add the watermark
-    var watermark = document.createElement('div');
-    watermark.id = 'watermark';
-    watermark.innerHTML = `<a href="https://www.linkedin.com/in/andrefrsilva/" target="_blank">André © ${new Date().getFullYear()}</a>`;
-    networkContainer.appendChild(watermark);
-
-    // Add event handlers for node selection
-    network.on('selectNode', function (properties) {
-      let seeAllDescendants = document.getElementById('seeAllDescendantsCheckbox').checked;
-      let nodesToUpdate = [];
-      let allNodes = nodes.get(); // Get all nodes
-
-      allNodes.forEach(node => {
-        if (properties.nodes.includes(node.id)) {
-          nodesToUpdate.push({ id: node.id, hidden: false, color: node.originalColor });
-        } else {
-          nodesToUpdate.push({ id: node.id, hidden: true });
-        }
-      });
-
-      const addChildNodes = (nodeId, nodesMap, recursive = true) => {
-        let connectedEdges = edges.get({
-          filter: function (edge) {
-            return edge.from === nodeId;
-          }
-        });
-
-        connectedEdges.forEach((edge) => {
-          let childId = edge.to;
-          let childNode = nodesMap.find(node => node.id === childId);
-          if (childNode && childNode.hidden) {
-            childNode.hidden = false;
-            childNode.color = nodes.get(childId).originalColor;
-            if (recursive) {
-              addChildNodes(childId, nodesMap, seeAllDescendants); // Use the checkbox value
-            }
-          }
-        });
-      };
-
-      // Apply recursion based on user preference
-      properties.nodes.forEach(nodeId => {
-        addChildNodes(nodeId, nodesToUpdate, seeAllDescendants);
-      });
-
-      nodes.update(nodesToUpdate);
-    });
-
-    network.on('deselectNode', function (properties) {
-      let nodesToUpdate = [];
-      let allNodes = nodes.get(); // Get all nodes
-
-      allNodes.forEach(node => {
-        if (node.hidden) {
-          // Make the node visible and restore its original color
-          nodesToUpdate.push({ id: node.id, hidden: false, color: node.originalColor });
-        } else {
-          // Ensure visible nodes have their original color
-          nodesToUpdate.push({ id: node.id, color: node.originalColor });
-        }
-      });
-
-      nodes.update(nodesToUpdate);
-    });
-  });
-
-  function loadDataForSection(id) {
-    const url = excelURLs[id];
-    if (url) {
-      loadDataFromGivenURL(url);
-    } else {
-      console.error('No data URL defined for section', id);
-    }
+  function saveAffiliateLocal(value) {
+    try { localStorage.setItem("prontuarios_affiliate", value || ""); } catch {}
   }
 
-  async function loadDataFromGivenURL(url) {
-    try {
-      const response = await fetch(url, { cache: 'no-store' });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const blob = await response.blob();
-      processExcel(blob); // Process the Excel file
-    } catch (error) {
-      console.error("Error loading the Excel file:", error);
-    }
+  function loadAffiliateLocal() {
+    try { return localStorage.getItem("prontuarios_affiliate") || ""; } catch {}
+    return "";
   }
 
-  function processExcel(blob) {
-    nodes.clear(); // Clear existing nodes
-    edges.clear(); // Clear existing edges
-    groupFilters = {}; // Reset group filters
+  function buildProductUrl(product, affiliate) {
+    const url = new URL(SITE_BASE);
+    url.searchParams.set("p", product);
+    url.searchParams.set("a", affiliate);
+    return url.toString();
+  }
 
-    var reader = new FileReader();
+  function clearNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
 
-    reader.onload = function(e) {
-      var data = e.target.result;
-      var workbook = XLSX.read(data, {type: "binary"});
+  // Gera/regera todos os QR codes com o affiliate atual
+  function regenerateQRCodes() {
+    const affiliate = ($affiliateInput.value || "").trim();
+    if (!affiliate) {
+      setStatus("⚠️ Introduz um affiliate e clica em Atualizar.");
+      return;
+    }
+    saveAffiliateLocal(affiliate);
 
-      // Read "nodes" sheet
-      var nodesSheet = workbook.Sheets["nodes"];
-      if (!nodesSheet) {
-        console.error("No 'nodes' sheet found in the Excel file.");
-        return;
-      }
-      var nodesData = XLSX.utils.sheet_to_json(nodesSheet, {header: 1});
-      nodesData.shift(); // Remove header row
+    const cards = qsa(".qr-card", $catalogo);
+    cards.forEach((card) => {
+      const product = card.getAttribute("data-product") || qs(".qr-name", card)?.textContent.trim() || "Produto";
+      const link = buildProductUrl(product, affiliate);
 
-      nodesData.forEach(function(row) {
-        if (row.every(cell => cell === undefined || cell === null || cell === '')) {
-          return; // Skip this row
-        }
-        var nodeId = row[0] ? row[0].replace(/\s+/g, '') : '';
-        var value = row[2] ? row[2] : '';
-        var color = row[1] ? row[1] : 'black';
-        var title = row[3] ? row[3] : '';
-        var group = row[4] ? row[4] : null; // Assuming group info is in the 5th column
+      // Mostra URL curto no cartão (apenas para debug/partilha rápida)
+      const linkEl = qs("[data-link]", card);
+      if (linkEl) linkEl.textContent = link;
 
-        if(group) {
-          groupFilters[group] = true; // Mark group as visible by default
-        }
-
-        var nodeOptions = {
-          id: nodeId,
-          label: row[0],
-          value: value,
-          color: color, // This is the color from Sheets data
-          title: title,
-          group: group,
-          hidden: group ? !groupFilters[group] : false,
-          originalColor: color, // Store the original color
-          font: { background: 'white', color: 'black' } // Set label background and text color
+      // Botão copiar
+      const btnCopy = qs("[data-copy]", card);
+      if (btnCopy) {
+        btnCopy.onclick = async () => {
+          try { await navigator.clipboard.writeText(link); btnCopy.textContent = "Copiado!"; setTimeout(()=>btnCopy.textContent="Copiar URL", 1200); }
+          catch { alert(link); }
         };
-
-        nodes.add(nodeOptions);
-      });
-
-      // Read "edges" sheet
-      var edgesSheet = workbook.Sheets["edges"];
-      if (!edgesSheet) {
-        console.error("No 'edges' sheet found in the Excel file.");
-        return;
       }
-      var edgesData = XLSX.utils.sheet_to_json(edgesSheet, {header: 1});
-      edgesData.shift(); // Remove header row
 
-      edgesData.forEach(function(row) {
-        if (row.every(cell => cell === undefined || cell === null || cell === '')) {
-          return; // Skip empty rows
+      // Gera QR
+      const qrBox = qs("[data-qr]", card);
+      if (qrBox) {
+        clearNode(qrBox);
+        // Aguarda carregamento do QRCode.js caso o defer ainda não tenha corrido
+        if (typeof QRCode === "undefined") {
+          setTimeout(() => regenerateQRCodes(), 150);
+          return;
         }
-
-        var color = "grey";
-        var dashes = false;
-        if (row[2] === "promotes") color = "green";
-        else if (row[2] === "inhibits") color = "red";
-        else if (row[2] === "link") {
-          color = "black";
-          dashes = true;
-        }
-
-        var title = row[4] ? row[4] : ''; // Comment from column E
-        var value = row[3] ? parseFloat(row[3]) : undefined; // Value from column D
-
-        // Define min and max values for thickness and length
-        var minThickness = 0.5;
-        var maxThickness = 10;
-        var minLength = 40;
-        var maxLength = 120;
-
-        // Normalize value for thickness and length
-        var thickness = value !== undefined ? Math.max(minThickness, minThickness + (value / 100) * (maxThickness - minThickness)) : minThickness;
-        var length = value !== undefined ? Math.max(minLength, maxLength - (value / 100) * (maxLength - minLength)) : minLength;
-
-        // Assuming row[0] and row[1] are the IDs for the source and target nodes
-        var fromNode = row[0].replace(/\s+/g, '');
-        var toNode = row[1].replace(/\s+/g, '');
-
-        edges.add({
-          from: fromNode,
-          to: toNode,
-          arrows: row[2] === "link" ? "" : "to",
-          color: color,
-          dashes: dashes,
-          title: title, // Add the comment as title
-          width: thickness, // Set the thickness directly
-          length: length,   // Set the length directly
+        new QRCode(qrBox, {
+          text: link,
+          width: 150,
+          height: 150,
+          correctLevel: QRCode.CorrectLevel.M
         });
-      });
-
-      // Update the network with new data
-      network.setData({nodes: nodes, edges: edges});
-
-      // Render group toggles only after updating data
-      renderGroupToggles();
-
-      // Stabilize the network to adjust the layout
-      network.stabilize();
-    };
-
-    reader.onerror = function(error) {
-      console.error("Error reading the Excel file:", error);
-    };
-
-    reader.readAsBinaryString(blob);
-  }
-
-  // Group filters and functions
-  var groupFilters = {};
-
-  function renderGroupToggles() {
-    var toggleContainer = document.getElementById("groupToggles");
-    toggleContainer.innerHTML = ""; // Clear previous toggles
-
-    Object.keys(groupFilters).forEach(function(group) {
-      var button = document.createElement("button");
-      button.innerText = group;
-      button.classList.add("group-toggle", "button");
-      button.onclick = function() {
-        // Toggle group visibility
-        groupFilters[group] = !groupFilters[group];
-        button.classList.toggle("off", !groupFilters[group]);
-        updateNetworkVisibility();
-      };
-
-      toggleContainer.appendChild(button);
-    });
-  }
-
-  function updateNetworkVisibility() {
-    nodes.forEach(function(node) {
-      var shouldBeHidden = node.group && !groupFilters[node.group];
-      nodes.update({
-        id: node.id,
-        hidden: shouldBeHidden,
-        color: node.originalColor // Use the original color stored for the node
-      });
+      }
     });
 
-    edges.forEach(function(edge) {
-      var fromNode = nodes.get(edge.from);
-      var toNode = nodes.get(edge.to);
-      edges.update({
-        id: edge.id,
-        hidden: fromNode.hidden || toNode.hidden
+    setStatus("✅ QR Codes atualizados.", true);
+    $lastAction.textContent = " · Affiliate ativo: " + affiliate;
+  }
+
+  // Inicializa valores guardados
+  $affiliateInput.value = loadAffiliateLocal();
+  if ($affiliateInput.value) {
+    // pré-gerar quando já existe affiliate guardado
+    window.addEventListener("load", regenerateQRCodes);
+  }
+
+  // Botão "Atualizar"
+  $btnAtualizar.addEventListener("click", regenerateQRCodes);
+
+  // ===== LADO “DESTINO” – quando o visitante chega com ?p=...&a=... abre o modal
+  function getParam(name) {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  }
+
+  function openModal() {
+    $backdrop.style.display = "flex";
+    $backdrop.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    $backdrop.style.display = "none";
+    $backdrop.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  $btnFechar.addEventListener("click", closeModal);
+  $backdrop.addEventListener("click", (e) => { if (e.target === $backdrop) closeModal(); });
+
+  // Se vier com parâmetros, abrir pop-up e preencher escondidos
+  function handleLanding() {
+    const product = getParam("p");
+    const affiliate = getParam("a");
+    if (!product || !affiliate) return; // sem parâmetros, não abre
+    // Preenche campos escondidos para o Google Forms
+    $gProduto.value = product;
+    $gAfiliado.value = affiliate;
+    openModal();
+  }
+
+  // Submissão do formulário ao Google Forms
+  $leadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $formStatus.textContent = "A enviar…";
+
+    const nome = (document.getElementById("nome").value || "").trim();
+    const contacto = (document.getElementById("contacto").value || "").trim();
+    const mensagem = (document.getElementById("mensagem").value || "").trim();
+
+    // Monta bloco de texto para entry.1002593961
+    const blocos = [];
+    if (nome) blocos.push(`Nome: ${nome}`);
+    if (contacto) blocos.push(`Contacto: ${contacto}`);
+    if (mensagem) blocos.push(`Mensagem: ${mensagem}`);
+    const textoAgregado = blocos.join("\n");
+
+    $gTexto.value = textoAgregado;
+
+    // Construir payload (como application/x-www-form-urlencoded)
+    const formData = new URLSearchParams();
+    formData.set("entry.698615008", $gProduto.value);    // Nome do produto
+    formData.set("entry.645159200", $gAfiliado.value);   // Affiliate
+    formData.set("entry.1002593961", $gTexto.value);     // Texto agregado
+
+    try {
+      const resp = await fetch(FORM_ACTION, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: formData.toString(),
+        mode: "no-cors" // Google Forms não devolve CORS; consideramos envio concluído.
       });
-    });
-  }
-
-  // Fullscreen functions
-  function enterFullscreen(element) {
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen();
-    }
-  }
-
-  function exitFullscreen() {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-  }
-
-  function isFullscreen() {
-    return !!(
-      document.fullscreenElement ||
-      document.webkitFullscreenElement ||
-      document.mozFullScreenElement ||
-      document.msFullscreenElement
-    );
-  }
-
-  // Add event listener for the fullscreen toggle button
-  document.getElementById("toggleFullscreen").addEventListener("click", function () {
-    var container = document.getElementById("mynetwork");
-    if (isFullscreen()) {
-      exitFullscreen();
-    } else {
-      enterFullscreen(container);
+      // Como não há CORS, assumimos sucesso se não houve erro de rede.
+      $formStatus.textContent = "✅ Pedido enviado. Obrigado!";
+      // Limpeza opcional
+      $leadForm.reset();
+      setTimeout(() => closeModal(), 900);
+    } catch (err) {
+      console.error(err);
+      $formStatus.textContent = "⚠️ Ocorreu um erro ao enviar. Tenta novamente.";
     }
   });
 
-document.querySelectorAll('.print-page').forEach(button => {
-  button.addEventListener('click', () => {
-    window.print();
-  });
-});
-
+  // Arranque
+  handleLanding();
+})();
 </script>
-  
-  </body>
+<!-- ===== FIM ===== -->
